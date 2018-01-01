@@ -27,7 +27,6 @@
     self = [super init];
     if (self) {
         [self checkIfLoginAccountIsValid];
-        APP_DELEGATE.isWorking=[USER_DEFAULT boolForKey:@"isWorking"];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onAccountUpdate:) name:ACCOUNT_UPDATE_NOTIFICATION object:nil];
     }
     return self;
@@ -231,15 +230,6 @@
     }else{
         [[AccountManager sharedInstance] updateUserStatusIfNeeded];
     }
-}
-
-//处理工作状态
--(void)handlerWorkingState:(BOOL)isWorking{
-    [self.loginModel setDeliverStatus:(isWorking?@"1":@"0")];
-    APP_DELEGATE.isWorking=isWorking;
-    [USER_DEFAULT setBool:isWorking forKey:@"isWorking"];
-    [USER_DEFAULT synchronize];
-    
 }
 
 //远程消息的注册

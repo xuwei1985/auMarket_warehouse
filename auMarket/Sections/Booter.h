@@ -32,10 +32,6 @@
 @property (nonatomic,strong) TaskModel *taskModel;
 @property (nonatomic,strong) BooterModel *model;
 @property (nonatomic,strong) MemberLoginModel *loginModel;
-@property (nonatomic,strong) NSArray<TaskItemEntity *> *tasklist_delivering;//配送中的订单
-@property (nonatomic,strong) NSArray<TaskItemEntity *> *tasklist_finished;//配送完成的订单
-@property (nonatomic,strong) NSArray<TaskItemEntity *> *tasklist_failed;//配送失败的订单
-@property (nonatomic,strong) NSArray<TaskItemEntity *> *tasklist_unknown;//没有配送坐标的订单
 @property (nonatomic,strong) NSArray<ParkingItemEntity *> *parkinglist;
 
 // 获取引导页
@@ -49,8 +45,6 @@
 -(void)bootUMeng;
 //初始化极光推送
 -(void)bootJPush:(NSDictionary *)launchOptions;
-//处理工作状态
--(void)handlerWorkingState:(BOOL)isWorking;
 //sync接口
 -(void)sync;
 //外部回调

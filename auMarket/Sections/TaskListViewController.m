@@ -59,7 +59,6 @@
     [btn_workState setTitleColor:COLOR_GRAY forState:UIControlStateNormal];
     [btn_workState setTitleColor:COLOR_MAIN forState:UIControlStateSelected];
     [btn_workState addTarget:self action:@selector(toggleWorkState:) forControlEvents:UIControlEventTouchUpInside];
-    btn_workState.selected=APP_DELEGATE.isWorking;
     self.navigationItem.titleView=btn_workState;
 }
 
@@ -286,7 +285,7 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    btn_workState.selected=APP_DELEGATE.isWorking;
+
     if(!self.taskArr){
         [APP_DELEGATE.booter loadTaskList];
     }

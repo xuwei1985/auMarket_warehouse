@@ -33,9 +33,9 @@
     
     self.booter = [[Booter alloc] init];
     [self.booter bootReachability];
-    [self.booter bootGoogleMap];
-    [self.booter loadTaskList];
-    [self.booter loadParkingList];
+////    [self.booter bootGoogleMap];
+//    [self.booter loadTaskList];
+    //[self.booter loadParkingList];
 //    [self.booter bootJPush:launchOptions];
 //    [self.booter bootUMeng];
     
