@@ -20,7 +20,6 @@
 #import <AdSupport/AdSupport.h>
 #import "SPTabBarController.h"
 #import "IntroViewController.h"
-#import <GoogleMaps/GoogleMaps.h>
 #import "TaskModel.h"
 #import "BooterModel.h"
 #import "MemberLoginModel.h"
@@ -51,7 +50,6 @@
 -(BOOL)onHandleOpenURL:(NSURL *)url;
 //网络检测
 - (void)bootReachability;
--(void)bootGoogleMap;
 -(void)loadTaskList;
 -(void)loadParkingList;
 @end
