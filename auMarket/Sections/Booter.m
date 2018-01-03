@@ -10,12 +10,10 @@
 #import "HomeViewController.h"
 #import "UserCenterViewController.h"
 #import "AdPageViewController.h"
-#import "TaskListViewController.h"
 
 @interface Booter() 
 {
     HomeViewController* homeViewController;
-    TaskListViewController* taskListViewController;
     UserCenterViewController* userCenterViewController;
 }
 @end
@@ -49,16 +47,13 @@
     homeViewController.hidesBottomBarWhenPushed = NO;
     homeViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"地图模式" image:[UIImage imageNamed:@"1_53"] selectedImage:[UIImage imageNamed:@"1_72"]];
     
-    taskListViewController = [[TaskListViewController alloc] init];
-    taskListViewController.hidesBottomBarWhenPushed = NO;
-    taskListViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"列表模式" image:[UIImage imageNamed:@"1_56"] selectedImage:[UIImage imageNamed:@"1_65"]];
     
     userCenterViewController = [[UserCenterViewController alloc] init];
     userCenterViewController.hidesBottomBarWhenPushed = NO;
     userCenterViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"我的" image:[UIImage imageNamed:@"1_69"] selectedImage:[UIImage imageNamed:@"1_59"]];
     
     SPNavigationController *navHomeViewController = [[SPNavigationController alloc] initWithRootViewController:homeViewController];
-    SPNavigationController *navTaskListViewController = [[SPNavigationController alloc] initWithRootViewController:taskListViewController];
+    SPNavigationController *navTaskListViewController = [[SPNavigationController alloc] initWithRootViewController:nil];
     SPNavigationController *navUserCenterViewController = [[SPNavigationController alloc] initWithRootViewController:userCenterViewController];
 
   
@@ -252,11 +247,6 @@
     //[YPUpdateChecker sharedInstance];
 }
 
-//获取派送任务列表
--(void)loadTaskList
-{
-    [self.taskModel loadTaskList];
-}
 
 //获取停车位数据
 -(void)loadParkingList
@@ -288,13 +278,6 @@
     }
 }
 
--(TaskModel *)taskModel{
-    if(!_taskModel){
-        _taskModel=[[TaskModel alloc] init];
-        _taskModel.delegate=self;
-    }
-    return _taskModel;
-}
 
 -(MemberLoginModel *)loginModel{
     if(!_loginModel){

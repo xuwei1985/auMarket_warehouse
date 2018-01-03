@@ -20,7 +20,6 @@
 #import <AdSupport/AdSupport.h>
 #import "SPTabBarController.h"
 #import "IntroViewController.h"
-#import "TaskModel.h"
 #import "BooterModel.h"
 #import "MemberLoginModel.h"
 
@@ -28,7 +27,6 @@
 
 @property (nonatomic,strong) UINavigationController* navigationController;
 @property (nonatomic,strong) UITabBarController* tabBarController;
-@property (nonatomic,strong) TaskModel *taskModel;
 @property (nonatomic,strong) BooterModel *model;
 @property (nonatomic,strong) MemberLoginModel *loginModel;
 @property (nonatomic,strong) NSArray<ParkingItemEntity *> *parkinglist;
@@ -50,6 +48,5 @@
 -(BOOL)onHandleOpenURL:(NSURL *)url;
 //网络检测
 - (void)bootReachability;
--(void)loadTaskList;
 -(void)loadParkingList;
 @end
