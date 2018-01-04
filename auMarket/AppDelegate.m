@@ -33,39 +33,12 @@
     
     self.booter = [[Booter alloc] init];
     [self.booter bootReachability];
-////    [self.booter bootGoogleMap];
-//    [self.booter loadTaskList];
-    //[self.booter loadParkingList];
-//    [self.booter bootJPush:launchOptions];
-//    [self.booter bootUMeng];
-    
-    // 当前版本第一次启动开启引导页
-//    NSString* introVer = [USER_DEFAULT stringForKey:APP_INTRO_VER];
-//    if (!introVer || ![[SPBaseModel getAppVer] isEqualToString:introVer]) {//显示介绍页
-//        [[NSUserDefaults standardUserDefaults]  setObject:[SPBaseModel getAppVer] forKey:APP_INTRO_VER];
-//        [[NSUserDefaults standardUserDefaults]  synchronize];
-//        [self.window setRootViewController:[self.booter getIntroViewController]];
-//    }
-//    else{//显示正常的页面
-//        [self.window setRootViewController:[self.booter bootUIViewController]];
-//    }
-//
+
     SPNavigationController *navController = [[SPNavigationController alloc] initWithRootViewController:[[UserLoginViewController alloc] init]];
     [self.window setRootViewController:navController];
-    
-    //启动的弹出界面
-//    UIViewController *startPageViewController = [self.booter bootStartPage];
-//    if (startPageViewController) {
-//        [self.window.rootViewController presentViewController:startPageViewController animated:NO completion:nil];
-//    }
-    
     self.window.backgroundColor=COLOR_WHITE;
     [self.window makeKeyAndVisible];
     return YES;
-}
-
--(void)logObj:(id)sender{
-    NSLog(@"%@",sender);
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -118,9 +91,8 @@
 
 
 - (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-    NSLog(@"My token is:%@", deviceToken);
     /// Required - 注册 DeviceToken
-    [JPUSHService registerDeviceToken:deviceToken];
+//    [JPUSHService registerDeviceToken:deviceToken];
 }
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
@@ -136,10 +108,8 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
     
-    [JPUSHService handleRemoteNotification:userInfo];
-    completionHandler(UIBackgroundFetchResultNewData);
-    
-//    [self.booter handleRemoteNotifacation:userInfo];
+//    [JPUSHService handleRemoteNotification:userInfo];
+//    completionHandler(UIBackgroundFetchResultNewData);
 }
 
 @end

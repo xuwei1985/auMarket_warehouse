@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "UserRegistViewController.h"
 #import "MemberLoginModel.h"
-#import "HomeViewController.h"
+#import "StockViewController.h"
 
 @interface UserLoginViewController : SPBaseViewController<UITextFieldDelegate,UIScrollViewDelegate,UITabBarControllerDelegate>
 {

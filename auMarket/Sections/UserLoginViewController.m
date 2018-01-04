@@ -31,7 +31,6 @@
 -(void)initData{
 }
 
-
 -(void)setNavigation{
     self.title=@"账号登录";
 }
@@ -266,9 +265,7 @@
 
 
 -(void)gotoHomeView{
-    Booter *booter=[[Booter alloc] init];
-
-    [APP_DELEGATE.window setRootViewController:[booter bootUIViewController]];
+    [APP_DELEGATE.window setRootViewController:[APP_DELEGATE.booter bootUIViewController]];
 }
 
 -(void)checkLoginState{

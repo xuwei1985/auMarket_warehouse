@@ -7,13 +7,17 @@
 //
 
 #import "Booter.h"
-#import "HomeViewController.h"
+#import "StockViewController.h"
 #import "UserCenterViewController.h"
+#import "PickViewController.h"
+#import "InformationViewController.h"
 #import "AdPageViewController.h"
 
 @interface Booter() 
 {
-    HomeViewController* homeViewController;
+    StockViewController* stockViewController;
+    PickViewController* pickViewController;
+    InformationViewController* informationViewController;
     UserCenterViewController* userCenterViewController;
 }
 @end
@@ -43,24 +47,33 @@
 //主视图控制器
 -(UIViewController*)bootUIViewController
 {
-    homeViewController = [[HomeViewController alloc] init];
-    homeViewController.hidesBottomBarWhenPushed = NO;
-    homeViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"地图模式" image:[UIImage imageNamed:@"1_53"] selectedImage:[UIImage imageNamed:@"1_72"]];
+    stockViewController = [[StockViewController alloc] init];
+    stockViewController.hidesBottomBarWhenPushed = NO;
+    stockViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"入库" image:[UIImage imageNamed:@"stock"] selectedImage:[UIImage imageNamed:@"stock_on"]];
+    
+    pickViewController = [[PickViewController alloc] init];
+    pickViewController.hidesBottomBarWhenPushed = NO;
+    pickViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"拣货" image:[UIImage imageNamed:@"pick"] selectedImage:[UIImage imageNamed:@"pick_on"]];
+    
+    informationViewController = [[InformationViewController alloc] init];
+    informationViewController.hidesBottomBarWhenPushed = NO;
+    informationViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"信息" image:[UIImage imageNamed:@"information"] selectedImage:[UIImage imageNamed:@"information_on"]];
     
     
     userCenterViewController = [[UserCenterViewController alloc] init];
     userCenterViewController.hidesBottomBarWhenPushed = NO;
-    userCenterViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"我的" image:[UIImage imageNamed:@"1_69"] selectedImage:[UIImage imageNamed:@"1_59"]];
+    userCenterViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"我的" image:[UIImage imageNamed:@"member"] selectedImage:[UIImage imageNamed:@"member_on"]];
     
-    SPNavigationController *navHomeViewController = [[SPNavigationController alloc] initWithRootViewController:homeViewController];
-    SPNavigationController *navTaskListViewController = [[SPNavigationController alloc] initWithRootViewController:nil];
-    SPNavigationController *navUserCenterViewController = [[SPNavigationController alloc] initWithRootViewController:userCenterViewController];
+    SPNavigationController *nav_stock = [[SPNavigationController alloc] initWithRootViewController:stockViewController];
+    SPNavigationController *nav_pick = [[SPNavigationController alloc] initWithRootViewController:pickViewController];
+    SPNavigationController *nav_information = [[SPNavigationController alloc] initWithRootViewController:informationViewController];
+    SPNavigationController *nav_member = [[SPNavigationController alloc] initWithRootViewController:userCenterViewController];
 
   
     self.tabBarController = [[SPTabBarController alloc] init];
     self.tabBarController.tabBar.translucent = NO;
     self.tabBarController.tabBar.tintColor = COLOR_FONT_MAIN;
-    [self.tabBarController setViewControllers:@[navHomeViewController,navTaskListViewController,navUserCenterViewController]];
+    [self.tabBarController setViewControllers:@[nav_pick,nav_stock,nav_information,nav_member]];
     self.tabBarController.selectedIndex = 0;
     self.tabBarController.delegate = self;
     
@@ -96,6 +109,7 @@
     [[BadgeManager sharedInstance] setBadgeValue:badgeValue forIndex:3];
 }
 
+//用户登录之后的业务代码
 - (void)onAccountUpdate:(NSNotification*)aNotification{
 
     //[[SPPullMessageManager sharedInstance] resetPullMessager];

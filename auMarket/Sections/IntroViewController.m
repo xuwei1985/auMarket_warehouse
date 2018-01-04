@@ -11,7 +11,6 @@
 #import "UIDevice-Hardware.h"
 #import "AppDelegate.h"
 #import "AccountManager.h"
-#import "HomeViewController.h"
 
 static NSInteger const YPIntroPageCount = 2;
 
