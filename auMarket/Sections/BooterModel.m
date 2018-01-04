@@ -19,7 +19,7 @@
 
 -(void)loadParkingList{
     self.parseDataClassType = [ParkingEntity class];
-    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=parking_list"];
+    self.shortRequestAddress=[NSString stringWithFormat:@"api_warehouse.php?act=parking_list"];
     self.params = @{};
     [self loadInner];
 }

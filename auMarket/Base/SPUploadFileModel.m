@@ -14,7 +14,7 @@
  */
 -(void)uploadImages:(NSData *)data andResourceType:(NSString *)resourceType{
     SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
-    self.shortRequestAddress = [NSString stringWithFormat:@"apiv1.php?act=uploadImages&user_id=%@&resource_type=%@",user.user_id,resourceType];
+    self.shortRequestAddress = [NSString stringWithFormat:@"api_warehouse.php?act=uploadImages&user_id=%@&resource_type=%@",user.user_id,resourceType];
     self.params = @{@"file_content": data};
     self.contentTypes = @{@"file_content": @"image/jpg"};
     self.parseDataClassType = [SPUploadFileEntity class];

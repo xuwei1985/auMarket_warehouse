@@ -20,7 +20,7 @@
 
 //普通登录
 -(void)loginWithUsername:(NSString *)uname andPassword:(NSString *)upass{
-    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=deliver_login&username=%@&password=%@",uname,upass];
+    self.shortRequestAddress=[NSString stringWithFormat:@"api_warehouse.php?act=user_login&username=%@&password=%@",uname,upass];
     self.params = @{
     };
     self.requestTag=1001;
@@ -30,7 +30,7 @@
 //设置工作状态
 -(void)setDeliverStatus:(NSString *)status{
     SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
-    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=set_deliver_status&status=%@&deliver_id=%@",status,user.user_id];
+    self.shortRequestAddress=[NSString stringWithFormat:@"api_warehouse.php?act=set_deliver_status&status=%@&deliver_id=%@",status,user.user_id];
     self.params = @{};
     self.requestTag=1002;
     [self loadInner];
@@ -40,7 +40,7 @@
 -(void)getChargeInfo{
     SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
     self.parseDataClassType = [MemberChargeEntity class];
-    self.shortRequestAddress=[NSString stringWithFormat:@"apiv1.php?act=get_deliver_charge&deliver_id=%@",user.user_id];
+    self.shortRequestAddress=[NSString stringWithFormat:@"api_warehouse.php?act=get_deliver_charge&deliver_id=%@",user.user_id];
     self.params = @{};
     self.requestTag=1003;
     [self loadInner];

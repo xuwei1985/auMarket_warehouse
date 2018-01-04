@@ -13,7 +13,7 @@
 -(instancetype)init{
     self = [super init];
     if (self) {
-        self.shortRequestAddress=@"apiv1.php?act=get_banner";
+        self.shortRequestAddress=@"api_warehouse.php?act=get_banner";
         self.parseDataClassType = [BannerEntity class];
         self.entity.err_msg=@"未获取到有效的Banner数据";
     }
