@@ -6,33 +6,84 @@
 //  Copyright (c) 2015年 xuwei. All rights reserved.
 //
 
-#import "MemberCell.h"
+#import "BatchCell.h"
 
-@implementation MemberCell
+@implementation BatchCell
 
 -(id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-//        if (_iconImageView==nil) {
-//            _iconImageView=[[UIImageView alloc] initWithFrame:CGRectMake(18, 12, 22, 22)];
-//            [self.contentView addSubview:_iconImageView];
-//        }
-        if (_itemLbl==nil) {
-            _itemLbl=[[UILabel alloc] initWithFrame:CGRectMake(WIDTH_SCREEN-100, 12, 90, 22)];
-            _itemLbl.textAlignment=NSTextAlignmentRight;
-            _itemLbl.textColor=COLOR_MAIN;
-            _itemLbl.font=FONT_SIZE_MIDDLE;
-            _itemLbl.hidden=YES;
-            [self.contentView addSubview:_itemLbl];
+        @weakify(self);
+        
+        if (imv_addGoods==nil) {
+            imv_addGoods=[[UIImageView alloc] init];
+            imv_addGoods.image=[UIImage imageNamed:@"batch_add"];
+            [self.contentView addSubview:imv_addGoods];
+            
+            [imv_addGoods mas_makeConstraints:^(MASConstraintMaker *make) {
+                @strongify(self);
+                make.centerY.mas_equalTo(self.mas_centerY);
+                make.right.mas_equalTo(10);
+                make.size.mas_equalTo(CGSizeMake(32, 32));
+            }];
         }
         
-        if (_mySwitch==nil) {
-            _mySwitch=[[ UISwitch alloc]initWithFrame:CGRectMake(WIDTH_SCREEN-58,6.0,80.0,22.0)];
-            [_mySwitch setOn:NO animated:YES];
-            _mySwitch.hidden=YES;
-            _mySwitch.onTintColor=COLOR_MAIN;
-            [_mySwitch addTarget: self action:@selector(switchValueChanged:) forControlEvents:UIControlEventValueChanged];
-            [self.contentView addSubview:_mySwitch];
+        if (lbl_batchNo==nil) {
+            lbl_batchNo_prefix=[[UILabel alloc] init];
+            lbl_batchNo_prefix.textAlignment=NSTextAlignmentLeft;
+            lbl_batchNo_prefix.textColor=COLOR_BLACK;
+            lbl_batchNo_prefix.font=FONT_SIZE_MIDDLE;
+            lbl_batchNo_prefix.text=@"批次编号：";
+            [self.contentView addSubview:lbl_batchNo_prefix];
+            
+            [lbl_batchNo_prefix mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.top.mas_equalTo(12);
+                make.left.mas_equalTo(10);
+                make.size.mas_equalTo(CGSizeMake(75, 24));
+            }];
+            
+            lbl_batchNo=[[UILabel alloc] init];
+            lbl_batchNo.textAlignment=NSTextAlignmentLeft;
+            lbl_batchNo.textColor=COLOR_MAIN;
+            lbl_batchNo.font=FONT_SIZE_MIDDLE;
+            [self.contentView addSubview:lbl_batchNo];
+            
+            [lbl_batchNo mas_makeConstraints:^(MASConstraintMaker *make) {
+                @strongify(self);
+                make.top.mas_equalTo(12);
+                make.left.mas_equalTo(lbl_batchNo_prefix.mas_right).offset(5);
+                make.right.mas_equalTo(self.mas_right).offset(-10);
+                make.height.mas_equalTo(24);
+            }];
+        }
+        
+        if (lbl_suppliersName==nil) {
+            lbl_suppliersName_prefix=[[UILabel alloc] init];
+            lbl_suppliersName_prefix.textAlignment=NSTextAlignmentLeft;
+            lbl_suppliersName_prefix.textColor=COLOR_BLACK;
+            lbl_suppliersName_prefix.font=FONT_SIZE_MIDDLE;
+            lbl_suppliersName_prefix.text=@"供应商：";
+            [self.contentView addSubview:lbl_batchNo_prefix];
+            
+            [lbl_suppliersName_prefix mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.top.mas_equalTo(lbl_batchNo_prefix.mas_bottom).offset(12);
+                make.left.mas_equalTo(10);
+                make.size.mas_equalTo(CGSizeMake(75, 24));
+            }];
+            
+            lbl_suppliersName=[[UILabel alloc] init];
+            lbl_suppliersName.textAlignment=NSTextAlignmentLeft;
+            lbl_suppliersName.textColor=COLOR_MAIN;
+            lbl_suppliersName.font=FONT_SIZE_MIDDLE;
+            [self.contentView addSubview:lbl_batchNo];
+            
+            [lbl_suppliersName mas_makeConstraints:^(MASConstraintMaker *make) {
+                @strongify(self);
+                make.top.mas_equalTo(lbl_suppliersName_prefix.mas_top);
+                make.left.mas_equalTo(lbl_suppliersName_prefix.mas_right).offset(5);
+                make.right.mas_equalTo(self.mas_right).offset(-10);
+                make.height.mas_equalTo(24);
+            }];
         }
     }
     return self;
@@ -41,26 +92,8 @@
 -(void)layoutSubviews{
     [super layoutSubviews];
     
-    self.textLabel.frame=CGRectMake(12, 0, 100, 44);
-    self.textLabel.text=self.itemName;
-    if(self.itemPrice==nil||self.itemPrice.length<=0){
-        _itemLbl.hidden=YES;
-        _mySwitch.hidden=NO;
-        [_mySwitch setOn:NO animated:YES];
-    }
-    else{
-        _itemLbl.hidden=NO;
-        _mySwitch.hidden=YES;
-        _itemLbl.text=self.itemPrice;
-    }
-}
-
-- (void)switchValueChanged:(id)sender{
-    UISwitch* control = (UISwitch*)sender;
-    if(control == _mySwitch){
-        BOOL on = control.on;
-        //添加自己要处理的事情代码
-    }
+    lbl_batchNo.text=self.entity.batch_no;
+    lbl_suppliersName.text=self.entity.suppliers_name;
 }
 
 

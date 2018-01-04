@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "UserRegistViewController.h"
 #import "MemberLoginModel.h"
-#import "StockViewController.h"
+#import "BatchViewController.h"
 
 @interface UserLoginViewController : SPBaseViewController<UITextFieldDelegate,UIScrollViewDelegate,UITabBarControllerDelegate>
 {
