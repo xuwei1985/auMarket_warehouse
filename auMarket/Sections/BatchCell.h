@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "BatchEntity.h"
 
+typedef void(^AddGoodsBlock)(NSString *batch_id);
+
 @interface BatchCell : UITableViewCell
 {
     UIImageView *imv_addGoods;
@@ -21,4 +23,7 @@
 }
 
 @property(nonatomic,retain) BatchItemEntity *entity;
+@property (nonatomic, copy) AddGoodsBlock addGoodsBlock;
+
+-(void)returnBatchId:(AddGoodsBlock)block;
 @end

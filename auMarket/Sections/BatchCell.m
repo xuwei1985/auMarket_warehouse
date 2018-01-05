@@ -17,7 +17,10 @@
         if (imv_addGoods==nil) {
             imv_addGoods=[[UIImageView alloc] init];
             imv_addGoods.image=[UIImage imageNamed:@"batch_add"];
+            imv_addGoods.userInteractionEnabled=YES;
             [self.contentView addSubview:imv_addGoods];
+            
+            [imv_addGoods addGestureRecognizer: [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(buttonAddTaped:)] ];
             
             [imv_addGoods mas_makeConstraints:^(MASConstraintMaker *make) {
                 @strongify(self);
@@ -116,6 +119,14 @@
         }
     }
     return self;
+}
+
+-(void)buttonAddTaped:(UITapGestureRecognizer *)sender{
+    self.addGoodsBlock(self.entity.id);
+}
+
+-(void)returnBatchId:(AddGoodsBlock)block{
+    self.addGoodsBlock = block;
 }
 
 -(void)layoutSubviews{

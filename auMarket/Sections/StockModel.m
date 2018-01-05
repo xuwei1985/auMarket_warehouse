@@ -20,7 +20,7 @@
 
 -(void)loadBatchs{
     self.parseDataClassType = [BatchEntity class];
-    self.shortRequestAddress= [NSString stringWithFormat:@"api_warehouse.php?act=batch_list&tid=%",(self.entity.tid==nil?@"0":self.entity.tid)];
+    self.shortRequestAddress= [NSString stringWithFormat:@"api_warehouse.php?act=batch_list&tid=%@",(self.entity.tid==nil?@"1":self.entity.tid)];
     self.params = @{};
     self.requestTag=1001;
     [self loadInner];

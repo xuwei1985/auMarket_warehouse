@@ -141,6 +141,10 @@
         cell=[[BatchCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdetify];
         cell.opaque=YES;
         cell.accessoryType = UITableViewCellAccessoryNone;
+        
+        [cell returnBatchId:^(NSString *batch_id) {//cell点击批次下增加商品的按钮
+            [self showToastWithText:batch_id];
+        }];
     }
     cell.backgroundColor=COLOR_BG_WHITE;
     
