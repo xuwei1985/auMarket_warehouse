@@ -6,19 +6,19 @@
 //  Copyright © 2016年 daao. All rights reserved.
 //
 
-#import "BannerEntity.h"
+#import "BatchEntity.h"
 
-@implementation BannerEntity
+@implementation BatchEntity
 -(id)init{
     self = [super init];
     if (self) {
-        [self addMappingRuleArrayProperty:@"banners" class:[BannerItemEntity class]];
+        [self addMappingRuleArrayProperty:@"list" class:[BatchItemEntity class]];
     }
     return self;
 }
 @end
 
 
-@implementation BannerItemEntity : SPBaseEntity
+@implementation BatchItemEntity : SPBaseEntity
 
 @end

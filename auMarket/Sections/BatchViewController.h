@@ -7,9 +7,11 @@
 //
 
 #import "SPBaseViewController.h"
+#import "StockModel.h"
+#import "BatchCell.h"
 
-@interface StockViewController : SPBaseViewController
+@interface BatchViewController : SPBaseViewController
 {
-    
 }
+@property(nonatomic,retain) StockModel *model;
 @end

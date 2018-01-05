@@ -7,7 +7,7 @@
 //
 
 #import "Booter.h"
-#import "StockViewController.h"
+#import "BatchViewController.h"
 #import "UserCenterViewController.h"
 #import "PickViewController.h"
 #import "InformationViewController.h"
@@ -15,7 +15,7 @@
 
 @interface Booter() 
 {
-    StockViewController* stockViewController;
+    BatchViewController* batchViewController;
     PickViewController* pickViewController;
     InformationViewController* informationViewController;
     UserCenterViewController* userCenterViewController;
@@ -47,9 +47,9 @@
 //主视图控制器
 -(UIViewController*)bootUIViewController
 {
-    stockViewController = [[StockViewController alloc] init];
-    stockViewController.hidesBottomBarWhenPushed = NO;
-    stockViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"入库" image:[UIImage imageNamed:@"stock"] selectedImage:[UIImage imageNamed:@"stock_on"]];
+    batchViewController = [[BatchViewController alloc] init];
+    batchViewController.hidesBottomBarWhenPushed = NO;
+    batchViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"入库" image:[UIImage imageNamed:@"stock"] selectedImage:[UIImage imageNamed:@"stock_on"]];
     
     pickViewController = [[PickViewController alloc] init];
     pickViewController.hidesBottomBarWhenPushed = NO;
@@ -64,7 +64,7 @@
     userCenterViewController.hidesBottomBarWhenPushed = NO;
     userCenterViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"我的" image:[UIImage imageNamed:@"member"] selectedImage:[UIImage imageNamed:@"member_on"]];
     
-    SPNavigationController *nav_stock = [[SPNavigationController alloc] initWithRootViewController:stockViewController];
+    SPNavigationController *nav_batch = [[SPNavigationController alloc] initWithRootViewController:batchViewController];
     SPNavigationController *nav_pick = [[SPNavigationController alloc] initWithRootViewController:pickViewController];
     SPNavigationController *nav_information = [[SPNavigationController alloc] initWithRootViewController:informationViewController];
     SPNavigationController *nav_member = [[SPNavigationController alloc] initWithRootViewController:userCenterViewController];
@@ -73,7 +73,7 @@
     self.tabBarController = [[SPTabBarController alloc] init];
     self.tabBarController.tabBar.translucent = NO;
     self.tabBarController.tabBar.tintColor = COLOR_FONT_MAIN;
-    [self.tabBarController setViewControllers:@[nav_pick,nav_stock,nav_information,nav_member]];
+    [self.tabBarController setViewControllers:@[nav_pick,nav_batch,nav_information,nav_member]];
     self.tabBarController.selectedIndex = 0;
     self.tabBarController.delegate = self;
     

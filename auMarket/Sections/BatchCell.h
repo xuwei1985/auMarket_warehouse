@@ -7,15 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BatchEntity.h"
 
-@interface MemberCell : UITableViewCell
+@interface BatchCell : UITableViewCell
 {
-    UIImageView *_iconImageView;
-    UILabel *_itemLbl;
-    UISwitch* _mySwitch;
+    UIImageView *imv_addGoods;
+    UILabel *lbl_batchNo_prefix;
+    UILabel *lbl_batchNo;
+    UILabel *lbl_suppliersName_prefix;
+    UILabel *lbl_suppliersName;
 }
 
-@property(nonatomic,retain) UIImage *iconImage;
-@property(nonatomic,retain) NSString *itemName;
-@property(nonatomic,retain) NSString *itemPrice;
+@property(nonatomic,retain) BatchItemEntity *entity;
 @end
