@@ -110,11 +110,12 @@
     }
 }
 
+
 -(void)setUpTableView{
     self.tableView=[[SPBaseTableView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, HEIGHT_SCREEN-64-54) style:UITableViewStylePlain];
     self.tableView.separatorStyle=UITableViewCellSeparatorStyleSingleLine;
-    self.tableView.separatorColor=COLOR_BG_WHITE;
-    self.tableView.backgroundColor=COLOR_BG_WHITE;
+    self.tableView.separatorColor=COLOR_BG_LINE;
+    self.tableView.backgroundColor=COLOR_BG_VIEW;
     [self.view addSubview:self.tableView];
     [self.tableView showTableFooterView];
 }
@@ -130,7 +131,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 72;
+    return 92;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -139,10 +140,9 @@
     if (cell == nil) {
         cell=[[BatchCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdetify];
         cell.opaque=YES;
-        cell.backgroundColor=COLOR_BG_WHITE;
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
-    cell.backgroundColor=COLOR_BG_TABLEVIEW;
+    cell.backgroundColor=COLOR_BG_WHITE;
     
     BatchItemEntity *obj=(BatchItemEntity *)[ self.tableView.itemArray objectAtIndex:indexPath.row];
     cell.entity=obj;
@@ -154,7 +154,7 @@
 }
 
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
-    [tableView setSeparatorInset:UIEdgeInsetsZero];
+//    [tableView setSeparatorInset:UIEdgeInsetsZero];
     [tableView setLayoutMargins:UIEdgeInsetsZero];
 }
 
