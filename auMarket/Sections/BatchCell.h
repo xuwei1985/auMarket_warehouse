@@ -16,6 +16,8 @@
     UILabel *lbl_batchNo;
     UILabel *lbl_suppliersName_prefix;
     UILabel *lbl_suppliersName;
+    UILabel *lbl_editTime_prefix;
+    UILabel *lbl_editTime;
 }
 
 @property(nonatomic,retain) BatchItemEntity *entity;

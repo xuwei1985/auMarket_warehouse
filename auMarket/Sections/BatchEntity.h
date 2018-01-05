@@ -18,4 +18,5 @@
 @property (nonatomic,retain) NSString *id;
 @property (nonatomic,retain) NSString *batch_no;
 @property (nonatomic,retain) NSString *suppliers_name;
+@property (nonatomic,retain) NSString *created_at;
 @end
