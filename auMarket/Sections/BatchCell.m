@@ -23,8 +23,8 @@
             [imv_addGoods mas_makeConstraints:^(MASConstraintMaker *make) {
                 @strongify(self);
                 make.centerY.mas_equalTo(self.mas_centerY);
-                make.right.mas_equalTo(10);
-                make.size.mas_equalTo(CGSizeMake(32, 32));
+                make.right.mas_equalTo(-10);
+                make.size.mas_equalTo(CGSizeMake(24, 24));
             }];
         }
         
@@ -44,14 +44,14 @@
             
             lbl_batchNo=[[UILabel alloc] init];
             lbl_batchNo.textAlignment=NSTextAlignmentLeft;
-            lbl_batchNo.textColor=COLOR_MAIN;
+            lbl_batchNo.textColor=COLOR_BLACK;
             lbl_batchNo.font=FONT_SIZE_MIDDLE;
             [self.contentView addSubview:lbl_batchNo];
             
             [lbl_batchNo mas_makeConstraints:^(MASConstraintMaker *make) {
                 @strongify(self);
                 make.top.mas_equalTo(12);
-                make.left.mas_equalTo(lbl_batchNo_prefix.mas_right).offset(5);
+                make.left.mas_equalTo(lbl_batchNo_prefix.mas_right).offset(2);
                 make.right.mas_equalTo(self.mas_right).offset(-10);
                 make.height.mas_equalTo(24);
             }];
@@ -63,24 +63,24 @@
             lbl_suppliersName_prefix.textColor=COLOR_BLACK;
             lbl_suppliersName_prefix.font=FONT_SIZE_MIDDLE;
             lbl_suppliersName_prefix.text=@"供应商：";
-            [self.contentView addSubview:lbl_batchNo_prefix];
+            [self.contentView addSubview:lbl_suppliersName_prefix];
             
             [lbl_suppliersName_prefix mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.top.mas_equalTo(lbl_batchNo_prefix.mas_bottom).offset(12);
+                make.top.mas_equalTo(lbl_batchNo_prefix.mas_bottom).offset(6);
                 make.left.mas_equalTo(10);
                 make.size.mas_equalTo(CGSizeMake(75, 24));
             }];
             
             lbl_suppliersName=[[UILabel alloc] init];
             lbl_suppliersName.textAlignment=NSTextAlignmentLeft;
-            lbl_suppliersName.textColor=COLOR_MAIN;
+            lbl_suppliersName.textColor=COLOR_BLACK;
             lbl_suppliersName.font=FONT_SIZE_MIDDLE;
-            [self.contentView addSubview:lbl_batchNo];
+            [self.contentView addSubview:lbl_suppliersName];
             
             [lbl_suppliersName mas_makeConstraints:^(MASConstraintMaker *make) {
                 @strongify(self);
                 make.top.mas_equalTo(lbl_suppliersName_prefix.mas_top);
-                make.left.mas_equalTo(lbl_suppliersName_prefix.mas_right).offset(5);
+                make.left.mas_equalTo(lbl_suppliersName_prefix.mas_right).offset(2);
                 make.right.mas_equalTo(self.mas_right).offset(-10);
                 make.height.mas_equalTo(24);
             }];

@@ -110,12 +110,11 @@
     }
 }
 
-
 -(void)setUpTableView{
-    self.tableView=[[SPBaseTableView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, HEIGHT_SCREEN-64) style:UITableViewStylePlain];
+    self.tableView=[[SPBaseTableView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, HEIGHT_SCREEN-64-54) style:UITableViewStylePlain];
     self.tableView.separatorStyle=UITableViewCellSeparatorStyleSingleLine;
     self.tableView.separatorColor=COLOR_BG_WHITE;
-    self.tableView.backgroundColor=COLOR_BG_VIEW;
+    self.tableView.backgroundColor=COLOR_BG_WHITE;
     [self.view addSubview:self.tableView];
     [self.tableView showTableFooterView];
 }
@@ -131,7 +130,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 68;
+    return 72;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -140,6 +139,7 @@
     if (cell == nil) {
         cell=[[BatchCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdetify];
         cell.opaque=YES;
+        cell.backgroundColor=COLOR_BG_WHITE;
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
     cell.backgroundColor=COLOR_BG_TABLEVIEW;
