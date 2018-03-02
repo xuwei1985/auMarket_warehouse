@@ -32,7 +32,7 @@
 }
 
 -(void)setNavigation{
-    self.title=@"入库";
+    self.title=@"批次";
 }
 
 -(void)addNotification{
