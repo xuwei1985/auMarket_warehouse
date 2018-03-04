@@ -7,6 +7,7 @@
 //
 
 #import "SPBaseViewController.h"
+#import "QRCodeViewController.h"
 
 @interface InformationViewController : SPBaseViewController
 
