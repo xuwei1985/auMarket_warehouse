@@ -28,6 +28,21 @@
 
 -(void)initUI{
     [self setNavigation];
+    
+    UIButton *btn=[UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame=CGRectMake(0, 0, 100, 28);
+    btn.center=self.view.center;
+    [btn setTitle:@"扫描条形码" forState:UIControlStateNormal];
+    btn.titleLabel.font=DEFAULT_FONT(14);
+    [btn setBackgroundColor: COLOR_BTN_GRAY];
+    [btn addTarget:self action:@selector(startQRController) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:btn];
+}
+
+-(void)startQRController{
+    QRCodeViewController *vc = [[QRCodeViewController alloc] init];
+    vc.title = @"二维码扫描";
+    [self presentViewController:vc animated:YES completion:nil];
 }
 
 -(void)setNavigation{

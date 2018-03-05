@@ -82,6 +82,20 @@
 		A964742A1E1117DB00A5A39B /* mark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A96474291E1117DB00A5A39B /* mark@2x.png */; };
 		A964742C1E11205500A5A39B /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A964742B1E11205500A5A39B /* CoreTelephony.framework */; };
 		A96474321E112BEA00A5A39B /* CustomTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = A96474311E112BEA00A5A39B /* CustomTextField.m */; };
+		A968116E20497A9F008604AC /* frame_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A968116420497A9E008604AC /* frame_icon@2x.png */; };
+		A968116F20497A9F008604AC /* frame_icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A968116520497A9E008604AC /* frame_icon@3x.png */; };
+		A968117020497A9F008604AC /* ScanQR3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A968116620497A9E008604AC /* ScanQR3@2x.png */; };
+		A968117120497A9F008604AC /* ScanQR1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A968116720497A9E008604AC /* ScanQR1@2x.png */; };
+		A968117220497A9F008604AC /* ScanQR4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A968116820497A9F008604AC /* ScanQR4@2x.png */; };
+		A968117320497A9F008604AC /* frame_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = A968116920497A9F008604AC /* frame_icon.png */; };
+		A968117420497A9F008604AC /* line.png in Resources */ = {isa = PBXBuildFile; fileRef = A968116A20497A9F008604AC /* line.png */; };
+		A968117520497A9F008604AC /* line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A968116B20497A9F008604AC /* line@2x.png */; };
+		A968117620497A9F008604AC /* line@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A968116C20497A9F008604AC /* line@3x.png */; };
+		A968117720497A9F008604AC /* ScanQR2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A968116D20497A9F008604AC /* ScanQR2@2x.png */; };
+		A968117E20497B18008604AC /* Qcodesound.caf in Resources */ = {isa = PBXBuildFile; fileRef = A968117920497B18008604AC /* Qcodesound.caf */; };
+		A968117F20497B18008604AC /* QRCodeScanView.m in Sources */ = {isa = PBXBuildFile; fileRef = A968117C20497B18008604AC /* QRCodeScanView.m */; };
+		A968118020497B18008604AC /* QRCodeBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = A968117D20497B18008604AC /* QRCodeBackgroundView.m */; };
+		A968118420497E80008604AC /* QRCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A968118220497E80008604AC /* QRCodeViewController.m */; };
 		A982F78F1E0FA87E00DB4C13 /* sign_weixin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A982F78E1E0FA87E00DB4C13 /* sign_weixin@2x.png */; };
 		A982F79A1E1107DA00DB4C13 /* grayline@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A982F7991E1107DA00DB4C13 /* grayline@2x.png */; };
 		A99FB2442006022A005AF4AE /* StockViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A99FB2432006022A005AF4AE /* StockViewController.m */; };
@@ -295,6 +309,24 @@
 		A964742B1E11205500A5A39B /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		A96474301E112BEA00A5A39B /* CustomTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTextField.h; sourceTree = "<group>"; };
 		A96474311E112BEA00A5A39B /* CustomTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTextField.m; sourceTree = "<group>"; };
+		A968116420497A9E008604AC /* frame_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "frame_icon@2x.png"; sourceTree = "<group>"; };
+		A968116520497A9E008604AC /* frame_icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "frame_icon@3x.png"; sourceTree = "<group>"; };
+		A968116620497A9E008604AC /* ScanQR3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ScanQR3@2x.png"; sourceTree = "<group>"; };
+		A968116720497A9E008604AC /* ScanQR1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ScanQR1@2x.png"; sourceTree = "<group>"; };
+		A968116820497A9F008604AC /* ScanQR4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ScanQR4@2x.png"; sourceTree = "<group>"; };
+		A968116920497A9F008604AC /* frame_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = frame_icon.png; sourceTree = "<group>"; };
+		A968116A20497A9F008604AC /* line.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = line.png; sourceTree = "<group>"; };
+		A968116B20497A9F008604AC /* line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "line@2x.png"; sourceTree = "<group>"; };
+		A968116C20497A9F008604AC /* line@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "line@3x.png"; sourceTree = "<group>"; };
+		A968116D20497A9F008604AC /* ScanQR2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ScanQR2@2x.png"; sourceTree = "<group>"; };
+		A968117920497B18008604AC /* Qcodesound.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Qcodesound.caf; sourceTree = "<group>"; };
+		A968117A20497B18008604AC /* QRCodeScanView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRCodeScanView.h; sourceTree = "<group>"; };
+		A968117B20497B18008604AC /* QRCodeBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRCodeBackgroundView.h; sourceTree = "<group>"; };
+		A968117C20497B18008604AC /* QRCodeScanView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRCodeScanView.m; sourceTree = "<group>"; };
+		A968117D20497B18008604AC /* QRCodeBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRCodeBackgroundView.m; sourceTree = "<group>"; };
+		A968118120497DF1008604AC /* Qcodesound.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Qcodesound.caf; sourceTree = "<group>"; };
+		A968118220497E80008604AC /* QRCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRCodeViewController.m; sourceTree = "<group>"; };
+		A968118320497E80008604AC /* QRCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRCodeViewController.h; sourceTree = "<group>"; };
 		A982F78E1E0FA87E00DB4C13 /* sign_weixin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sign_weixin@2x.png"; sourceTree = "<group>"; };
 		A982F7991E1107DA00DB4C13 /* grayline@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grayline@2x.png"; sourceTree = "<group>"; };
 		A99FB2422006022A005AF4AE /* StockViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StockViewController.h; sourceTree = "<group>"; };
@@ -716,6 +748,7 @@
 		A95E114A1DF8492400660E42 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A968117820497B18008604AC /* QRCodeView */,
 				A9F4DAD61F69099100D71774 /* AlertBlockView.h */,
 				A9F4DAD71F69099100D71774 /* AlertBlockView.m */,
 				A9AD42BB1E13B6DC00A4B131 /* ImageRotatorView.h */,
@@ -809,12 +842,26 @@
 		A95E11681DF8518B00660E42 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				A968118320497E80008604AC /* QRCodeViewController.h */,
+				A968118220497E80008604AC /* QRCodeViewController.m */,
 				A9FBC1F51DF97192005ECDDE /* BatchViewController.h */,
 				A9FBC1F61DF97192005ECDDE /* BatchViewController.m */,
 				A99FB2422006022A005AF4AE /* StockViewController.h */,
 				A99FB2432006022A005AF4AE /* StockViewController.m */,
 			);
 			name = Controllers;
+			sourceTree = "<group>";
+		};
+		A968117820497B18008604AC /* QRCodeView */ = {
+			isa = PBXGroup;
+			children = (
+				A968117920497B18008604AC /* Qcodesound.caf */,
+				A968117A20497B18008604AC /* QRCodeScanView.h */,
+				A968117B20497B18008604AC /* QRCodeBackgroundView.h */,
+				A968117C20497B18008604AC /* QRCodeScanView.m */,
+				A968117D20497B18008604AC /* QRCodeBackgroundView.m */,
+			);
+			path = QRCodeView;
 			sourceTree = "<group>";
 		};
 		A9F4DABE1F68390F00D71774 /* MJPhotoBrowser */ = {
@@ -891,6 +938,16 @@
 		A9FBC1C61DF93838005ECDDE /* images */ = {
 			isa = PBXGroup;
 			children = (
+				A968116920497A9F008604AC /* frame_icon.png */,
+				A968116420497A9E008604AC /* frame_icon@2x.png */,
+				A968116520497A9E008604AC /* frame_icon@3x.png */,
+				A968116A20497A9F008604AC /* line.png */,
+				A968116B20497A9F008604AC /* line@2x.png */,
+				A968116C20497A9F008604AC /* line@3x.png */,
+				A968116720497A9E008604AC /* ScanQR1@2x.png */,
+				A968116D20497A9F008604AC /* ScanQR2@2x.png */,
+				A968116620497A9E008604AC /* ScanQR3@2x.png */,
+				A968116820497A9F008604AC /* ScanQR4@2x.png */,
 				A9F5603E1FFE68B500EA8116 /* batch_add@2x.png */,
 				A9F5603F1FFE68B500EA8116 /* batch_add@3x.png */,
 				A91EBD6B1FFE255A00DA9D68 /* member_on@3x.png */,
@@ -967,6 +1024,7 @@
 		A9FBC1D31DF9473A005ECDDE /* sounds */ = {
 			isa = PBXGroup;
 			children = (
+				A968118120497DF1008604AC /* Qcodesound.caf */,
 			);
 			name = sounds;
 			sourceTree = "<group>";
@@ -1048,6 +1106,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A9D354661E0976CB006D265D /* icon_user@2x.png in Resources */,
+				A968116F20497A9F008604AC /* frame_icon@3x.png in Resources */,
 				A9D3543C1E08F1FA006D265D /* cart_white@3x.png in Resources */,
 				A9F4DA851F658AFE00D71774 /* 1_03@2x.png in Resources */,
 				A9187C271DF9B62700A3E902 /* cart@3x.png in Resources */,
@@ -1063,7 +1122,9 @@
 				A91EBD6E1FFE255B00DA9D68 /* member@3x.png in Resources */,
 				A9FBC1D21DF941F5005ECDDE /* wifi@3x.png in Resources */,
 				A91D842F1F665B5300DF69EF /* 1_04@2x.png in Resources */,
+				A968117420497A9F008604AC /* line.png in Resources */,
 				A964742A1E1117DB00A5A39B /* mark@2x.png in Resources */,
+				A968117E20497B18008604AC /* Qcodesound.caf in Resources */,
 				A9F560401FFE68B500EA8116 /* batch_add@2x.png in Resources */,
 				A95E109C1DF80ED000660E42 /* Assets.xcassets in Resources */,
 				A9F4DA8B1F658AFE00D71774 /* 1_24@2x.png in Resources */,
@@ -1073,15 +1134,19 @@
 				A91EBD6A1FFE24DF00DA9D68 /* information_on@3x.png in Resources */,
 				A9FBC1E61DF94A91005ECDDE /* noContent@3x.png in Resources */,
 				A9D354681E0976CB006D265D /* icon_comment@2x.png in Resources */,
+				A968117220497A9F008604AC /* ScanQR4@2x.png in Resources */,
 				A91FAC011E026F4300D6FACC /* c1@2x.png in Resources */,
 				A9AD42AD1E12B0CF00A4B131 /* search@2x.png in Resources */,
 				A9D3546D1E0976D8006D265D /* icon_setting@2x.png in Resources */,
 				A9FBC1C91DF93854005ECDDE /* btn_back_black@3x.png in Resources */,
 				A9FBC1E71DF94A91005ECDDE /* noContent@2x.png in Resources */,
+				A968117320497A9F008604AC /* frame_icon.png in Resources */,
 				A9F4DA861F658AFE00D71774 /* 1_06@2x.png in Resources */,
 				A9D3543B1E08F1FA006D265D /* cart_white@2x.png in Resources */,
+				A968117520497A9F008604AC /* line@2x.png in Resources */,
 				A982F79A1E1107DA00DB4C13 /* grayline@2x.png in Resources */,
 				A91EBD5E1FFE1CD100DA9D68 /* stock@2x.png in Resources */,
+				A968117720497A9F008604AC /* ScanQR2@2x.png in Resources */,
 				A9D3546A1E0976CB006D265D /* icon_cache@2x.png in Resources */,
 				A9F4DA951F658AFE00D71774 /* 1_69@2x.png in Resources */,
 				A9F4DA921F658AFE00D71774 /* 1_56@2x.png in Resources */,
@@ -1091,11 +1156,13 @@
 				A9F4DA8F1F658AFE00D71774 /* 1_45@2x.png in Resources */,
 				A91EBD5B1FFE182300DA9D68 /* pick_on@2x.png in Resources */,
 				A91EBD5C1FFE182300DA9D68 /* pick@2x.png in Resources */,
+				A968117620497A9F008604AC /* line@3x.png in Resources */,
 				A9FBC2001DF973CC005ECDDE /* app_guide_pass@2x.png in Resources */,
 				A91FAC021E026F4300D6FACC /* c2@2x.png in Resources */,
 				A9D354671E0976CB006D265D /* icon_favorite@2x.png in Resources */,
 				A94692FA1F6AB367007537DC /* 1_29_gray@2x.png in Resources */,
 				A91EBD691FFE24DF00DA9D68 /* information@3x.png in Resources */,
+				A968117120497A9F008604AC /* ScanQR1@2x.png in Resources */,
 				A91EBD591FFE182300DA9D68 /* information_on@2x.png in Resources */,
 				A982F78F1E0FA87E00DB4C13 /* sign_weixin@2x.png in Resources */,
 				A9F4DA8C1F658AFE00D71774 /* 1_29@2x.png in Resources */,
@@ -1104,6 +1171,7 @@
 				A9187C281DF9B62700A3E902 /* cart@2x.png in Resources */,
 				A9F560411FFE68B500EA8116 /* batch_add@3x.png in Resources */,
 				A9F4DA931F658AFE00D71774 /* 1_59@2x.png in Resources */,
+				A968117020497A9F008604AC /* ScanQR3@2x.png in Resources */,
 				A9FBC1DF1DF94973005ECDDE /* member@2x.png in Resources */,
 				A91EBD5A1FFE182300DA9D68 /* stock_on@2x.png in Resources */,
 				A96474191E11084A00A5A39B /* pwd_icon_black@2x.png in Resources */,
@@ -1112,6 +1180,7 @@
 				A9AD42AE1E12B0CF00A4B131 /* search@3x.png in Resources */,
 				A9D354371E08E01D006D265D /* addCart@2x.png in Resources */,
 				A9F4DA8E1F658AFE00D71774 /* 1_41.png in Resources */,
+				A968116E20497A9F008604AC /* frame_icon@2x.png in Resources */,
 				A9F4DA901F658AFE00D71774 /* 1_49.png in Resources */,
 				A9F4DACF1F68390F00D71774 /* MJPhotoBrowser.bundle in Resources */,
 				A9D3546F1E0976E6006D265D /* icon_infomation@2x.png in Resources */,
@@ -1190,6 +1259,7 @@
 				A9D354451E08FD6C006D265D /* MemberCell.m in Sources */,
 				A95E11481DF8491600660E42 /* AccountManager.m in Sources */,
 				A95E11541DF84DDE00660E42 /* SeqIDGenerator.m in Sources */,
+				A968118020497B18008604AC /* QRCodeBackgroundView.m in Sources */,
 				A95E114E1DF84D8600660E42 /* IPManager.m in Sources */,
 				A95E11461DF8491600660E42 /* UIImage+IDPExtension.m in Sources */,
 				A90BF2921F6FDA570001A49E /* ParkingEntity.m in Sources */,
@@ -1218,6 +1288,7 @@
 				A9F4DAD81F69099100D71774 /* AlertBlockView.m in Sources */,
 				A9FBC1FA1DF97299005ECDDE /* IntroViewController.m in Sources */,
 				A9F4DAD31F68390F00D71774 /* MJPhotoToolbar.m in Sources */,
+				A968118420497E80008604AC /* QRCodeViewController.m in Sources */,
 				A91EBD4C1FFE115E00DA9D68 /* InformationViewController.m in Sources */,
 				A95E11571DF84E1A00660E42 /* UIView+Toast.m in Sources */,
 				A91EBD711FFE2CB200DA9D68 /* BatchCell.m in Sources */,
@@ -1234,6 +1305,7 @@
 				A9FBC1EE1DF96A38005ECDDE /* SPBaseViewController.m in Sources */,
 				A9187C111DF9ABB200A3E902 /* UserCenterViewController.m in Sources */,
 				A91EBD491FFE112900DA9D68 /* PickViewController.m in Sources */,
+				A968117F20497B18008604AC /* QRCodeScanView.m in Sources */,
 				A95E11451DF8491600660E42 /* UIDevice+Resolutions.m in Sources */,
 				A95E10941DF80ED000660E42 /* AppDelegate.m in Sources */,
 				A95E11511DF84DA700660E42 /* SyncManager.m in Sources */,
