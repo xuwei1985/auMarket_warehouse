@@ -73,6 +73,8 @@
 		A95E11671DF850D000660E42 /* SPRedirect.m in Sources */ = {isa = PBXBuildFile; fileRef = A95E11661DF850D000660E42 /* SPRedirect.m */; };
 		A95E116E1DF851EA00660E42 /* SPTabBarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A95E116D1DF851EA00660E42 /* SPTabBarItem.m */; };
 		A95E11711DF8520A00660E42 /* SPTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = A95E11701DF8520A00660E42 /* SPTabBarController.m */; };
+		A9633B8C204D547A00F2FFEB /* GoodsBindCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A9633B8B204D547A00F2FFEB /* GoodsBindCell.m */; };
+		A9633B8E204D548700F2FFEB /* goodsBindViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9633B8D204D548700F2FFEB /* goodsBindViewController.m */; };
 		A96474171E11083A00A5A39B /* account_icon_black@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A96474161E11083A00A5A39B /* account_icon_black@2x.png */; };
 		A96474191E11084A00A5A39B /* pwd_icon_black@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A96474181E11084A00A5A39B /* pwd_icon_black@2x.png */; };
 		A964741F1E110D5B00A5A39B /* MemberLoginEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = A964741E1E110D5B00A5A39B /* MemberLoginEntity.m */; };
@@ -295,6 +297,10 @@
 		A95E116D1DF851EA00660E42 /* SPTabBarItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPTabBarItem.m; path = ../Sections/SPTabBarItem.m; sourceTree = "<group>"; };
 		A95E116F1DF8520A00660E42 /* SPTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPTabBarController.h; path = ../Sections/SPTabBarController.h; sourceTree = "<group>"; };
 		A95E11701DF8520A00660E42 /* SPTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPTabBarController.m; path = ../Sections/SPTabBarController.m; sourceTree = "<group>"; };
+		A9633B89204D546F00F2FFEB /* GoodsBindCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GoodsBindCell.h; sourceTree = "<group>"; };
+		A9633B8A204D546F00F2FFEB /* goodsBindViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = goodsBindViewController.h; sourceTree = "<group>"; };
+		A9633B8B204D547A00F2FFEB /* GoodsBindCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoodsBindCell.m; sourceTree = "<group>"; };
+		A9633B8D204D548700F2FFEB /* goodsBindViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = goodsBindViewController.m; sourceTree = "<group>"; };
 		A96474161E11083A00A5A39B /* account_icon_black@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "account_icon_black@2x.png"; sourceTree = "<group>"; };
 		A96474181E11084A00A5A39B /* pwd_icon_black@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pwd_icon_black@2x.png"; sourceTree = "<group>"; };
 		A964741D1E110D5B00A5A39B /* MemberLoginEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MemberLoginEntity.h; sourceTree = "<group>"; };
@@ -484,6 +490,8 @@
 		A9187C011DF9AB3700A3E902 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A9633B89204D546F00F2FFEB /* GoodsBindCell.h */,
+				A9633B8B204D547A00F2FFEB /* GoodsBindCell.m */,
 				A99FB24620060998005AF4AE /* StockCell.h */,
 				A99FB24520060998005AF4AE /* StockCell.m */,
 				A91EBD701FFE2CB200DA9D68 /* BatchCell.h */,
@@ -842,6 +850,8 @@
 		A95E11681DF8518B00660E42 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				A9633B8A204D546F00F2FFEB /* goodsBindViewController.h */,
+				A9633B8D204D548700F2FFEB /* goodsBindViewController.m */,
 				A968118320497E80008604AC /* QRCodeViewController.h */,
 				A968118220497E80008604AC /* QRCodeViewController.m */,
 				A9FBC1F51DF97192005ECDDE /* BatchViewController.h */,
@@ -1248,6 +1258,7 @@
 				A95E116E1DF851EA00660E42 /* SPTabBarItem.m in Sources */,
 				A90BF2911F6FDA570001A49E /* BooterModel.m in Sources */,
 				A9F4DAD21F68390F00D71774 /* MJPhotoProgressView.m in Sources */,
+				A9633B8C204D547A00F2FFEB /* GoodsBindCell.m in Sources */,
 				A95E113F1DF8491600660E42 /* NSData+IDPExtension.m in Sources */,
 				A95E11671DF850D000660E42 /* SPRedirect.m in Sources */,
 				A95E113B1DF8491600660E42 /* b64.m in Sources */,
@@ -1275,6 +1286,7 @@
 				A9F4DAD11F68390F00D71774 /* MJPhotoLoadingView.m in Sources */,
 				A9FBC1F71DF97192005ECDDE /* BatchViewController.m in Sources */,
 				A96474221E1111E500A5A39B /* MemberLoginModel.m in Sources */,
+				A9633B8E204D548700F2FFEB /* goodsBindViewController.m in Sources */,
 				A95E113E1DF8491600660E42 /* NSArray+IDPExtension.m in Sources */,
 				A9F4DAD51F68390F00D71774 /* SDWebImageManager+MJ.m in Sources */,
 				A91D539D1DFE99E600A6BB37 /* AdPageViewController.m in Sources */,
