@@ -7,6 +7,7 @@
 //
 
 #import "SPBaseViewController.h"
+#import "GoodsBindViewController.h"
 #import "StockModel.h"
 #import "BatchCell.h"
 

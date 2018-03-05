@@ -22,13 +22,13 @@
 #define SCALE_HEIGHT_BASED_ON_IPAD(v)               ((v)*(SCREEN_HEIGHT/1136.0))
 #endif /* SizeMacro_h */
 
-#define FONT_SIZE_MINI          [UIFont systemFontOfSize:10]
-#define FONT_SIZE_SMALL         [UIFont systemFontOfSize:12]
-#define FONT_SIZE_MIDDLE        [UIFont systemFontOfSize:14]
-#define FONT_SIZE_BIG           [UIFont systemFontOfSize:16]
-#define FONT_SIZE_MINI_BLOD          [UIFont boldSystemFontOfSize:10]
-#define FONT_SIZE_SMALL_BLOD         [UIFont boldSystemFontOfSize:12]
-#define FONT_SIZE_MIDDLE_BLOD       [UIFont boldSystemFontOfSize:14]
-#define FONT_SIZE_BIG_BLOD          [UIFont boldSystemFontOfSize:16]
+#define FONT_SIZE_MINI          [UIFont systemFontOfSize:12]
+#define FONT_SIZE_SMALL         [UIFont systemFontOfSize:14]
+#define FONT_SIZE_MIDDLE        [UIFont systemFontOfSize:16]
+#define FONT_SIZE_BIG           [UIFont systemFontOfSize:18]
+#define FONT_SIZE_MINI_BLOD          [UIFont boldSystemFontOfSize:12]
+#define FONT_SIZE_SMALL_BLOD         [UIFont boldSystemFontOfSize:13]
+#define FONT_SIZE_MIDDLE_BLOD       [UIFont boldSystemFontOfSize:16]
+#define FONT_SIZE_BIG_BLOD          [UIFont boldSystemFontOfSize:18]
 #define FONT_SIZE_NAVIGATION    [UIFont systemFontOfSize:20]
 #define FONT_SIZE_NTABBAR       [UIFont systemFontOfSize:10]

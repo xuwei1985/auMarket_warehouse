@@ -7,12 +7,16 @@
 //
 
 #import "SPBaseViewController.h"
+#import "StockViewController.h"
 #import "GoodsBindCell.h"
+#import "StockModel.h"
 
-@interface goodsBindViewController : SPBaseViewController<UIActionSheetDelegate>
+@interface GoodsBindViewController : SPBaseViewController<UIActionSheetDelegate>
 {
     UILabel *lbl_goodsNum;
     UILabel *lbl_sumPrice;
     UIButton *_btn_doneAction;
 }
+@property(nonatomic,retain) StockModel *model;
+@property(nonatomic,retain) NSString *batch_id;
 @end

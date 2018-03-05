@@ -143,7 +143,7 @@
         cell.accessoryType = UITableViewCellAccessoryNone;
         
         [cell returnBatchId:^(NSString *batch_id) {//cell点击批次下增加商品的按钮
-            [self showToastWithText:batch_id];
+            [self gotoGoodsBindViewController:batch_id];
         }];
     }
     cell.backgroundColor=COLOR_BG_WHITE;
@@ -168,6 +168,14 @@
         [self loadBatchList];
     }
 }
+
+
+-(void)gotoGoodsBindViewController:(NSString *)batch_id{
+    GoodsBindViewController *bvc=[[GoodsBindViewController alloc] init];
+    bvc.batch_id=batch_id;
+    [self.navigationController pushViewController:bvc animated:YES];
+}
+
 
 -(StockModel *)model{
     if(!_model){
