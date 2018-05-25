@@ -11,6 +11,7 @@
 #import "StockCell.h"
 #import "QRCodeViewController.h"
 #import "GoodsSearchViewController.h"
+#import "GoodsListModel.h"
 
 typedef enum:NSInteger{
     INPUT_GOODS_NUM,
@@ -27,9 +28,15 @@ typedef enum:NSInteger{
     UIAlertView *_inputAlertView;
     UIDatePicker *_datePicker;
     UIToolbar* _keyboardDoneButtonView;
+    UIImageView *goods_img;
+    UILabel *goodsNameLbl;
+    UILabel *goodsPriceLbl;
+    UIView *goods_view;
 }
 @property(nonatomic,retain) StockModel *model;
 @property(nonatomic,retain) NSString *goods_code;
 @property(nonatomic,retain) NSString *shelf_code;
 @property(nonatomic,assign) GOODS_INPUT_MODEL current_input_model;
+@property(nonatomic,retain) GoodsListModel *goods_model;
+@property(nonatomic,retain) GoodsEntity *scan_entity;
 @end

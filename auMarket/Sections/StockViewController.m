@@ -46,7 +46,6 @@
     [itemArr addObject:item_childs_3];
 }
 
-
 -(void)initUI{
     [self setNavigation];
     [self setUpTableView];
@@ -67,12 +66,25 @@
 -(void)onResponse:(SPBaseModel *)model isSuccess:(BOOL)isSuccess{
     [self stopLoadingActivityIndicator];
     
-    if(model==self.model&&model.requestTag==1001){//获取列表
-        if(isSuccess){
-            
+    if(model==self.model){//获取列表
+        if(model.requestTag==1001){
+            if(isSuccess){
+                
+            }
+            else{
+                
+            }
         }
-        else{
-            
+    }
+    else if(model==self.goods_model){
+        if(model.requestTag==1001){
+            if(self.goods_model.entity.list!=nil&&self.goods_model.entity.list.count>0){
+                self.scan_entity=[self.goods_model.entity.list objectAtIndex:0];
+                [self.tableView reloadData];
+            }
+            else{
+                [self showToastBottomWithText:@"未找到任何商品"];
+            }
         }
     }
 }
@@ -126,7 +138,7 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    if(section==0){
+    if(section==0&&self.scan_entity){
         return 92;
     }
     return 0;
@@ -177,36 +189,44 @@
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
-    if(section==0){
-
-        UIView *goods_view=[[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, 92)];
+    if(section==0&&self.scan_entity){
+        goods_view=[[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, 92)];
         goods_view.backgroundColor=COLOR_WHITE;
         
         CALayer *layer = [CALayer layer];
         layer.frame = CGRectMake(0, 0, WIDTH_SCREEN, 0.5);
         layer.backgroundColor = RGBCOLOR(235, 235, 235).CGColor;
         [goods_view.layer addSublayer:layer];
-        
-        UIImageView *goods_img=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"default_head.jpg"]];
+         
+        goods_img=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"default_head.jpg"]];
         goods_img.frame=CGRectMake(10, 10, 72, 72);
         [goods_view addSubview:goods_img];
         
-        UILabel *goodsNameLbl=[[UILabel alloc] initWithFrame:CGRectMake(92, 10, WIDTH_SCREEN-95 , 24)];
+        goodsNameLbl=[[UILabel alloc] initWithFrame:CGRectMake(92, 10, WIDTH_SCREEN-95 , 24)];
         goodsNameLbl.textAlignment=NSTextAlignmentLeft;
         goodsNameLbl.textColor=COLOR_DARKGRAY;
         goodsNameLbl.font=DEFAULT_FONT(14.0);
         goodsNameLbl.numberOfLines=0;
         goodsNameLbl.lineBreakMode=NSLineBreakByWordWrapping;
-        goodsNameLbl.text=@"五芳斋粽子 栗子鲜肉粽400g 4只装 肉粽子特产";
         [goodsNameLbl sizeToFit];
         [goods_view addSubview:goodsNameLbl];
         
-        UILabel *goodsPriceLbl=[[UILabel alloc] initWithFrame:CGRectMake(92, 58, 100, 24)];
+        goodsPriceLbl=[[UILabel alloc] initWithFrame:CGRectMake(92, 58, 100, 24)];
         goodsPriceLbl.textAlignment=NSTextAlignmentLeft;
         goodsPriceLbl.textColor=COLOR_MAIN;
         goodsPriceLbl.font=DEFAULT_FONT(14.0);
-        goodsPriceLbl.text=@"$6.70";
         [goods_view addSubview:goodsPriceLbl];
+        
+        if(self.scan_entity){
+            [goods_img sd_setImageWithURL:[NSURL URLWithString:self.scan_entity.goods_thumb] placeholderImage:[UIImage imageNamed:@"defaut_list"]];
+            goodsNameLbl.text=self.scan_entity.goods_name;
+            goodsPriceLbl.text=[NSString stringWithFormat:@"$%@",self.scan_entity.shop_price];
+            [goodsNameLbl sizeToFit];
+        }
+        else{
+            goodsNameLbl.text=@"";
+            goodsPriceLbl.text=@"$0.00";
+        }
         
         return goods_view;
         
@@ -223,6 +243,7 @@
         cell = [[StockCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
         cell.showsReorderControl = NO;
         cell.accessoryType=UITableViewCellAccessoryNone;
+        cell.selectionStyle = UITableViewCellSelectionStyleDefault;
         cell.backgroundColor=COLOR_BG_TABLEVIEWCELL;
         cell.textLabel.backgroundColor = [UIColor clearColor];
         cell.textLabel.font=DEFAULT_FONT(16.0);
@@ -241,7 +262,7 @@
 
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [tv deselectRowAtIndexPath:[tv indexPathForSelectedRow] animated:NO];
+    [tv deselectRowAtIndexPath:[tv indexPathForSelectedRow] animated:YES];
     
     
     if(indexPath==[NSIndexPath indexPathForRow:3 inSection:1]){//保质期选择
@@ -293,6 +314,12 @@
     } else if (scrollView.contentOffset.y>=sectionHeaderHeight) {
         scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
     }
+}
+
+-(void)searchGoodsWithCode:(NSString *)goods_code{
+    //执行搜索
+    [self startLoadingActivityIndicator];
+    [self.goods_model loadGoodsList:goods_code orGoodsName:nil];
 }
 
 -(void)showDatePicker{
@@ -415,6 +442,7 @@
         NSString *txt_value=[nameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
         if(_current_input_model==INPUT_GOODS_CODE){
             self.goods_code=txt_value;
+            [self searchGoodsWithCode:txt_value];
         }
         else if(_current_input_model==INPUT_SHELF_CODE){
             self.shelf_code=txt_value;
@@ -469,12 +497,16 @@
     [self.navigationController pushViewController:qvc animated:YES];
 }
 
-
 //地址选择器的传值
 -(void)passObject:(id)obj{
-    if(obj){
+    if([obj class]==[GoodsEntity class]){
+        self.scan_entity=(GoodsEntity *)obj;
+        [self.tableView reloadData];
+    }
+    else{
         if([[obj objectForKey:@"scan_model"] intValue]==0){//商品条形码
             self.goods_code=[obj objectForKey:@"code"];
+            [self searchGoodsWithCode:self.goods_code];
         }
         else if([[obj objectForKey:@"scan_model"] intValue]==1){//货架条形码
             self.shelf_code=[obj objectForKey:@"code"];
@@ -496,6 +528,14 @@
         _model.delegate=self;
     }
     return _model;
+}
+
+-(GoodsListModel *)goods_model{
+    if(!_goods_model){
+        _goods_model=[[GoodsListModel alloc] init];
+        _goods_model.delegate=self;
+    }
+    return _goods_model;
 }
 
 -(void)viewWillAppear:(BOOL)animated{

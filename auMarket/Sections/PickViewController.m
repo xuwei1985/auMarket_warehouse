@@ -34,9 +34,11 @@
 
 -(void)setNavigation{
     self.title=@"拣货";
-    UIBarButtonItem *right_Item= [[UIBarButtonItem alloc] initWithTitle:@"已完成" style:UIBarButtonItemStylePlain target:self action:@selector(gotoPickDoneList)];
-    [right_Item setTintColor:COLOR_WHITE];
     
+    UIBarButtonItem *left_Item = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"hs"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(gotoMyCartView)];
+    self.navigationItem.leftBarButtonItem=left_Item;
+    
+    UIBarButtonItem *right_Item = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"jhz"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(gotoMyCartView)];
     self.navigationItem.rightBarButtonItem=right_Item;
 }
 

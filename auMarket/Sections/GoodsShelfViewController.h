@@ -10,8 +10,9 @@
 #import "GoodsShelfCell.h"
 #import "GoodsEntity.h"
 
-@interface GoodsShelfViewController : SPBaseViewController
+@interface GoodsShelfViewController : SPBaseViewController<UITextFieldDelegate>
 {
+    UIAlertView *_inputAlertView;
 }
 @property(nonatomic,retain) GoodsEntity *goods_entity;
 @end
