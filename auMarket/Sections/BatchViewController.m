@@ -32,7 +32,7 @@
 }
 
 -(void)setNavigation{
-    self.title=@"批次";
+    self.title=@"入库";
 }
 
 -(void)addNotification{
@@ -59,7 +59,7 @@
         [self.tableView.itemArray addObjectsFromArray:entity.list];
         //self.model.tid=entity.tid;
         //判断数据状态
-        if([entity.tid intValue]>0){
+        if([entity.next intValue]>0){
             self.tableView.hasMore=YES;
         }
         else{

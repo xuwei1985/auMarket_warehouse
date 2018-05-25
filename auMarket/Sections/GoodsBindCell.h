@@ -13,6 +13,9 @@
     UIImageView *_iconImageView;
     UILabel *_itemLbl;
     UILabel *_numLbl;
+    UILabel *_priceLbl;
+    UILabel *_totalPriceLbl;
+    UILabel *_shelf_no;
 }
 
 @property(nonatomic,retain) NSString *itemImage;

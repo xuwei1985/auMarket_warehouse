@@ -16,9 +16,6 @@
 
 //普通登录
 -(void)loginWithUsername:(NSString *)uname andPassword:(NSString *)upass;
--(void)setDeliverStatus:(NSString *)status;
--(void)getChargeInfo;
-
 //将登录的实体信息提取出 用户实体（SpAccount）
 -(SPAccount *)convertToSpAccount:(MemberEntity*)mEntity;
 @end

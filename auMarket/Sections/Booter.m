@@ -11,6 +11,7 @@
 #import "UserCenterViewController.h"
 #import "PickViewController.h"
 #import "InformationViewController.h"
+#import "ToolsViewController.h"
 #import "AdPageViewController.h"
 
 @interface Booter() 
@@ -19,6 +20,7 @@
     PickViewController* pickViewController;
     InformationViewController* informationViewController;
     UserCenterViewController* userCenterViewController;
+    ToolsViewController *toolsViewController;
 }
 @end
 
@@ -55,9 +57,9 @@
     pickViewController.hidesBottomBarWhenPushed = NO;
     pickViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"拣货" image:[UIImage imageNamed:@"pick"] selectedImage:[UIImage imageNamed:@"pick_on"]];
     
-    informationViewController = [[InformationViewController alloc] init];
-    informationViewController.hidesBottomBarWhenPushed = NO;
-    informationViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"信息" image:[UIImage imageNamed:@"information"] selectedImage:[UIImage imageNamed:@"information_on"]];
+    toolsViewController = [[ToolsViewController alloc] init];
+    toolsViewController.hidesBottomBarWhenPushed = NO;
+    toolsViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"工具" image:[UIImage imageNamed:@"tools"] selectedImage:[UIImage imageNamed:@"tools_on"]];
     
     
     userCenterViewController = [[UserCenterViewController alloc] init];
@@ -66,7 +68,7 @@
     
     SPNavigationController *nav_batch = [[SPNavigationController alloc] initWithRootViewController:batchViewController];
     SPNavigationController *nav_pick = [[SPNavigationController alloc] initWithRootViewController:pickViewController];
-    SPNavigationController *nav_information = [[SPNavigationController alloc] initWithRootViewController:informationViewController];
+    SPNavigationController *nav_information = [[SPNavigationController alloc] initWithRootViewController:toolsViewController];
     SPNavigationController *nav_member = [[SPNavigationController alloc] initWithRootViewController:userCenterViewController];
 
   

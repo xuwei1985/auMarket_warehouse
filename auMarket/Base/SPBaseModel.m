@@ -185,7 +185,7 @@
     if (self.parseDataClassType) {
         SPBaseEntity *entity = responseObject;
         self.errorCode = [entity.code integerValue];
-        if (![entity.code isEqualToString:@"0"]) {
+        if (!([entity.code isEqualToString:@"200"]||[entity.code isEqualToString:@"0"])) {
             isSuccess = NO;
             
             if (SPServerErrorCodeDefUserNotLogin == self.errorCode) {

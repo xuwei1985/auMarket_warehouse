@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0700"
+   LastUpgradeVersion = "0930"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -13,11 +13,11 @@
             buildForProfiling = "YES"
             buildForArchiving = "YES">
             <BuildableReference
-               BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'C8A4AD15ED40217EA4AD9E8768B42A16'
-               BlueprintName = 'UICKeyChainStore'
-               ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'libUICKeyChainStore.a'>
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "B9BD7BDC649365507AFEDFCC938D9A39"
+               BlueprintName = "UICKeyChainStore"
+               ReferencedContainer = "container:Pods.xcodeproj"
+               BuildableName = "libUICKeyChainStore.a">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

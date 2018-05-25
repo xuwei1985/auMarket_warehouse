@@ -7,7 +7,13 @@
 //
 
 #import "SPBaseViewController.h"
+#import "PickOrderCell.h"
 
 @interface PickViewController : SPBaseViewController
-
+{
+    UIView *_summaryView;
+    UIView *_summaryView_bottom;
+    UIButton *_sumBtn;
+    UIButton *_selectAllBtn;
+}
 @end

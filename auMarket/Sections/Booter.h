@@ -23,6 +23,7 @@
 #import "BooterModel.h"
 #import "MemberLoginModel.h"
 #import "PassValueDelegate.h"
+#import "Common.h"
 
 @interface Booter : NSObject<UIGestureRecognizerDelegate,UITabBarControllerDelegate,SPBaseModelProtocol>
 

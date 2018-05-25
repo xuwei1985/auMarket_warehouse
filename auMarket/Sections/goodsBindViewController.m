@@ -156,7 +156,7 @@
 
 - (NSInteger)tableView:(UITableView *)tv numberOfRowsInSection:(NSInteger)section
 {
-    return 0;
+    return 10;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -181,6 +181,10 @@
         cell.textLabel.font=FONT_SIZE_MIDDLE;
         cell.textLabel.textColor=COLOR_DARKGRAY;
     }
+    
+    cell.itemName=@"测试商品名001";
+    cell.itemNum=@"70";
+    cell.itemImage=@"http://www.kouzibuy.com/images/201803/goods_img/5aa9179e044a7.jpg";
 //    cell.itemName=[self.model.goods_entity.goods_list_normal objectAtIndex:indexPath.row].goods_name;
 //    cell.itemNum=[self.model.goods_entity.goods_list_normal objectAtIndex:indexPath.row].goods_number;
 //    cell.itemImage=[self.model.goods_entity.goods_list_normal objectAtIndex:indexPath.row].thumb_url;
@@ -189,7 +193,7 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tv heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 70;
+    return 108;
 }
 
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)indexPath

@@ -20,7 +20,7 @@
         if (_itemLbl==nil) {
             _itemLbl=[[UILabel alloc] initWithFrame:CGRectMake(WIDTH_SCREEN-100, 12, 90, 22)];
             _itemLbl.textAlignment=NSTextAlignmentRight;
-            _itemLbl.textColor=COLOR_MAIN;
+            _itemLbl.textColor=COLOR_DARKGRAY;
             _itemLbl.font=FONT_SIZE_MIDDLE;
             _itemLbl.hidden=YES;
             [self.contentView addSubview:_itemLbl];

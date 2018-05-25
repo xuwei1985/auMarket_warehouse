@@ -10,7 +10,7 @@
 #define YP_SPServerErrorCodeDef_h
 
 typedef enum {
-    SPServerErrorCodeDefUserNotLogin = 110000,
+    SPServerErrorCodeDefUserNotLogin = 501,
 } SPServerErrorCodeDef;
 
 #endif

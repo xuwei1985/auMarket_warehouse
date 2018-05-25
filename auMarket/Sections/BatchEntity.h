@@ -11,12 +11,12 @@
 
 @interface BatchEntity : SPBaseEntity
 @property (nonatomic,retain) NSMutableArray<BatchItemEntity*> *list;
-@property (nonatomic,retain) NSString *tid;//下一页
+@property (nonatomic,retain) NSString *next;//下一页
 @end
 
 @interface BatchItemEntity : SPBaseEntity
 @property (nonatomic,retain) NSString *id;
 @property (nonatomic,retain) NSString *batch_no;
 @property (nonatomic,retain) NSString *suppliers_name;
-@property (nonatomic,retain) NSString *created_at;
+@property (nonatomic,retain) NSString *update;
 @end

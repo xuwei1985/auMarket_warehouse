@@ -37,12 +37,9 @@
     NSDictionary *dic1,*dic2,*dic3;
     _itemArr=[[NSMutableArray alloc] init];
     
-    dic1=[[NSDictionary alloc] initWithObjectsAndKeys:@"待结算现金",@"item_name", nil];
-    dic2=[[NSDictionary alloc] initWithObjectsAndKeys:@"待结算转账",@"item_name", nil];
+    dic1=[[NSDictionary alloc] initWithObjectsAndKeys:@"角色名称",@"item_name", nil];
+    dic2=[[NSDictionary alloc] initWithObjectsAndKeys:@"系统版本",@"item_name", nil];
     [_itemArr addObject:[NSArray arrayWithObjects:dic1,dic2, nil]];
-
-    dic3=[[NSDictionary alloc] initWithObjectsAndKeys:@"是否开启接单",@"item_name", nil];
-    [_itemArr addObject:[NSArray arrayWithObjects:dic3,nil]];
 }
 
 
@@ -133,9 +130,6 @@
     [self.view addSubview:self.tableView];
 }
 
--(void)loadMyChargeInfo{
-    [self.model getChargeInfo];
-}
 
 -(void)onResponse:(SPBaseModel *)model isSuccess:(BOOL)isSuccess{
     if(model==self.model){
@@ -193,18 +187,15 @@
     }
     
     cell.itemName =[[[_itemArr objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] objectForKey:@"item_name"];
+
+    if(indexPath.row==0){
+        SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
+        cell.itemPrice=user.role_name;
+    }
+    else if(indexPath.row==1){
+        cell.itemPrice=SYSTEM_VERSION_STRING;
+    }
     
-    if(indexPath.section==1&&indexPath.row==[[_itemArr objectAtIndex:indexPath.section] count]-1){
-        cell.itemPrice=@"";
-    }
-    else{
-        if(indexPath.row==0){
-            cell.itemPrice=[NSString stringWithFormat:@"$%.2f",[self.model.charge_entity.cash_charge floatValue]];
-        }
-        else if(indexPath.row==1){
-            cell.itemPrice=[NSString stringWithFormat:@"$%.2f",[self.model.charge_entity.transfer_charge floatValue]];;
-        }
-    }
     return cell;
 }
 
@@ -216,6 +207,9 @@
 {
     [tv deselectRowAtIndexPath:[tv indexPathForSelectedRow] animated:NO];
 }
+
+
+
 
 - (void)onAccountUpdate:(NSNotification*)aNotitification{
     BOOL login = [aNotitification.object boolValue];
@@ -250,7 +244,6 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.tableView reloadData];
-    [self loadMyChargeInfo];
     [self checkLoginStatus];
 }
 

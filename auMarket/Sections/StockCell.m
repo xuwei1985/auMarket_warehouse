@@ -14,127 +14,66 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         @weakify(self);
-        if (imv_addGoods==nil) {
-            imv_addGoods=[[UIImageView alloc] init];
-            imv_addGoods.image=[UIImage imageNamed:@"batch_add"];
-            imv_addGoods.userInteractionEnabled=YES;
-            [self.contentView addSubview:imv_addGoods];
-            
-            [imv_addGoods addGestureRecognizer: [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(buttonAddTaped:)] ];
-            
-            [imv_addGoods mas_makeConstraints:^(MASConstraintMaker *make) {
+        if (info_icon==nil) {
+            info_icon=[[UIImageView alloc] init];
+            [self.contentView addSubview:info_icon];
+
+            [info_icon mas_makeConstraints:^(MASConstraintMaker *make) {
                 @strongify(self);
                 make.centerY.mas_equalTo(self.mas_centerY);
-                make.right.mas_equalTo(-10);
-                make.size.mas_equalTo(CGSizeMake(25, 25));
+                make.left.mas_equalTo(10);
+                make.size.mas_equalTo(CGSizeMake(32, 32));
             }];
         }
         
-        if (lbl_batchNo==nil) {
-            lbl_batchNo_prefix=[[UILabel alloc] init];
-            lbl_batchNo_prefix.textAlignment=NSTextAlignmentLeft;
-            lbl_batchNo_prefix.textColor=COLOR_BLACK;
-            lbl_batchNo_prefix.font=FONT_SIZE_MIDDLE;
-            lbl_batchNo_prefix.text=@"批次号:";
-            [self.contentView addSubview:lbl_batchNo_prefix];
+        if (info_arrow==nil) {
+            info_arrow=[[UIImageView alloc] init];
+            info_arrow.image=[UIImage imageNamed:@"stock_arrow"];
+            [self.contentView addSubview:info_arrow];
             
-            [lbl_batchNo_prefix mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.top.mas_equalTo(12);
-                make.left.mas_equalTo(15);
-                make.size.mas_equalTo(CGSizeMake(68, 24));
-            }];
-            
-            lbl_batchNo=[[UILabel alloc] init];
-            lbl_batchNo.textAlignment=NSTextAlignmentLeft;
-            lbl_batchNo.textColor=COLOR_BLACK;
-            lbl_batchNo.font=FONT_SIZE_MIDDLE;
-            [self.contentView addSubview:lbl_batchNo];
-            
-            [lbl_batchNo mas_makeConstraints:^(MASConstraintMaker *make) {
+            [info_arrow mas_makeConstraints:^(MASConstraintMaker *make) {
                 @strongify(self);
-                make.top.mas_equalTo(12);
-                make.left.mas_equalTo(lbl_batchNo_prefix.mas_right).offset(2);
-                make.right.mas_equalTo(self.mas_right).offset(-10);
-                make.height.mas_equalTo(24);
+                make.centerY.mas_equalTo(self.mas_centerY);
+                make.right.mas_equalTo(-2);
+                make.size.mas_equalTo(CGSizeMake(32, 32));
             }];
         }
         
-        if (lbl_suppliersName==nil) {
-            lbl_suppliersName_prefix=[[UILabel alloc] init];
-            lbl_suppliersName_prefix.textAlignment=NSTextAlignmentLeft;
-            lbl_suppliersName_prefix.textColor=COLOR_BLACK;
-            lbl_suppliersName_prefix.font=FONT_SIZE_MIDDLE;
-            lbl_suppliersName_prefix.text=@"供应商:";
-            [self.contentView addSubview:lbl_suppliersName_prefix];
+        if (lbl_info_title==nil) {
+            lbl_info_title=[[UILabel alloc] init];
+            lbl_info_title.textAlignment=NSTextAlignmentLeft;
+            lbl_info_title.textColor=COLOR_DARKGRAY;
+            lbl_info_title.font=FONT_SIZE_MIDDLE;
+            [self.contentView addSubview:lbl_info_title];
             
-            [lbl_suppliersName_prefix mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.top.mas_equalTo(lbl_batchNo_prefix.mas_bottom);
-                make.left.mas_equalTo(15);
-                make.size.mas_equalTo(CGSizeMake(68, 24));
+            [lbl_info_title mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.top.mas_equalTo(12);
+                make.left.mas_equalTo(info_icon.mas_right).offset(5);
+                make.size.mas_equalTo(CGSizeMake(150, 28));
             }];
             
-            lbl_suppliersName=[[UILabel alloc] init];
-            lbl_suppliersName.textAlignment=NSTextAlignmentLeft;
-            lbl_suppliersName.textColor=COLOR_BLACK;
-            lbl_suppliersName.font=FONT_SIZE_MIDDLE;
-            [self.contentView addSubview:lbl_suppliersName];
+            lbl_info_value=[[UILabel alloc] init];
+            lbl_info_value.textAlignment=NSTextAlignmentRight;
+            lbl_info_value.textColor=COLOR_GRAY;
+            lbl_info_value.font=FONT_SIZE_MIDDLE;
+            [self.contentView addSubview:lbl_info_value];
             
-            [lbl_suppliersName mas_makeConstraints:^(MASConstraintMaker *make) {
+            [lbl_info_value mas_makeConstraints:^(MASConstraintMaker *make) {
                 @strongify(self);
-                make.top.mas_equalTo(lbl_suppliersName_prefix.mas_top);
-                make.left.mas_equalTo(lbl_suppliersName_prefix.mas_right).offset(2);
-                make.right.mas_equalTo(self.mas_right).offset(-10);
+                make.centerY.mas_equalTo(self.mas_centerY);
+                make.right.mas_equalTo(self.mas_right).offset(-35);
                 make.height.mas_equalTo(24);
             }];
-        }
-
-        if (lbl_editTime==nil) {
-            lbl_editTime_prefix=[[UILabel alloc] init];
-            lbl_editTime_prefix.textAlignment=NSTextAlignmentLeft;
-            lbl_editTime_prefix.textColor=COLOR_BLACK;
-            lbl_editTime_prefix.font=FONT_SIZE_MIDDLE;
-            lbl_editTime_prefix.text=@"最后修改:";
-            [self.contentView addSubview:lbl_editTime_prefix];
-            
-            [lbl_editTime_prefix mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.top.mas_equalTo(lbl_suppliersName_prefix.mas_bottom);
-                make.left.mas_equalTo(15);
-                make.size.mas_equalTo(CGSizeMake(68, 24));
-            }];
-            
-            lbl_editTime=[[UILabel alloc] init];
-            lbl_editTime.textAlignment=NSTextAlignmentLeft;
-            lbl_editTime.textColor=COLOR_MAIN;
-            lbl_editTime.font=FONT_SIZE_MIDDLE;
-            [self.contentView addSubview:lbl_editTime];
-            
-            [lbl_editTime mas_makeConstraints:^(MASConstraintMaker *make) {
-                @strongify(self);
-                make.top.mas_equalTo(lbl_editTime_prefix.mas_top);
-                make.left.mas_equalTo(lbl_editTime_prefix.mas_right).offset(2);
-                make.right.mas_equalTo(self.mas_right).offset(-10);
-                make.height.mas_equalTo(24);
-            }];
-            
         }
     }
     return self;
 }
 
--(void)buttonAddTaped:(UITapGestureRecognizer *)sender{
-    self.addGoodsBlock(self.entity.id);
-}
-
--(void)returnBatchId:(AddGoodsBlock)block{
-    self.addGoodsBlock = block;
-}
-
 -(void)layoutSubviews{
     [super layoutSubviews];
-    
-    lbl_batchNo.text=self.entity.batch_no;
-    lbl_suppliersName.text=self.entity.suppliers_name;
-    lbl_editTime.text=self.entity.created_at;
+    info_icon.image=[UIImage imageNamed:self.info_icon_name];
+    lbl_info_value.text=self.info_value;
+    lbl_info_title.text=self.info_title;
 }
 
 

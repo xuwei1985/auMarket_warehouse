@@ -47,6 +47,20 @@ DEPENDENCIES:
   - UICKeyChainStore (~> 2.1.0)
   - UMengAnalytics-NO-IDFA (~> 4.0.1)
 
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - AFNetworking
+    - JPush
+    - Masonry
+    - MJRefresh
+    - MOBFoundation
+    - SDWebImage
+    - ShareSDK3
+    - SVProgressHUD
+    - TMCache
+    - UICKeyChainStore
+    - UMengAnalytics-NO-IDFA
+
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   JPush: 8bccf709ace4318a8e7008cc4fab42b706bfad46
@@ -62,4 +76,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 45b4afda0f21d34bc96b2213e64854a7b8c6ef3c
 
-COCOAPODS: 1.1.1
+COCOAPODS: 1.5.2
