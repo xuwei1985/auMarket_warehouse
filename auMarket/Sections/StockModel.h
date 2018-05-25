@@ -6,11 +6,13 @@
 //  Copyright © 2016年 daao. All rights reserved.
 //
 
-#import "StockModel.h"
 #import "BatchEntity.h"
+#import "GoodsEntity.h"
 
 @interface StockModel : SPBaseModel
 @property (nonatomic,retain) BatchEntity *entity;
+@property (nonatomic,retain) GoodsListEntity *goods_list_entity;
 
 -(void)loadBatchs;
+-(void)loadBindGoods;
 @end

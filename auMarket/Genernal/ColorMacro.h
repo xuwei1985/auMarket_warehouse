@@ -64,7 +64,7 @@
 #define COLOR_GREEN               [UIColor colorWithRed:0.64 green:0.90 blue:0.39 alpha:1.00]
 #define COLOR_BLUE              [UIColor colorWithRed:49./255. green:174./255. blue:255./255. alpha:1] //透明颜色
 #define COLOR_BLACK               [UIColor colorWithRed:0./255. green:0./255. blue:0./255. alpha:1] //透明颜色
-#define COLOR_DARKGRAY                [UIColor colorWithRed:77./255. green:77./255. blue:77./255. alpha:1]
+#define COLOR_DARKGRAY                [UIColor colorWithRed:66./255. green:66./255. blue:66./255. alpha:1]
 #define COLOR_GRAY                [UIColor colorWithRed:155./255. green:155./255. blue:155./255. alpha:1]
 #define COLOR_WHITE               [UIColor colorWithRed:255./255. green:255./255. blue:255./255. alpha:1]
 #define COLOR_RED                 [UIColor colorWithRed:255./255. green:0./255. blue:0./255. alpha:1]

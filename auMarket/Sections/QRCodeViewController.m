@@ -12,9 +12,9 @@
 #import "QRCodeBackgroundView.h"
 #import "QRCodeScanView.h"
 
-#define ScanY 150           //扫描区域y
-#define ScanWidth 250       //扫描区域宽度
-#define ScanHeight 250      //扫描区域高度
+#define ScanY 0.15*HEIGHT_SCREEN           //扫描区域y
+#define ScanWidth 0.7*WIDTH_SCREEN       //扫描区域宽度
+#define ScanHeight 0.7*WIDTH_SCREEN      //扫描区域高度
 
 
 @interface QRCodeViewController ()<AVCaptureMetadataOutputObjectsDelegate,UIAlertViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
@@ -33,9 +33,22 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+
     [self capture];
     [self UI];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+
+    [self.navigationController.navigationBar setBarTintColor:COLOR_BLACK];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:COLOR_WHITE,NSFontAttributeName:FONT_SIZE_NAVIGATION}];
+    
+    self.view.backgroundColor = [UIColor whiteColor];
+    
+    [self.session startRunning];
+    [self.scanView startAnimaion];
 }
 
 - (void)dealloc
@@ -53,7 +66,7 @@
 #pragma mark - 初始化UI
 - (void)UI
 {
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.title=@"扫描条形码";
     //扫描区域
     CGRect scanFrame = CGRectMake((WIDTH_SCREEN-ScanWidth)/2, ScanY, ScanWidth, ScanHeight);
     
@@ -68,11 +81,20 @@
     
     //提示文字
     UILabel *label = [UILabel new];
-    label.text = @"将二维码/条形码放入框内，即可自动扫描";
+    if(self.scan_model==SCAN_GOODS){
+        label.text = @"将商品条形码放入框内，即可自动扫描";
+    }
+    else if(self.scan_model==SCAN_SHELF){
+        label.text = @"将货架条形码放入框内，即可自动扫描";
+    }
+    else{
+        label.text = @"将二维码/条形码放入框内，即可自动扫描";
+    }
+    
     label.textAlignment = NSTextAlignmentCenter;
     label.font = [UIFont systemFontOfSize:15];
     label.textColor = [UIColor colorWithRed:224/255.0 green:224/255.0 blue:224/255.0 alpha:1.0];
-    label.frame = CGRectMake(0, CGRectGetMaxY(self.scanView.frame)+10, WIDTH_SCREEN, 20);
+    label.frame = CGRectMake(0, CGRectGetMaxY(self.scanView.frame)+12, WIDTH_SCREEN, 20);
     [self.view addSubview:label];
     
     
@@ -90,13 +112,13 @@
 //        [self.view addSubview:btn];
 //    }
     
-    NSArray *arr = @[@"关闭"];
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setTitle:arr[0] forState:UIControlStateNormal];
-    btn.backgroundColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.5];
-    btn.frame = CGRectMake(0, HEIGHT_SCREEN-48, WIDTH_SCREEN, 48);
-    [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:btn];
+//    NSArray *arr = @[@"关闭"];
+//    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [btn setTitle:arr[0] forState:UIControlStateNormal];
+//    btn.backgroundColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.5];
+//    btn.frame = CGRectMake(0, HEIGHT_SCREEN-48, WIDTH_SCREEN, 48);
+//    [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
+//    [self.view addSubview:btn];
 }
 
 #pragma mark - 菜单按钮点击事件
@@ -143,6 +165,7 @@
     //初始化  将类型设置为二维码
     CIDetector *detector = [CIDetector detectorOfType:CIDetectorTypeQRCode context:nil options:nil];
     
+    
     [picker dismissViewControllerAnimated:YES completion:^{
         //设置数组，放置识别完之后的数据
         NSArray *features = [detector featuresInImage:[CIImage imageWithData:UIImagePNGRepresentation(image)]];
@@ -186,7 +209,6 @@
     
     AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
     if(authStatus ==AVAuthorizationStatusRestricted|| authStatus ==AVAuthorizationStatusDenied){
-        
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请在iPhone的“设置”-“隐私”-“相机”功能中，找到“某某应用”打开相机访问权限" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
         [alert show];
         return;
@@ -234,24 +256,24 @@
         //扫描格式
         NSMutableArray *metadataObjectTypes = [NSMutableArray array];
         [metadataObjectTypes addObjectsFromArray:@[
-                                                   AVMetadataObjectTypeQRCode,
                                                    AVMetadataObjectTypeEAN13Code,
                                                    AVMetadataObjectTypeEAN8Code,
                                                    AVMetadataObjectTypeCode128Code,
-                                                   AVMetadataObjectTypeCode39Code,
-                                                   AVMetadataObjectTypeCode93Code,
-                                                   AVMetadataObjectTypeCode39Mod43Code,
-                                                   AVMetadataObjectTypePDF417Code,
-                                                   AVMetadataObjectTypeAztecCode,
-                                                   AVMetadataObjectTypeUPCECode,
+                                                   AVMetadataObjectTypeQRCode,
                                                    ]];
+//        AVMetadataObjectTypeCode39Code,
+//        AVMetadataObjectTypeCode93Code,
+//        AVMetadataObjectTypeCode39Mod43Code,
+//        AVMetadataObjectTypePDF417Code,
+//        AVMetadataObjectTypeAztecCode,
+//        AVMetadataObjectTypeUPCECode,
         
         // >= ios 8
-        if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_7_1) {
-            [metadataObjectTypes addObjectsFromArray:@[AVMetadataObjectTypeInterleaved2of5Code,
-                                                       AVMetadataObjectTypeITF14Code,
-                                                       AVMetadataObjectTypeDataMatrixCode]];
-        }
+//        if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_7_1) {
+//            [metadataObjectTypes addObjectsFromArray:@[AVMetadataObjectTypeInterleaved2of5Code,
+//                                                       AVMetadataObjectTypeITF14Code,
+//                                                       AVMetadataObjectTypeDataMatrixCode]];
+//        }
         //设置扫描格式
         self.output.metadataObjectTypes= metadataObjectTypes;
     }
@@ -282,20 +304,13 @@
     [self.scanView stopAnimaion];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
-    [self.session startRunning];
-    [self.scanView startAnimaion];
-}
 
 #pragma mark - AVCaptureMetadataOutputObjectsDelegate
 #pragma mark - 扫描结果处理
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection
 {
     //扫描成功播放音效
-    [self playSoundEffect:@"Qcodesound.caf"];
+    [self playSoundEffect:@"scan.wav"];
     
     // 判断扫描结果的数据是否存在
     if ([metadataObjects count] >0){
@@ -309,13 +324,18 @@
         
         // 获取扫描到的信息
         NSString *stringValue = metadataObject.stringValue;
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"扫描结果"
-                                                        message:stringValue
-                                                       delegate:self
-                                              cancelButtonTitle:nil
-                                              otherButtonTitles:@"确定", nil];
-        [self.view addSubview:alert];
-        [alert show];
+        if([self.pass_delegate respondsToSelector:@selector(passObject:)]){
+            [self.pass_delegate passObject:[NSDictionary dictionaryWithObjectsAndKeys:stringValue,@"code",[NSString stringWithFormat:@"%d",self.scan_model],@"scan_model", nil]];
+        }
+        [self goBack];
+//
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"扫描结果"
+//                                                        message:stringValue
+//                                                       delegate:self
+//                                              cancelButtonTitle:nil
+//                                              otherButtonTitles:@"确定", nil];
+//        [self.view addSubview:alert];
+//        [alert show];
     }
 }
 
@@ -351,6 +371,11 @@
  */
 void soundCompleteCallback(SystemSoundID soundID, void *clientData){
     NSLog(@"播放完成...");
+    
+}
+
+-(void)goBack{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

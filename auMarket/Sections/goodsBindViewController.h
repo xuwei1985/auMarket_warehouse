@@ -9,7 +9,6 @@
 #import "SPBaseViewController.h"
 #import "StockViewController.h"
 #import "GoodsBindCell.h"
-#import "StockModel.h"
 
 @interface GoodsBindViewController : SPBaseViewController<UIActionSheetDelegate>
 {

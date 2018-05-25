@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0700"
+   LastUpgradeVersion = "0930"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -13,11 +13,11 @@
             buildForProfiling = "YES"
             buildForArchiving = "YES">
             <BuildableReference
-               BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'EDF9A8C08A6EE5575B751DB20D8BCFD4'
-               BlueprintName = 'TMCache'
-               ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'libTMCache.a'>
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "1AF5D7FE149647671041458363CEC3D9"
+               BlueprintName = "TMCache"
+               ReferencedContainer = "container:Pods.xcodeproj"
+               BuildableName = "libTMCache.a">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

@@ -11,7 +11,7 @@
 #import <UICKeyChainStore.h>
 
 NSString *const KEY_CHAIN_USR_KEY = @"loginUser";
-NSString *const KEYCHAIN_IDENTIFIER = @"com.wilson.auMarket.account";
+NSString *const KEYCHAIN_IDENTIFIER = @"com.wilson.auMarketWarehouse.account";
 
 @interface AccountManager()
 @property (nonatomic,strong) SPAccount* account;

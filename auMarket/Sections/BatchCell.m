@@ -41,7 +41,7 @@
             [lbl_batchNo_prefix mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.top.mas_equalTo(12);
                 make.left.mas_equalTo(15);
-                make.size.mas_equalTo(CGSizeMake(68, 24));
+                make.size.mas_equalTo(CGSizeMake(78, 24));
             }];
             
             lbl_batchNo=[[UILabel alloc] init];
@@ -63,27 +63,27 @@
             lbl_suppliersName_prefix=[[UILabel alloc] init];
             lbl_suppliersName_prefix.textAlignment=NSTextAlignmentLeft;
             lbl_suppliersName_prefix.textColor=COLOR_BLACK;
-            lbl_suppliersName_prefix.font=FONT_SIZE_MIDDLE;
+            lbl_suppliersName_prefix.font=FONT_SIZE_MIDDLE_BLOD;
             lbl_suppliersName_prefix.text=@"供应商:";
             [self.contentView addSubview:lbl_suppliersName_prefix];
             
             [lbl_suppliersName_prefix mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.top.mas_equalTo(lbl_batchNo_prefix.mas_bottom);
                 make.left.mas_equalTo(15);
-                make.size.mas_equalTo(CGSizeMake(68, 24));
+                make.size.mas_equalTo(CGSizeMake(78, 24));
             }];
             
             lbl_suppliersName=[[UILabel alloc] init];
             lbl_suppliersName.textAlignment=NSTextAlignmentLeft;
             lbl_suppliersName.textColor=COLOR_BLACK;
-            lbl_suppliersName.font=FONT_SIZE_MIDDLE;
+            lbl_suppliersName.font=FONT_SIZE_MIDDLE_BLOD;
             [self.contentView addSubview:lbl_suppliersName];
             
             [lbl_suppliersName mas_makeConstraints:^(MASConstraintMaker *make) {
                 @strongify(self);
                 make.top.mas_equalTo(lbl_suppliersName_prefix.mas_top);
                 make.left.mas_equalTo(lbl_suppliersName_prefix.mas_right).offset(2);
-                make.right.mas_equalTo(self.mas_right).offset(-10);
+                make.right.mas_equalTo(self.mas_right).offset(-30);
                 make.height.mas_equalTo(24);
             }];
         }
@@ -99,7 +99,7 @@
             [lbl_editTime_prefix mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.top.mas_equalTo(lbl_suppliersName_prefix.mas_bottom);
                 make.left.mas_equalTo(15);
-                make.size.mas_equalTo(CGSizeMake(68, 24));
+                make.size.mas_equalTo(CGSizeMake(78, 24));
             }];
             
             lbl_editTime=[[UILabel alloc] init];
@@ -134,7 +134,7 @@
     
     lbl_batchNo.text=self.entity.batch_no;
     lbl_suppliersName.text=self.entity.suppliers_name;
-    lbl_editTime.text=self.entity.created_at;
+    lbl_editTime.text=self.entity.update;
 }
 
 

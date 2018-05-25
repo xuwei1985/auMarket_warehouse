@@ -13,7 +13,6 @@
 #import "SizeMacro.h"
 #import "NotificationsMacro.h"
 #import "VendorMacro.h"
-
 #import "ColorUtils.h"
 #import "Masonry.h"
 #import "MJRefresh.h"

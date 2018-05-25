@@ -179,9 +179,9 @@
     if(isSuccess){
         if(self.model.entity!=nil&&self.model.requestTag==1001){//普通登录
             [self showSuccesWithText:@"登录成功"];
-            self.model.entity.userinfo.account=[_accountText.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-            self.model.entity.userinfo.password=[_passwordText.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-            SPAccount *_account =[self.model convertToSpAccount:self.model.entity.userinfo];
+            self.model.entity.user.username=[_accountText.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+            self.model.entity.user.password=[_passwordText.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+            SPAccount *_account =[self.model convertToSpAccount:self.model.entity.user];
             [[AccountManager sharedInstance] registerLoginUser:_account];
             _accountText.text=@"";
             _passwordText.text=@"";
