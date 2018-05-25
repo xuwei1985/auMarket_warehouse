@@ -97,7 +97,7 @@
     StockCell *cell = [tv dequeueReusableCellWithIdentifier:identifier];
     if (cell == nil) {
         cell = [[StockCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
-        cell.showsReorderControl = NO;
+        cell.showsReorderControl = YES;
         cell.accessoryType=UITableViewCellAccessoryNone;
         cell.backgroundColor=COLOR_BG_TABLEVIEWCELL;
         cell.selectionStyle = UITableViewCellSelectionStyleDefault;
@@ -127,6 +127,7 @@
         [self gotoGoodsSearchView];
     }
 }
+
 
 
 -(void)gotoScanQRView:(SCAN_MODEL)scan_model{

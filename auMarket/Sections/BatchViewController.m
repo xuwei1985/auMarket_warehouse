@@ -140,6 +140,7 @@
     if (cell == nil) {
         cell=[[BatchCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdetify];
         cell.opaque=YES;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.accessoryType = UITableViewCellAccessoryNone;
         
         [cell returnBatchId:^(NSString *batch_id) {//cell点击批次下增加商品的按钮
@@ -154,7 +155,7 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    BatchItemEntity *obj=(BatchItemEntity *)[ self.tableView.itemArray objectAtIndex:indexPath.row];
+    [tableView deselectRowAtIndexPath:[tableView indexPathForSelectedRow] animated:YES];
 }
 
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{

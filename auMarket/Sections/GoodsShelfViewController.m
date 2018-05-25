@@ -32,10 +32,9 @@
 }
 
 -(void)setNavigation{
-    self.title=@"拣货";
-    UIBarButtonItem *right_Item= [[UIBarButtonItem alloc] initWithTitle:@"已完成" style:UIBarButtonItemStylePlain target:self action:@selector(gotoPickDoneList)];
-    [right_Item setTintColor:COLOR_WHITE];
-    
+    self.title=@"商品货架";
+   UIBarButtonItem *right_Item = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"transfer_cart"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(gotoMyCartView)];
+
     self.navigationItem.rightBarButtonItem=right_Item;
 }
 
@@ -141,11 +140,68 @@
     [tv deselectRowAtIndexPath:[tv indexPathForSelectedRow] animated:NO];
 }
 
--(void)gotoPickList{
-    
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
 }
 
--(void)gotoPickDoneList{
+- (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath{
+    UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"输入数量" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+        [self showInputBox];
+    }];
+    return @[deleteAction];
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+    editingStyle = UITableViewCellEditingStyleDelete;
+}
+
+
+-(void)showInputBox{
+    NSString *tip_title=@"";
+    tip_title=@"转移数量";
+    
+    if (_inputAlertView==nil) {
+        _inputAlertView = [[UIAlertView alloc] initWithTitle:tip_title message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    }
+    _inputAlertView.title=tip_title;
+    [_inputAlertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
+    
+    UITextField *nameField = [_inputAlertView textFieldAtIndex:0];
+    nameField.delegate=self;
+    nameField.placeholder =[NSString stringWithFormat:@"请输入%@",tip_title];
+    nameField.keyboardType=UIKeyboardTypeNumberPad;
+    [_inputAlertView show];
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    
+    if (buttonIndex == alertView.firstOtherButtonIndex) {
+        UITextField *nameField = [alertView textFieldAtIndex:0];
+        NSString *txt_value=[nameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+        [self.tableView reloadData];
+    }
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    //判断是否为删除字符，如果为删除则让执行
+    char c=[string UTF8String][0];
+    if (c=='\000') {
+        //numberOfCharsLabel.text=[NSString stringWithFormat:@"%d",50-[[self.textView text] length]+1];
+        return YES;
+    }
+    //长度限制
+    if([textField.text length] > 3){
+        textField.text = [textField.text substringToIndex:3];
+        return NO;
+    }
+    
+    return YES;
+}
+
+
+-(void)gotoMyCartView{
     
 }
 

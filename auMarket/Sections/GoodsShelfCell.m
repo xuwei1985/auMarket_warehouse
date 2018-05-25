@@ -16,9 +16,8 @@
 
         if (btn_select==nil) {
             btn_select=[UIButton buttonWithType:UIButtonTypeCustom];
-            [btn_select setImage:[UIImage imageNamed:@"sel_off"] forState:UIControlStateNormal];
-            [btn_select setImage:[UIImage imageNamed:@"sel_on"] forState:UIControlStateSelected];
-            [btn_select addTarget:self action:@selector(selOrder:) forControlEvents:UIControlEventTouchUpInside];
+            [btn_select setImage:[UIImage imageNamed:@"add_transfer_off"] forState:UIControlStateNormal];
+            [btn_select setImage:[UIImage imageNamed:@"add_transfer_on"] forState:UIControlStateSelected];
             [self.contentView addSubview:btn_select];
             
             [btn_select mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -67,7 +66,7 @@
             [self.contentView addSubview:lbl_order_region];
             
             [lbl_order_region mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.top.mas_equalTo(lbl_order_sn.mas_bottom).offset(4);
+                make.top.mas_equalTo(lbl_order_sn.mas_bottom).offset(5);
                 make.left.mas_equalTo(self.mas_left).offset(15);
                 make.size.mas_equalTo(CGSizeMake(74, 20));
             }];
@@ -81,7 +80,7 @@
             [self.contentView addSubview:lbl_order_region_value];
             
             [lbl_order_region_value mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.top.mas_equalTo(lbl_order_sn_value.mas_bottom).offset(4);
+                make.top.mas_equalTo(lbl_order_sn_value.mas_bottom).offset(5);
                 make.left.mas_equalTo(lbl_order_region.mas_right);
                 make.size.mas_equalTo(CGSizeMake(120, 20));
             }];
@@ -96,7 +95,7 @@
             [self.contentView addSubview:lbl_order_price];
             
             [lbl_order_price mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.top.mas_equalTo(lbl_order_region.mas_bottom).offset(4);
+                make.top.mas_equalTo(lbl_order_region.mas_bottom).offset(5);
                 make.left.mas_equalTo(self.mas_left).offset(15);
                 make.size.mas_equalTo(CGSizeMake(74, 20));
             }];
@@ -110,7 +109,7 @@
             [self.contentView addSubview:lbl_order_price_value];
             
             [lbl_order_price_value mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.top.mas_equalTo(lbl_order_region_value.mas_bottom).offset(4);
+                make.top.mas_equalTo(lbl_order_region_value.mas_bottom).offset(5);
                 make.left.mas_equalTo(lbl_order_price.mas_right);
                 make.size.mas_equalTo(CGSizeMake(120, 20));
             }];
@@ -125,7 +124,7 @@
             [self.contentView addSubview:lbl_order_goods_num];
             
             [lbl_order_goods_num mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.top.mas_equalTo(lbl_order_price.mas_bottom).offset(4);
+                make.top.mas_equalTo(lbl_order_price.mas_bottom).offset(5);
                 make.left.mas_equalTo(self.mas_left).offset(15);
                 make.size.mas_equalTo(CGSizeMake(74, 20));
             }];
@@ -139,7 +138,7 @@
             [self.contentView addSubview:lbl_order_goods_num_value];
             
             [lbl_order_goods_num_value mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.top.mas_equalTo(lbl_order_price_value.mas_bottom).offset(4);
+                make.top.mas_equalTo(lbl_order_price_value.mas_bottom).offset(5);
                 make.left.mas_equalTo(lbl_order_goods_num.mas_right);
                 make.size.mas_equalTo(CGSizeMake(120, 20));
             }];
@@ -154,9 +153,9 @@
             [self.contentView addSubview:lbl_bind_tip];
             
             [lbl_bind_tip mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.top.mas_equalTo(lbl_order_goods_num.mas_bottom).offset(4);
+                make.top.mas_equalTo(lbl_order_goods_num.mas_bottom).offset(5);
                 make.left.mas_equalTo(self.mas_left).offset(15);
-                make.size.mas_equalTo(CGSizeMake(90, 18));
+                make.size.mas_equalTo(CGSizeMake(74, 18));
             }];
         }
         
@@ -165,13 +164,13 @@
             lbl_bind_mark=[[UILabel alloc] init];
             lbl_bind_mark.textColor=COLOR_MAIN;
             lbl_bind_mark.font=FONT_SIZE_SMALL;
-            lbl_bind_mark.text=@"13";
-            lbl_bind_mark.textAlignment=NSTextAlignmentCenter;
+            lbl_bind_mark.text=@"0";
+            lbl_bind_mark.textAlignment=NSTextAlignmentLeft;
             [self.contentView addSubview:lbl_bind_mark];
             
             [lbl_bind_mark mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.top.mas_equalTo(lbl_order_goods_num_value.mas_bottom).offset(4);
-                make.left.mas_equalTo(lbl_bind_tip.mas_right).offset(4);
+                make.top.mas_equalTo(lbl_order_goods_num_value.mas_bottom).offset(5);
+                make.left.mas_equalTo(lbl_bind_tip.mas_right);
                 make.size.mas_equalTo(CGSizeMake(100, 14));
             }];
         }
