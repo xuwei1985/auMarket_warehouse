@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "OrderEntity.h"
 
 @interface PickOrderCell : UITableViewCell
 {
@@ -26,4 +27,5 @@
     UIButton *btn_type_zero;
     UIButton *btn_type_box;
 }
+@property(nonatomic,retain) OrderItemEntity *entity;
 @end

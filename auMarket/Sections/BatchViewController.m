@@ -156,6 +156,8 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:[tableView indexPathForSelectedRow] animated:YES];
+    BatchItemEntity *obj=(BatchItemEntity *)[ self.tableView.itemArray objectAtIndex:indexPath.row];
+    [self gotoGoodsBindViewController:obj.id];
 }
 
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{

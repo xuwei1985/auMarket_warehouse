@@ -6,9 +6,9 @@
 //  Copyright (c) 2015年 xuwei. All rights reserved.
 //
 
-#import "GoodsBindCell.h"
+#import "PickGoodsCell.h"
 
-@implementation GoodsBindCell
+@implementation PickGoodsCell
 
 -(id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];

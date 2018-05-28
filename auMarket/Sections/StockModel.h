@@ -14,5 +14,6 @@
 @property (nonatomic,retain) GoodsListEntity *goods_list_entity;
 
 -(void)loadBatchs;
--(void)loadBindGoods;
+-(void)loadBindGoodsWithBatchId:(NSString *)batch_id;
+-(void)addRukuGoods:(RukuGoodsEntity *)entity;
 @end

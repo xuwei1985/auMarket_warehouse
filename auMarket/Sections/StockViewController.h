@@ -21,6 +21,11 @@ typedef enum:NSInteger{
     INPUT_SHELF_CODE
 } GOODS_INPUT_MODEL;
 
+typedef enum:NSInteger{
+    SAVE_THEN_BACK,
+    SAVE_THEN_CONTINUE,
+} SAVE_MODEL;
+
 @interface StockViewController : SPBaseViewController<PassValueDelegate,UITextFieldDelegate>{
     NSMutableArray *itemArr;
     UIButton *_btn_back;
@@ -34,9 +39,12 @@ typedef enum:NSInteger{
     UIView *goods_view;
 }
 @property(nonatomic,retain) StockModel *model;
+@property(nonatomic,retain) NSString *goods_id;
 @property(nonatomic,retain) NSString *goods_code;
 @property(nonatomic,retain) NSString *shelf_code;
 @property(nonatomic,assign) GOODS_INPUT_MODEL current_input_model;
+@property(nonatomic,assign) SAVE_MODEL save_model;
 @property(nonatomic,retain) GoodsListModel *goods_model;
 @property(nonatomic,retain) GoodsEntity *scan_entity;
+@property(nonatomic,retain) NSString *batch_id;
 @end

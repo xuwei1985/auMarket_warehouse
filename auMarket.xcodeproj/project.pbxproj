@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		0059EA546C882E71AD80A600 /* libPods-auMarket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C826CF625A6D336B501B11B7 /* libPods-auMarket.a */; };
+		A90A0AE420B9AE700069A609 /* PickModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A90A0AE220B9AE700069A609 /* PickModel.m */; };
+		A90A0AE720BA48230069A609 /* OrderEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = A90A0AE620BA48230069A609 /* OrderEntity.m */; };
 		A90BF2911F6FDA570001A49E /* BooterModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A90BF28D1F6FDA570001A49E /* BooterModel.m */; };
 		A90BF2921F6FDA570001A49E /* ParkingEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = A90BF28F1F6FDA570001A49E /* ParkingEntity.m */; };
 		A91357781F6783EF000186B0 /* defaut_list@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A91357771F6783EF000186B0 /* defaut_list@2x.png */; };
@@ -46,6 +48,8 @@
 		A94A271020B0334E0025A438 /* stock_scan@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A94A270920B0334E0025A438 /* stock_scan@2x.png */; };
 		A94A271120B0334E0025A438 /* stock_date@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A94A270A20B0334E0025A438 /* stock_date@2x.png */; };
 		A94A271220B0334E0025A438 /* stock_listnum@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A94A270B20B0334E0025A438 /* stock_listnum@2x.png */; };
+		A94A937520BA9816002EEE61 /* PickGoodsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A94A937320BA9815002EEE61 /* PickGoodsViewController.m */; };
+		A94A937820BA985A002EEE61 /* PickGoodsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A94A937720BA9859002EEE61 /* PickGoodsCell.m */; };
 		A95E10911DF80ED000660E42 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A95E10901DF80ED000660E42 /* main.m */; };
 		A95E10941DF80ED000660E42 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A95E10931DF80ED000660E42 /* AppDelegate.m */; };
 		A95E109C1DF80ED000660E42 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A95E109B1DF80ED000660E42 /* Assets.xcassets */; };
@@ -222,6 +226,10 @@
 
 /* Begin PBXFileReference section */
 		91897BA25E21E5EFC131B7DE /* Pods-auMarket.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-auMarket.debug.xcconfig"; path = "Pods/Target Support Files/Pods-auMarket/Pods-auMarket.debug.xcconfig"; sourceTree = "<group>"; };
+		A90A0AE220B9AE700069A609 /* PickModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickModel.m; sourceTree = "<group>"; };
+		A90A0AE320B9AE700069A609 /* PickModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickModel.h; sourceTree = "<group>"; };
+		A90A0AE520BA48230069A609 /* OrderEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderEntity.h; sourceTree = "<group>"; };
+		A90A0AE620BA48230069A609 /* OrderEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderEntity.m; sourceTree = "<group>"; };
 		A90BF28D1F6FDA570001A49E /* BooterModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BooterModel.m; sourceTree = "<group>"; };
 		A90BF28E1F6FDA570001A49E /* BooterModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BooterModel.h; sourceTree = "<group>"; };
 		A90BF28F1F6FDA570001A49E /* ParkingEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParkingEntity.m; sourceTree = "<group>"; };
@@ -270,6 +278,10 @@
 		A94A270920B0334E0025A438 /* stock_scan@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stock_scan@2x.png"; sourceTree = "<group>"; };
 		A94A270A20B0334E0025A438 /* stock_date@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stock_date@2x.png"; sourceTree = "<group>"; };
 		A94A270B20B0334E0025A438 /* stock_listnum@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stock_listnum@2x.png"; sourceTree = "<group>"; };
+		A94A937320BA9815002EEE61 /* PickGoodsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickGoodsViewController.m; sourceTree = "<group>"; };
+		A94A937420BA9815002EEE61 /* PickGoodsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickGoodsViewController.h; sourceTree = "<group>"; };
+		A94A937620BA9859002EEE61 /* PickGoodsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickGoodsCell.h; sourceTree = "<group>"; };
+		A94A937720BA9859002EEE61 /* PickGoodsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickGoodsCell.m; sourceTree = "<group>"; };
 		A95E108C1DF80ED000660E42 /* auMarket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = auMarket.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A95E10901DF80ED000660E42 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A95E10921DF80ED000660E42 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -620,6 +632,10 @@
 		A9187C031DF9AB4600A3E902 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				A90A0AE520BA48230069A609 /* OrderEntity.h */,
+				A90A0AE620BA48230069A609 /* OrderEntity.m */,
+				A90A0AE320B9AE700069A609 /* PickModel.h */,
+				A90A0AE220B9AE700069A609 /* PickModel.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -627,6 +643,8 @@
 		A9187C041DF9AB4900A3E902 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A94A937620BA9859002EEE61 /* PickGoodsCell.h */,
+				A94A937720BA9859002EEE61 /* PickGoodsCell.m */,
 				A9D7E26420B26D9900E02AAA /* PickOrderCell.h */,
 				A9D7E26520B26D9900E02AAA /* PickOrderCell.m */,
 			);
@@ -638,6 +656,8 @@
 			children = (
 				A91EBD471FFE112900DA9D68 /* PickViewController.h */,
 				A91EBD481FFE112900DA9D68 /* PickViewController.m */,
+				A94A937420BA9815002EEE61 /* PickGoodsViewController.h */,
+				A94A937320BA9815002EEE61 /* PickGoodsViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1462,6 +1482,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A95E116E1DF851EA00660E42 /* SPTabBarItem.m in Sources */,
+				A90A0AE720BA48230069A609 /* OrderEntity.m in Sources */,
 				A90BF2911F6FDA570001A49E /* BooterModel.m in Sources */,
 				A9F4DAD21F68390F00D71774 /* MJPhotoProgressView.m in Sources */,
 				A9633B8C204D547A00F2FFEB /* GoodsBindCell.m in Sources */,
@@ -1489,6 +1510,8 @@
 				A96474321E112BEA00A5A39B /* CustomTextField.m in Sources */,
 				A975688B20B7072E003DC139 /* GoodsShelfCell.m in Sources */,
 				A95E11471DF8491600660E42 /* UIView+IDPExtension.m in Sources */,
+				A90A0AE420B9AE700069A609 /* PickModel.m in Sources */,
+				A94A937820BA985A002EEE61 /* PickGoodsCell.m in Sources */,
 				A95E10F61DF8104800660E42 /* SPBaseTableView.m in Sources */,
 				A95E11421DF8491600660E42 /* NSDictionary+IDPExtension.m in Sources */,
 				A95E11711DF8520A00660E42 /* SPTabBarController.m in Sources */,
@@ -1545,6 +1568,7 @@
 				A95E11611DF8505C00660E42 /* BadgeManager.m in Sources */,
 				A9AD42B41E13673500A4B131 /* BatchEntity.m in Sources */,
 				A95E10911DF80ED000660E42 /* main.m in Sources */,
+				A94A937520BA9816002EEE61 /* PickGoodsViewController.m in Sources */,
 				A95E11401DF8491600660E42 /* NSDate+IDPExtension.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

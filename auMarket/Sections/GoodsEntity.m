@@ -29,3 +29,8 @@
     return NO;
 }
 @end
+
+
+
+@implementation RukuGoodsEntity : SPBaseEntity
+@end

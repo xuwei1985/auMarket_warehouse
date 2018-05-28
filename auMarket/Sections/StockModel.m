@@ -27,17 +27,39 @@
     [self loadInner];
 }
 
--(void)loadBindGoods{
+-(void)loadBindGoodsWithBatchId:(NSString *)batch_id{
+    SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
     self.parseDataClassType = [GoodsListEntity class];
-    self.shortRequestAddress= [NSString stringWithFormat:@"api_warehouse.php?act=batch_list&tid=%@",(self.entity.next==nil?@"0":self.entity.next)];
+    self.shortRequestAddress= [NSString stringWithFormat:@"v1/ruku-goods/list?batch_id=%@&token=%@",batch_id,user.user_token];
     self.params = @{};
     self.requestTag=1002;
+    [self loadInner];
+}
+
+-(void)addRukuGoods:(RukuGoodsEntity *)entity{
+    SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
+    self.parseDataClassType = [GoodsListEntity class];
+    self.shortRequestAddress= [NSString stringWithFormat:@"v1/ruku-goods/add?token=%@",user.user_token];
+    self.params = @{
+                    @"batch_id":entity.batch_id,
+                    @"goods_id":entity.goods_id,
+                    @"goods_code":entity.goods_code,
+                    @"number":entity.number,
+                    @"cost":entity.cost,
+                    @"expired_date":entity.expired_date,
+                    @"no":entity.no,
+                    @"shelves_code":entity.shelves_code
+                    };
+    self.requestTag=1003;
     [self loadInner];
 }
 
 -(void)handleParsedData:(SPBaseEntity*)parsedData{
     if ([parsedData isKindOfClass:[BatchEntity class]]) {
         self.entity = (BatchEntity*)parsedData;
+    }
+    else if ([parsedData isKindOfClass:[GoodsListEntity class]]) {
+        self.goods_list_entity = (GoodsListEntity*)parsedData;
     }
 }
 

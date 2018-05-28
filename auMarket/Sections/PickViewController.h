@@ -8,6 +8,7 @@
 
 #import "SPBaseViewController.h"
 #import "PickOrderCell.h"
+#import "PickModel.h"
 
 @interface PickViewController : SPBaseViewController
 {
@@ -16,4 +17,7 @@
     UIButton *_sumBtn;
     UIButton *_selectAllBtn;
 }
+
+
+@property(nonatomic,retain) PickModel *model;
 @end

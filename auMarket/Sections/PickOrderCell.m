@@ -47,7 +47,7 @@
             lbl_order_sn_value=[[UILabel alloc] init];
             lbl_order_sn_value.textColor=COLOR_DARKGRAY;
             lbl_order_sn_value.font=FONT_SIZE_SMALL;
-            lbl_order_sn_value.text=@"201834857";
+            lbl_order_sn_value.text=@"--";
             [self.contentView addSubview:lbl_order_sn_value];
             
             [lbl_order_sn_value mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -75,7 +75,7 @@
             lbl_order_region_value=[[UILabel alloc] init];
             lbl_order_region_value.textColor=COLOR_DARKGRAY;
             lbl_order_region_value.font=FONT_SIZE_SMALL;
-            lbl_order_region_value.text=@"市区";
+            lbl_order_region_value.text=@"--";
             [self.contentView addSubview:lbl_order_region_value];
             
             [lbl_order_region_value mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -103,7 +103,7 @@
             lbl_order_price_value=[[UILabel alloc] init];
             lbl_order_price_value.textColor=COLOR_MAIN;
             lbl_order_price_value.font=FONT_SIZE_SMALL;
-            lbl_order_price_value.text=@"$19.23";
+            lbl_order_price_value.text=@"$0.00";
             [self.contentView addSubview:lbl_order_price_value];
             
             [lbl_order_price_value mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -131,7 +131,7 @@
             lbl_order_goods_num_value=[[UILabel alloc] init];
             lbl_order_goods_num_value.textColor=COLOR_DARKGRAY;
             lbl_order_goods_num_value.font=FONT_SIZE_SMALL;
-            lbl_order_goods_num_value.text=@"65";
+            lbl_order_goods_num_value.text=@"0";
             [self.contentView addSubview:lbl_order_goods_num_value];
             
             [lbl_order_goods_num_value mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -245,7 +245,18 @@
 
 -(void)layoutSubviews{
     [super layoutSubviews];
+    lbl_order_sn_value.text=self.entity.order_sn;
+    lbl_order_region_value.text=self.entity.region_name;
+    lbl_order_goods_num_value.text=self.entity.goods_count;
+    lbl_order_price_value.text=[NSString stringWithFormat:@"$%@",self.entity.total_price];
+    
+    btn_type_freeze.hidden=[self.entity.attribute.frozen intValue]<=0;
+    btn_type_zero.hidden=[self.entity.attribute.cold intValue]<=0;
+    btn_type_box.hidden=[self.entity.attribute.package intValue]<=0;
+    
 }
+
+
 
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

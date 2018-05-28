@@ -22,7 +22,7 @@
 
 -(void)loadGoodsList:(NSString *)goods_code orGoodsName:(NSString *)goods_name{
     SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
-    self.shortRequestAddress=[NSString stringWithFormat:@"v1/goods/search?goods_code=%@&goods_name=%@&token=%@",(goods_code==nil?@"":goods_code),(goods_name==nil?@"":goods_name),user.user_token];
+    self.shortRequestAddress=[NSString stringWithFormat:@"v1/goods/search?goods_code=%@&goods_name=%@&token=%@",(goods_code==nil?@"":goods_code),(goods_name==nil?@"":[goods_name stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]),user.user_token];
     self.params = @{};
     self.requestTag=1001;
     

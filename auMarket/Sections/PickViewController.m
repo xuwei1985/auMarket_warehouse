@@ -23,7 +23,7 @@
 }
 
 -(void)initData{
-    
+    [self loadOrders];
 }
 
 -(void)initUI{
@@ -122,7 +122,7 @@
 
 - (NSInteger)tableView:(UITableView *)tv numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    return self.model.entity.list.count;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -145,17 +145,58 @@
         cell.backgroundColor=COLOR_BG_TABLEVIEWCELL;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
-
+    OrderItemEntity *entity=[self.model.entity.list objectAtIndex:indexPath.row];
+    cell.entity=entity;
     return cell;
 }
 
 -(CGFloat)tableView:(UITableView *)tv heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 168;
+    OrderItemEntity *entity=[self.model.entity.list objectAtIndex:indexPath.row];
+    if([self hasSpecialPackage:entity]){
+        return 168;
+    }
+    else{
+        return 142;
+    }
+    
 }
 
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tv deselectRowAtIndexPath:[tv indexPathForSelectedRow] animated:NO];
+}
+
+-(BOOL)hasSpecialPackage:(OrderItemEntity *)entity{
+    if(entity){
+        if([entity.attribute.frozen intValue]>0||[entity.attribute.cold intValue]>0||[entity.attribute.package intValue]>0){
+            return YES;
+        }
+        else{
+            return NO;
+        }
+    }
+    return NO;
+}
+
+-(void)loadOrders{
+    [self.model loadOrderList];
+}
+
+-(void)onResponse:(SPBaseModel *)model isSuccess:(BOOL)isSuccess{
+    [self stopLoadingActivityIndicator];
+    
+    if(model==self.model){//获取列表
+        if(model==self.model){
+            if(model.requestTag==1001){
+                if(self.model.entity.list!=nil&&self.model.entity.list.count>0){
+                    [self.tableView reloadData];
+                }
+                else{
+                    [self showFailWithText:@"加载订单失败"];
+                }
+            }
+        }
+    }
 }
 
 -(void)gotoPickList{
@@ -164,6 +205,14 @@
 
 -(void)gotoPickDoneList{
     
+}
+
+-(PickModel *)model{
+    if(!_model){
+        _model=[[PickModel alloc] init];
+        _model.delegate=self;
+    }
+    return _model;
 }
 
 -(void)viewWillAppear:(BOOL)animated{

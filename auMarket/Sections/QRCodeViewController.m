@@ -260,20 +260,20 @@
                                                    AVMetadataObjectTypeEAN8Code,
                                                    AVMetadataObjectTypeCode128Code,
                                                    AVMetadataObjectTypeQRCode,
+                                                   AVMetadataObjectTypeCode39Code,
+                                                   AVMetadataObjectTypeCode93Code,
+                                                   AVMetadataObjectTypeCode39Mod43Code
                                                    ]];
-//        AVMetadataObjectTypeCode39Code,
-//        AVMetadataObjectTypeCode93Code,
-//        AVMetadataObjectTypeCode39Mod43Code,
 //        AVMetadataObjectTypePDF417Code,
 //        AVMetadataObjectTypeAztecCode,
 //        AVMetadataObjectTypeUPCECode,
         
-        // >= ios 8
-//        if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_7_1) {
-//            [metadataObjectTypes addObjectsFromArray:@[AVMetadataObjectTypeInterleaved2of5Code,
-//                                                       AVMetadataObjectTypeITF14Code,
-//                                                       AVMetadataObjectTypeDataMatrixCode]];
-//        }
+        // >= ios /Users/wuxuwei/Projects/IOS_Projects/auMarket_warehouse/auMarket/Sections8
+        if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_7_1) {
+            [metadataObjectTypes addObjectsFromArray:@[AVMetadataObjectTypeInterleaved2of5Code,
+                                                       AVMetadataObjectTypeITF14Code,
+                                                       AVMetadataObjectTypeDataMatrixCode]];
+        }
         //设置扫描格式
         self.output.metadataObjectTypes= metadataObjectTypes;
     }

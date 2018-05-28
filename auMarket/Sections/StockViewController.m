@@ -20,8 +20,8 @@
     
     [self initUI];
     [self initData];
-    [self addNotification];
 }
+
 
 -(void)initData{
     NSMutableDictionary *dic1,*dic2,*dic3,*dic4,*dic5,*dic6,*dic7,*dic8,*dic9;
@@ -55,24 +55,41 @@
     self.title=@"商品信息";
 }
 
--(void)addNotification{
-    
-}
-
 -(void)loadGoodsInfoByCode{
     [self.model loadBatchs];
+}
+
+-(void)resetData{
+    self.goods_id=@"";
+    self.goods_code=@"";
+    self.shelf_code=@"";
+    self.scan_entity=nil;
+    
+    for (int i=0; i<itemArr.count; i++) {
+        [[itemArr objectAtIndex:i] setValue:@"" forKey:@"item_value"];
+    }
 }
 
 -(void)onResponse:(SPBaseModel *)model isSuccess:(BOOL)isSuccess{
     [self stopLoadingActivityIndicator];
     
     if(model==self.model){//获取列表
-        if(model.requestTag==1001){
+        if(model.requestTag==1003){
+            [self.tableView setContentOffset:CGPointMake(0,0) animated:YES];
+            
             if(isSuccess){
-                
+                [self showSuccesWithText:@"入库保存成功"];
+                if(self.save_model==SAVE_THEN_BACK){
+                    [self goBack];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"RELOAD_GOODS_LIST" object:nil];
+                }
+                else{
+                    [self resetData];
+                    [self.tableView reloadData];
+                }
             }
             else{
-                
+                [self showFailWithText:@"入库保存失败"];
             }
         }
     }
@@ -80,10 +97,11 @@
         if(model.requestTag==1001){
             if(self.goods_model.entity.list!=nil&&self.goods_model.entity.list.count>0){
                 self.scan_entity=[self.goods_model.entity.list objectAtIndex:0];
+                self.goods_id=self.scan_entity.goods_id;
                 [self.tableView reloadData];
             }
             else{
-                [self showToastBottomWithText:@"未找到任何商品"];
+                [self showFailWithText:@"未匹配到已有商品"];
             }
         }
     }
@@ -107,6 +125,7 @@
     _btn_back.frame=CGRectMake(0, HEIGHT_SCREEN-64-48, WIDTH_SCREEN/2, 48);
     _btn_back.titleLabel.font=FONT_SIZE_MIDDLE;
     _btn_back.titleLabel.textAlignment=NSTextAlignmentCenter;
+    _btn_back.tag=3001;
     [_btn_back addTarget:self action:@selector(nextGoods:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_btn_back];
     
@@ -117,6 +136,7 @@
     _btn_next.frame=CGRectMake(WIDTH_SCREEN/2, HEIGHT_SCREEN-64-48, WIDTH_SCREEN/2, 48);
     _btn_next.titleLabel.font=FONT_SIZE_BIG;
     _btn_next.titleLabel.textAlignment=NSTextAlignmentCenter;
+    _btn_next.tag=3002;
     [_btn_next addTarget:self action:@selector(nextGoods:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_btn_next];
 }
@@ -318,8 +338,10 @@
 
 -(void)searchGoodsWithCode:(NSString *)goods_code{
     //执行搜索
-    [self startLoadingActivityIndicator];
-    [self.goods_model loadGoodsList:goods_code orGoodsName:nil];
+    if(goods_code&&goods_code.length>0){
+        [self startLoadingActivityIndicator];
+        [self.goods_model loadGoodsList:goods_code orGoodsName:nil];
+    }
 }
 
 -(void)showDatePicker{
@@ -454,7 +476,7 @@
             [[[itemArr objectAtIndex:1] objectAtIndex:1] setValue:[NSString stringWithFormat:@"$%.2f",round([txt_value floatValue]*100)/100] forKey:@"item_value"];
         }
         else if(_current_input_model==INPUT_GOODS_NUM){
-            [[[itemArr objectAtIndex:1] objectAtIndex:2] setValue:txt_value forKey:@"item_value"];
+            [[[itemArr objectAtIndex:1] objectAtIndex:2] setValue:[NSString stringWithFormat:@"%d",[txt_value intValue]] forKey:@"item_value"];
         }
         [self.tableView reloadData];
     }
@@ -471,8 +493,11 @@
     //长度限制
     if(_current_input_model==INPUT_GOODS_CODE||_current_input_model==INPUT_SHELF_CODE){
         if([textField.text length] >= 18){
-            textField.text = [textField.text substringToIndex:18];
+            textField.text = [[textField.text substringToIndex:18] uppercaseString];
             return NO;
+        }
+        else{
+            textField.text=[textField.text uppercaseString];
         }
     }
     else{
@@ -485,10 +510,67 @@
     return YES;
 }
 
--(void)nextGoods:(id)sender{
+-(void)nextGoods:(UIButton *)sender{
+    if(sender.tag==3001){//保存并返回
+        self.save_model=SAVE_THEN_BACK;
+    }
+    else{//保存并继续
+        self.save_model=SAVE_THEN_CONTINUE;
+    }
     
+    [self saveRukuGoods];
 }
 
+-(BOOL)checkEntity:(RukuGoodsEntity*)entity{
+    if(entity){
+        if(entity.batch_id==nil||entity.batch_id.length<=0){
+            [self showToastBottomWithText:@"缺少入库批次信息"];
+            return NO;
+        }
+        else if(entity.goods_code==nil||entity.goods_code.length<=0){
+            [self showToastBottomWithText:@"缺少商品条形码"];
+            return NO;
+        }
+        else if(entity.shelves_code==nil||entity.shelves_code.length<=0){
+            [self showToastBottomWithText:@"缺少货架号"];
+            return NO;
+        }
+        else if(entity.number==nil||entity.number.length<=0||[entity.number intValue]<=0){
+            [self showToastBottomWithText:@"无有效的商品数量"];
+            return NO;
+        }
+        else if(entity.cost==nil||entity.cost.length<=0||[entity.cost intValue]<0){
+            [self showToastBottomWithText:@"无有效的商品进价"];
+            return NO;
+        }
+        else if(entity.expired_date==nil||entity.expired_date.length<=0){
+            [self showToastBottomWithText:@"缺少保质期信息"];
+            return NO;
+        }
+    }
+    else{
+        [self showToastBottomWithText:@"无效信息"];
+        return NO;
+    }
+    return YES;
+}
+
+-(void)saveRukuGoods{
+    RukuGoodsEntity *entity=[[RukuGoodsEntity alloc] init];
+    entity.batch_id=self.batch_id;
+    entity.goods_id=self.goods_id;
+    entity.goods_code=self.goods_code;
+    entity.shelves_code=[self.shelf_code uppercaseString];
+    entity.expired_date=[[[itemArr objectAtIndex:1] objectAtIndex:3] valueForKey:@"item_value"];
+    entity.no=[[[itemArr objectAtIndex:1] objectAtIndex:0] valueForKey:@"item_value"];
+    entity.number=[[[itemArr objectAtIndex:1] objectAtIndex:2] valueForKey:@"item_value"];
+    entity.cost=[[[[itemArr objectAtIndex:1] objectAtIndex:1] valueForKey:@"item_value"] stringByReplacingOccurrencesOfString:@"$" withString:@""];
+    
+    if([self checkEntity:entity]){
+        [self startLoadingActivityIndicator];
+        [self.model addRukuGoods:entity];
+    }
+}
 
 -(void)gotoScanQRView:(SCAN_MODEL)scan_model{
     QRCodeViewController *qvc=[[QRCodeViewController alloc] init];
@@ -497,10 +579,11 @@
     [self.navigationController pushViewController:qvc animated:YES];
 }
 
-//地址选择器的传值
 -(void)passObject:(id)obj{
     if([obj class]==[GoodsEntity class]){
         self.scan_entity=(GoodsEntity *)obj;
+        self.goods_id=self.scan_entity.goods_id;
+        self.goods_code=self.scan_entity.goods_code;
         [self.tableView reloadData];
     }
     else{
@@ -519,6 +602,10 @@
     GoodsSearchViewController *gvc=[[GoodsSearchViewController alloc] init];
     gvc.pass_delegate=self;
     [self.navigationController pushViewController:gvc animated:YES];
+}
+
+-(void)goBack{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 

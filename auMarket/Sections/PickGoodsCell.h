@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "GoodsEntity.h"
 
-@interface GoodsBindCell : UITableViewCell
+@interface PickGoodsCell : UITableViewCell
 {
     UIImageView *_iconImageView;
     UILabel *_itemLbl;
