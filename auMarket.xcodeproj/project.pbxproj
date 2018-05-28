@@ -181,6 +181,7 @@
 		A9E40EC020B7F25700024C79 /* transfer_cart@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9E40EBF20B7F25600024C79 /* transfer_cart@2x.png */; };
 		A9E40EC320B7F79300024C79 /* hs@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9E40EC120B7F79300024C79 /* hs@2x.png */; };
 		A9E40EC420B7F79300024C79 /* jhz@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9E40EC220B7F79300024C79 /* jhz@2x.png */; };
+		A9E40EC720BBB1E900024C79 /* PickGoodsEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = A9E40EC620BBB1E900024C79 /* PickGoodsEntity.m */; };
 		A9F4DA851F658AFE00D71774 /* 1_03@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F4DA731F658AFE00D71774 /* 1_03@2x.png */; };
 		A9F4DA861F658AFE00D71774 /* 1_06@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F4DA741F658AFE00D71774 /* 1_06@2x.png */; };
 		A9F4DA881F658AFE00D71774 /* 1_12.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F4DA761F658AFE00D71774 /* 1_12.png */; };
@@ -485,6 +486,8 @@
 		A9E40EBF20B7F25600024C79 /* transfer_cart@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "transfer_cart@2x.png"; sourceTree = "<group>"; };
 		A9E40EC120B7F79300024C79 /* hs@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hs@2x.png"; sourceTree = "<group>"; };
 		A9E40EC220B7F79300024C79 /* jhz@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jhz@2x.png"; sourceTree = "<group>"; };
+		A9E40EC520BBB1E900024C79 /* PickGoodsEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickGoodsEntity.h; sourceTree = "<group>"; };
+		A9E40EC620BBB1E900024C79 /* PickGoodsEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickGoodsEntity.m; sourceTree = "<group>"; };
 		A9F4DA731F658AFE00D71774 /* 1_03@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "1_03@2x.png"; sourceTree = "<group>"; };
 		A9F4DA741F658AFE00D71774 /* 1_06@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "1_06@2x.png"; sourceTree = "<group>"; };
 		A9F4DA761F658AFE00D71774 /* 1_12.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1_12.png; sourceTree = "<group>"; };
@@ -632,6 +635,8 @@
 		A9187C031DF9AB4600A3E902 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				A9E40EC520BBB1E900024C79 /* PickGoodsEntity.h */,
+				A9E40EC620BBB1E900024C79 /* PickGoodsEntity.m */,
 				A90A0AE520BA48230069A609 /* OrderEntity.h */,
 				A90A0AE620BA48230069A609 /* OrderEntity.m */,
 				A90A0AE320B9AE700069A609 /* PickModel.h */,
@@ -1535,6 +1540,7 @@
 				A95E10F41DF8104800660E42 /* SPBaseEntity.m in Sources */,
 				A99FB2442006022A005AF4AE /* StockViewController.m in Sources */,
 				A9F4DAD81F69099100D71774 /* AlertBlockView.m in Sources */,
+				A9E40EC720BBB1E900024C79 /* PickGoodsEntity.m in Sources */,
 				A9FBC1FA1DF97299005ECDDE /* IntroViewController.m in Sources */,
 				A9F4DAD31F68390F00D71774 /* MJPhotoToolbar.m in Sources */,
 				A968118420497E80008604AC /* QRCodeViewController.m in Sources */,

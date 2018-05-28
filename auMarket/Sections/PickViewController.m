@@ -71,7 +71,7 @@
     
     _sumBtn=[UIButton buttonWithType:UIButtonTypeCustom];
     _sumBtn.frame=CGRectMake(WIDTH_SCREEN-110, 0,110, 44);
-    [_sumBtn setTitle:@"生成清单(2)" forState:UIControlStateNormal];
+    [_sumBtn setTitle:@"生成清单" forState:UIControlStateNormal];
     _sumBtn.titleLabel.textAlignment=NSTextAlignmentCenter;
     _sumBtn.backgroundColor=COLOR_MAIN;
     _sumBtn.titleLabel.font=FONT_SIZE_MIDDLE;
@@ -110,7 +110,54 @@
 }
 
 -(void)selectAllOrders:(UIButton *)sender{
+    sender.selected=!sender.selected;
+    for(int i=0;i<self.model.entity.list.count;i++){
+        [self.model.entity.list objectAtIndex:i].selected=sender.selected;
+    }
+    if(sender.selected){
+        [_sumBtn setTitle:[NSString stringWithFormat:@"生成清单(%lu)",(unsigned long)self.model.entity.list.count] forState:UIControlStateNormal];
+    }
+    else{
+         [_sumBtn setTitle:[NSString stringWithFormat:@"生成清单"] forState:UIControlStateNormal];
+    }
+    [self.tableView reloadData];
+}
+
+-(void)handlerOrdersSelect{
+    int sel_num=0;
+    for(int i=0;i<self.model.entity.list.count;i++){
+        if([self.model.entity.list objectAtIndex:i].selected){
+            sel_num++;
+        }
+    }
     
+    if(sel_num==0){
+        _selectAllBtn.selected=NO;
+    }
+    else if(sel_num==self.model.entity.list.count){
+        _selectAllBtn.selected=YES;
+    }
+    
+    if(sel_num>0){
+        [_sumBtn setTitle:[NSString stringWithFormat:@"生成清单(%d)",sel_num] forState:UIControlStateNormal];
+    }
+    else{
+        [_sumBtn setTitle:[NSString stringWithFormat:@"生成清单"] forState:UIControlStateNormal];
+    }
+    [self.tableView reloadData];
+}
+
+-(NSString *)getSelectedOrdersId{
+    NSString *order_ids=@"";
+    for(int i=0;i<self.model.entity.list.count;i++){
+        if([self.model.entity.list objectAtIndex:i].selected){
+            order_ids=[NSString stringWithFormat:@"%@%@,",order_ids,[self.model.entity.list objectAtIndex:i].order_id];
+        }
+    }
+    if(order_ids.length>0){
+        order_ids=[order_ids substringWithRange:NSMakeRange(0, order_ids.length-1)];
+    }
+    return order_ids;
 }
 
 #pragma mark - Table view delegate
@@ -147,6 +194,9 @@
     }
     OrderItemEntity *entity=[self.model.entity.list objectAtIndex:indexPath.row];
     cell.entity=entity;
+    [cell selOrderId:^(NSString *order_id,int action) {
+        [self handlerOrdersSelect];
+    }];
     return cell;
 }
 
@@ -158,12 +208,13 @@
     else{
         return 142;
     }
-    
 }
 
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tv deselectRowAtIndexPath:[tv indexPathForSelectedRow] animated:NO];
+    PickOrderCell *cell=[tv cellForRowAtIndexPath:indexPath];
+    [cell toggleOrderSel];
 }
 
 -(BOOL)hasSpecialPackage:(OrderItemEntity *)entity{
@@ -200,7 +251,15 @@
 }
 
 -(void)gotoPickList{
-    
+    NSString *order_ids= [self getSelectedOrdersId];
+    if(order_ids.length>0){
+        PickGoodsViewController *pvc=[[PickGoodsViewController alloc] init];
+        pvc.order_ids=order_ids;
+        [self.navigationController pushViewController:pvc animated:YES];
+    }
+    else{
+        [self showToastWithText:@"未选择任何订单"];
+    }
 }
 
 -(void)gotoPickDoneList{

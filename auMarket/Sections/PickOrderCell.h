@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "OrderEntity.h"
 
+typedef void(^SelOrderBlock)(NSString *order_id,int action);
+
 @interface PickOrderCell : UITableViewCell
 {
     UIButton *btn_select;
@@ -27,5 +29,10 @@
     UIButton *btn_type_zero;
     UIButton *btn_type_box;
 }
+
 @property(nonatomic,retain) OrderItemEntity *entity;
+@property (nonatomic, copy) SelOrderBlock selOrderBlock;
+
+-(void)selOrderId:(SelOrderBlock)block;
+-(void)toggleOrderSel;
 @end

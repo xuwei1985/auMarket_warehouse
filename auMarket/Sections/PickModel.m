@@ -28,7 +28,7 @@
 }
 
 -(void)loadGoodsListWithOrderIds:(NSString *)order_ids{
-    self.parseDataClassType = [OrderEntity class];
+    self.parseDataClassType = [PickGoodsListEntity class];
     SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
     self.shortRequestAddress= [NSString stringWithFormat:@"v1/pick/goods?order_id=%@&token=%@",order_ids,user.user_token];
     self.params = @{};
@@ -40,6 +40,9 @@
     if ([parsedData isKindOfClass:[OrderEntity class]]) {
         self.entity = (OrderEntity*)parsedData;
     }
+    else if ([parsedData isKindOfClass:[PickGoodsListEntity class]]) {
+        self.pickGoodsListEntity = (PickGoodsListEntity*)parsedData;
+    }
 }
 
 -(OrderEntity *)entity{
@@ -50,5 +53,15 @@
     
     return _entity;
 }
+
+-(PickGoodsListEntity *)pickGoodsListEntity{
+    if(!_pickGoodsListEntity){
+        _pickGoodsListEntity=[[PickGoodsListEntity alloc] init];
+        _pickGoodsListEntity.err_msg=@"未获取到有效的订单数据";
+    }
+    
+    return _pickGoodsListEntity;
+}
+
 
 @end

@@ -9,12 +9,13 @@
 #import "SPBaseViewController.h"
 #import "StockViewController.h"
 #import "PickGoodsCell.h"
+#import "PickModel.h"
 
 @interface PickGoodsViewController : SPBaseViewController<UIActionSheetDelegate>
 {
     UIButton *btn_picking;
     UIButton *btn_picked;
 }
-@property(nonatomic,retain) StockModel *model;
+@property(nonatomic,retain) PickModel *model;
 @property(nonatomic,retain) NSString *order_ids;
 @end

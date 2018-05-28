@@ -7,6 +7,7 @@
 //
 
 #import "SPBaseViewController.h"
+#import "PickGoodsViewController.h"
 #import "PickOrderCell.h"
 #import "PickModel.h"
 

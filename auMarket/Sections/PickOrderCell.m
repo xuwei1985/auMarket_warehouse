@@ -241,6 +241,28 @@
 
 -(void)selOrder:(UIButton *)sender{
     sender.selected=!sender.selected;
+    self.entity.selected=sender.selected;
+    if(self.entity.selected){
+        self.selOrderBlock(self.entity.order_id,1);//选中
+    }
+    else{
+        self.selOrderBlock(self.entity.order_id,0);//取消
+    }
+}
+
+-(void)selOrderId:(SelOrderBlock)block
+{
+    self.selOrderBlock = block;
+}
+
+-(void)toggleOrderSel{
+    self.entity.selected=!self.entity.selected;
+    if(self.entity.selected){
+        self.selOrderBlock(self.entity.order_id,1);//选中
+    }
+    else{
+        self.selOrderBlock(self.entity.order_id,0);//取消
+    }
 }
 
 -(void)layoutSubviews{
@@ -253,7 +275,7 @@
     btn_type_freeze.hidden=[self.entity.attribute.frozen intValue]<=0;
     btn_type_zero.hidden=[self.entity.attribute.cold intValue]<=0;
     btn_type_box.hidden=[self.entity.attribute.package intValue]<=0;
-    
+    btn_select.selected=self.entity.selected;
 }
 
 

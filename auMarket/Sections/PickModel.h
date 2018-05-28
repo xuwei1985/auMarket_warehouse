@@ -7,9 +7,12 @@
 //
 
 #import "OrderEntity.h"
+#import "PickGoodsEntity.h"
 
 @interface PickModel : SPBaseModel
 @property (nonatomic,retain) OrderEntity *entity;
+@property (nonatomic,retain) PickGoodsListEntity *pickGoodsListEntity;
 
 -(void)loadOrderList;
+-(void)loadGoodsListWithOrderIds:(NSString *)order_ids;
 @end
