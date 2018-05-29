@@ -15,4 +15,5 @@
 
 -(void)loadOrderList;
 -(void)loadGoodsListWithOrderIds:(NSString *)order_ids;
+-(void)bindBoxToOrder:(NSString *)order_id andBoxCode:(NSString *)box_code;
 @end

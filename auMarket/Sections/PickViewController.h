@@ -10,15 +10,18 @@
 #import "PickGoodsViewController.h"
 #import "PickOrderCell.h"
 #import "PickModel.h"
+#import "QRCodeViewController.h"
 
-@interface PickViewController : SPBaseViewController
+@interface PickViewController : SPBaseViewController<PassValueDelegate>
 {
     UIView *_summaryView;
     UIView *_summaryView_bottom;
     UIButton *_sumBtn;
     UIButton *_selectAllBtn;
+    
 }
 
 
 @property(nonatomic,retain) PickModel *model;
+@property(nonatomic,retain) OrderItemEntity *bind_order_entity;
 @end

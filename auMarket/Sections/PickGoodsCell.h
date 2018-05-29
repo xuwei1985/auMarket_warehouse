@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AVFoundation/AVFoundation.h>
 #import "PickGoodsEntity.h"
 
 @interface PickGoodsCell : UITableViewCell

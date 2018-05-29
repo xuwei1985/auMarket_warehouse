@@ -60,16 +60,20 @@
             lbl_box_mark.font=DEFAULT_FONT(11.0);
             lbl_box_mark.clipsToBounds=YES;
             lbl_box_mark.textColor=COLOR_WHITE;
-            [lbl_box_mark.layer setCornerRadius:9];
-            lbl_box_mark.text=@"红色";
+            [lbl_box_mark.layer setCornerRadius:7];
+            lbl_box_mark.layer.borderColor = COLOR_WHITE.CGColor;
+            [lbl_box_mark.layer setBorderWidth:0.5];
+            lbl_box_mark.text=@"";
+            lbl_box_mark.layer.shouldRasterize = YES;
             [self.contentView addSubview:lbl_box_mark];
             
             [lbl_box_mark mas_makeConstraints:^(MASConstraintMaker *make) {
                 @strongify(self);
-                make.top.mas_equalTo(12);
-                make.right.mas_equalTo(self.mas_right).offset(-12);
-                make.size.mas_equalTo(CGSizeMake(38, 18));
+                make.top.mas_equalTo(14);
+                make.right.mas_equalTo(self.mas_right).offset(-14);
+                make.size.mas_equalTo(CGSizeMake(14, 14));
             }];
+            
         }
         
         if (lbl_goods_number==nil) {
@@ -95,7 +99,7 @@
             [lbl_goods_number mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.top.mas_equalTo(lbl_shelf_code.mas_bottom).offset(2);
                 make.left.mas_equalTo(lbl_title.mas_right);
-                make.size.mas_equalTo(CGSizeMake(40, 22));
+                make.size.mas_equalTo(CGSizeMake(60, 23));
             }];
         }
         
@@ -122,7 +126,7 @@
             [lbl_box_name mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.top.mas_equalTo(lbl_goods_number.mas_bottom).offset(2);
                 make.left.mas_equalTo(lbl_title.mas_right);
-                make.size.mas_equalTo(CGSizeMake(40, 22));
+                make.size.mas_equalTo(CGSizeMake(80, 24));
             }];
         }
 

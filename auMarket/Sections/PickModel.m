@@ -18,6 +18,7 @@
     return self;
 }
 
+//加载待拣货的订单列表
 -(void)loadOrderList{
     self.parseDataClassType = [OrderEntity class];
     SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
@@ -27,6 +28,7 @@
     [self loadInner];
 }
 
+//加载生成的订单的待拣货商品
 -(void)loadGoodsListWithOrderIds:(NSString *)order_ids{
     self.parseDataClassType = [PickGoodsListEntity class];
     SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
@@ -35,6 +37,17 @@
     self.requestTag=1002;
     [self loadInner];
 }
+
+//绑定货箱到订单
+-(void)bindBoxToOrder:(NSString *)order_id andBoxCode:(NSString *)box_code{
+    self.parseDataClassType = [OrderEntity class];
+    SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
+    self.shortRequestAddress= [NSString stringWithFormat:@"v1/pick/box?order_id=%@&box=%@&token=%@",order_id,[box_code stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],user.user_token];
+    self.params = @{};
+    self.requestTag=1003;
+    [self loadInner];
+}
+
 
 -(void)handleParsedData:(SPBaseEntity*)parsedData{
     if ([parsedData isKindOfClass:[OrderEntity class]]) {

@@ -102,7 +102,7 @@
         }
         else{
             [self.tableView stopLoadingActivityIndicatorView:nil];
-            [self showToastBottomWithText:@"获取订单数据失败"];
+            [self showToastWithText:@"获取订单数据失败"];
         }
         self.tableView.isFirstLoad=NO;
         self.tableView.isLoading=NO;
