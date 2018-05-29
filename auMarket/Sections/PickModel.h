@@ -12,4 +12,5 @@
 @property (nonatomic,retain) OrderEntity *entity;
 
 -(void)loadOrderList;
+-(void)loadGoodsListWithOrderIds:(NSString *)order_ids andType:(int)type;
 @end

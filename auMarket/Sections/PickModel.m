@@ -27,10 +27,10 @@
     [self loadInner];
 }
 
--(void)loadGoodsListWithOrderIds:(NSString *)order_ids{
+-(void)loadGoodsListWithOrderIds:(NSString *)order_ids andType:(int)type{
     self.parseDataClassType = [OrderEntity class];
     SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
-    self.shortRequestAddress= [NSString stringWithFormat:@"v1/pick/goods?order_id=%@&token=%@",order_ids,user.user_token];
+    self.shortRequestAddress= [NSString stringWithFormat:@"v1/pick/goods?order_id=%@&done=%d&token=%@",order_ids,type,user.user_token];
     self.params = @{};
     self.requestTag=1002;
     [self loadInner];
