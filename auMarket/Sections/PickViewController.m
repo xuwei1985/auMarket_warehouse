@@ -17,8 +17,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self initData];
     [self initUI];
+    [self initData];
     [self addNotification];
 }
 
@@ -57,7 +57,7 @@
         make.width.mas_equalTo(WIDTH_SCREEN);
         make.height.mas_equalTo(44);
     }];
-    
+
     UIView *_baseLineView=[[UIView alloc] init];
     _baseLineView.backgroundColor=COLOR_BG_TABLESEPARATE;
     [_summaryView_bottom addSubview:_baseLineView];
@@ -71,7 +71,7 @@
     
     _sumBtn=[UIButton buttonWithType:UIButtonTypeCustom];
     _sumBtn.frame=CGRectMake(WIDTH_SCREEN-110, 0,110, 44);
-    [_sumBtn setTitle:@"生成清单(2)" forState:UIControlStateNormal];
+    [_sumBtn setTitle:@"生成清单" forState:UIControlStateNormal];
     _sumBtn.titleLabel.textAlignment=NSTextAlignmentCenter;
     _sumBtn.backgroundColor=COLOR_MAIN;
     _sumBtn.titleLabel.font=FONT_SIZE_MIDDLE;
@@ -110,7 +110,65 @@
 }
 
 -(void)selectAllOrders:(UIButton *)sender{
+    int n=0;
+    for(int i=0;i<self.model.entity.list.count;i++){
+        if([self.model.entity.list objectAtIndex:i].box!=nil&&[[self.model.entity.list objectAtIndex:i].box length]>0){
+            [self.model.entity.list objectAtIndex:i].selected=!sender.selected;
+            n++;
+        }
+    }
     
+    if(n>0){
+        sender.selected=!sender.selected;
+        if(n<[self.model.entity.list count]&&sender.selected){
+            [self showToastWithText:@"有订单未扫码货箱"];
+        }
+    }
+    
+    if(sender.selected){
+        [_sumBtn setTitle:[NSString stringWithFormat:@"生成清单(%d)",n] forState:UIControlStateNormal];
+    }
+    else{
+         [_sumBtn setTitle:[NSString stringWithFormat:@"生成清单"] forState:UIControlStateNormal];
+    }
+    [self.tableView reloadData];
+}
+
+-(void)handlerOrdersSelect{
+    int sel_num=0;
+    for(int i=0;i<self.model.entity.list.count;i++){
+        if([self.model.entity.list objectAtIndex:i].selected){
+            sel_num++;
+        }
+    }
+    
+    if(sel_num==0){
+        _selectAllBtn.selected=NO;
+    }
+    else if(sel_num==self.model.entity.list.count){
+        _selectAllBtn.selected=YES;
+    }
+    
+    if(sel_num>0){
+        [_sumBtn setTitle:[NSString stringWithFormat:@"生成清单(%d)",sel_num] forState:UIControlStateNormal];
+    }
+    else{
+        [_sumBtn setTitle:[NSString stringWithFormat:@"生成清单"] forState:UIControlStateNormal];
+    }
+    [self.tableView reloadData];
+}
+
+-(NSString *)getSelectedOrdersId{
+    NSString *order_ids=@"";
+    for(int i=0;i<self.model.entity.list.count;i++){
+        if([self.model.entity.list objectAtIndex:i].selected){
+            order_ids=[NSString stringWithFormat:@"%@%@,",order_ids,[self.model.entity.list objectAtIndex:i].order_id];
+        }
+    }
+    if(order_ids.length>0){
+        order_ids=[order_ids substringWithRange:NSMakeRange(0, order_ids.length-1)];
+    }
+    return order_ids;
 }
 
 #pragma mark - Table view delegate
@@ -147,23 +205,56 @@
     }
     OrderItemEntity *entity=[self.model.entity.list objectAtIndex:indexPath.row];
     cell.entity=entity;
+    [cell selOrderId:^(NSString *order_id,int action) {
+        if(action>=0){
+            [self handlerOrdersSelect];
+        }
+        else{
+            [self showToastWithText:@"请先侧滑扫描货箱"];
+        }
+    }];
     return cell;
 }
 
 -(CGFloat)tableView:(UITableView *)tv heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     OrderItemEntity *entity=[self.model.entity.list objectAtIndex:indexPath.row];
     if([self hasSpecialPackage:entity]){
-        return 168;
+        return 172;
     }
     else{
         return 142;
     }
-    
 }
 
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tv deselectRowAtIndexPath:[tv indexPathForSelectedRow] animated:NO];
+    PickOrderCell *cell=[tv cellForRowAtIndexPath:indexPath];
+    [cell toggleOrderSel];
+}
+
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
+}
+
+- (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath{
+    UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"扫描货箱" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+        OrderItemEntity *entity=[self.model.entity.list objectAtIndex:indexPath.row];
+        self.bind_order_entity=entity;
+        if(self.bind_order_entity&&[self.bind_order_entity.order_id length]>0){
+            [self gotoScanQRView];
+        }
+        else{
+            [self showToastWithText:@"无效的订单信息"];
+        }
+    }];
+    return @[deleteAction];
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+    editingStyle = UITableViewCellEditingStyleDelete;
 }
 
 -(BOOL)hasSpecialPackage:(OrderItemEntity *)entity{
@@ -179,28 +270,75 @@
 }
 
 -(void)loadOrders{
+    [self startLoadingActivityIndicator];
     [self.model loadOrderList];
 }
+
+-(void)bindBoxToOrder:(NSString *)order_id andBoxCode:(NSString *)box_code{
+    [self startLoadingActivityIndicator];
+    [self.model bindBoxToOrder:order_id andBoxCode:box_code];
+}
+
 
 -(void)onResponse:(SPBaseModel *)model isSuccess:(BOOL)isSuccess{
     [self stopLoadingActivityIndicator];
     
-    if(model==self.model){//获取列表
-        if(model==self.model){
-            if(model.requestTag==1001){
-                if(self.model.entity.list!=nil&&self.model.entity.list.count>0){
-                    [self.tableView reloadData];
-                }
-                else{
-                    [self showFailWithText:@"加载订单失败"];
-                }
+    if(model==self.model){
+        if(model.requestTag==1001){
+            if(self.model.entity.list!=nil&&self.model.entity.list.count>0){
+                [self.tableView reloadData];
+            }
+            else{
+                [self showFailWithText:@"加载订单失败"];
+            }
+        }
+        else if(model.requestTag==1003){
+            if(isSuccess){
+                //重新请求订单数据
+                self.model.entity.next=0;
+                [self loadOrders];
+            }
+            else{
+                [self showFailWithText:@"货箱绑定失败"];
             }
         }
     }
 }
 
+-(void)passObject:(id)obj{
+    if([[obj objectForKey:@"scan_model"] intValue]==SCAN_BOX){//货箱条形码
+        //提交绑定信息到接口
+        if([[obj objectForKey:@"code"] length]>0){
+            [self bindBoxToOrder:self.bind_order_entity.order_id andBoxCode:[obj objectForKey:@"code"]];
+            [self.tableView reloadData];
+            [self showSuccesWithText:@"货箱绑定成功"];
+        }
+        else{
+            [self showToastWithText:@"扫码结果无效"];
+        }
+    }
+    else{
+        [self showToastWithText:@"未知扫码结果"];
+    }
+}
+
+-(void)gotoScanQRView{
+    QRCodeViewController *qvc=[[QRCodeViewController alloc] init];
+    qvc.scan_model=SCAN_BOX;
+    qvc.pass_delegate=self;
+    [self.navigationController pushViewController:qvc animated:YES];
+}
+
 -(void)gotoPickList{
-    
+    NSString *order_ids= [self getSelectedOrdersId];
+    if(order_ids.length>0){
+        PickGoodsViewController *pvc=[[PickGoodsViewController alloc] init];
+        pvc.order_ids=order_ids;
+        [self.navigationController pushViewController:pvc animated:YES];
+    }
+    else{
+        [self showToastWithText:@"未选择任何订单"];
+    }
 }
 
 -(void)gotoPickDoneList{

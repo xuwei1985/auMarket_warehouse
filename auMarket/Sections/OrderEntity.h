@@ -21,7 +21,8 @@
 @property (nonatomic,retain) NSString *goods_count;
 @property (nonatomic,retain) NSString *region_name;
 @property (nonatomic,retain) PackageFormEntity *attribute;
-@property (nonatomic,retain) NSString *box_code;//绑定的货箱码
+@property (nonatomic,retain) NSString *box;//绑定的货箱码
+@property (nonatomic,assign) BOOL selected;//是否选中
 @end
 
 @interface PackageFormEntity : SPBaseEntity

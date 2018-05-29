@@ -20,85 +20,131 @@
             _iconImageView.image=[UIImage imageNamed:@"defaut_list"];
             [self.contentView addSubview:_iconImageView];
         }
-        if (_itemLbl==nil) {
-            _itemLbl=[[UILabel alloc] init];
-            _itemLbl.textAlignment=NSTextAlignmentLeft;
-            _itemLbl.textColor=COLOR_BLACK;
-            if(WIDTH_SCREEN<=320){
-                _itemLbl.font=DEFAULT_FONT(13.0);
-            }
-            else{
-                _itemLbl.font=DEFAULT_FONT(14.0);
-            }
-            _itemLbl.numberOfLines=0;
-            _itemLbl.lineBreakMode=NSLineBreakByWordWrapping;
-            [self.contentView addSubview:_itemLbl];
+        
+        UILabel *lbl_title=[[UILabel alloc] init];
+        
+        
+        if (lbl_shelf_code==nil) {
+            lbl_title=[[UILabel alloc] init];
+            lbl_title.textAlignment=NSTextAlignmentLeft;
+            lbl_title.textColor=COLOR_DARKGRAY;
+            lbl_title.font=FONT_SIZE_SMALL;
+            lbl_title.text=@"货架位置:";
+            [self.contentView addSubview:lbl_title];
             
-            [_itemLbl mas_makeConstraints:^(MASConstraintMaker *make) {
+            [lbl_title mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.top.mas_equalTo(12);
+                make.left.mas_equalTo(_iconImageView.mas_right).offset(10);
+                make.size.mas_equalTo(CGSizeMake(68, 22));
+            }];
+            
+            lbl_shelf_code=[[UILabel alloc] init];
+            lbl_shelf_code.textAlignment=NSTextAlignmentLeft;
+            lbl_shelf_code.textColor=COLOR_BLACK;
+            lbl_shelf_code.font=FONT_SIZE_SMALL;
+            [self.contentView addSubview:lbl_shelf_code];
+            
+            [lbl_shelf_code mas_makeConstraints:^(MASConstraintMaker *make) {
                 @strongify(self);
-                make.top.mas_equalTo(self.mas_top).offset(10);
-                make.left.mas_equalTo(_iconImageView.mas_right).offset(10);
+                make.top.mas_equalTo(12);
+                make.left.mas_equalTo(lbl_title.mas_right);
                 make.right.mas_equalTo(self.mas_right).offset(-10);
+                make.height.mas_equalTo(22);
             }];
         }
         
-        if (_numLbl==nil) {
-            _numLbl=[[UILabel alloc] init];
-            _numLbl.textAlignment=NSTextAlignmentRight;
-            _numLbl.textColor=COLOR_DARKGRAY;
-            _numLbl.font=FONT_SIZE_SMALL;
-            [self.contentView addSubview:_numLbl];
+        if (lbl_box_mark==nil) {
+            lbl_box_mark=[[UILabel alloc] init];
+            lbl_box_mark.textAlignment=NSTextAlignmentCenter;
+            lbl_box_mark.backgroundColor=COLOR_RED;
+            lbl_box_mark.font=DEFAULT_FONT(11.0);
+            lbl_box_mark.clipsToBounds=YES;
+            lbl_box_mark.textColor=COLOR_WHITE;
+            [lbl_box_mark.layer setCornerRadius:7];
+            lbl_box_mark.layer.borderColor = COLOR_WHITE.CGColor;
+            [lbl_box_mark.layer setBorderWidth:0.5];
+            lbl_box_mark.text=@"";
+            lbl_box_mark.layer.shouldRasterize = YES;
+            [self.contentView addSubview:lbl_box_mark];
             
-            [_numLbl mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.top.mas_equalTo(_itemLbl.mas_bottom).offset(6);
-                make.right.mas_equalTo(-8);
-                make.size.mas_equalTo(CGSizeMake(40, 20));
+            [lbl_box_mark mas_makeConstraints:^(MASConstraintMaker *make) {
+                @strongify(self);
+                make.top.mas_equalTo(14);
+                make.right.mas_equalTo(self.mas_right).offset(-14);
+                make.size.mas_equalTo(CGSizeMake(14, 14));
             }];
+            
         }
         
-        if (_priceLbl==nil) {
-            _priceLbl=[[UILabel alloc] init];
-            _priceLbl.textAlignment=NSTextAlignmentLeft;
-            _priceLbl.textColor=COLOR_GRAY;
-            _priceLbl.font=FONT_SIZE_SMALL;
-            [self.contentView addSubview:_priceLbl];
+        if (lbl_goods_number==nil) {
+            lbl_title=[[UILabel alloc] init];
+            lbl_title.textAlignment=NSTextAlignmentLeft;
+            lbl_title.textColor=COLOR_DARKGRAY;
+            lbl_title.font=FONT_SIZE_SMALL;
+            lbl_title.text=@"拣货数量:";
+            [self.contentView addSubview:lbl_title];
             
-            [_priceLbl mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.top.mas_equalTo(_itemLbl.mas_bottom).offset(6);
+            [lbl_title mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.top.mas_equalTo(lbl_shelf_code.mas_bottom).offset(2);
                 make.left.mas_equalTo(_iconImageView.mas_right).offset(10);
-                make.size.mas_equalTo(CGSizeMake(60, 20));
+                make.size.mas_equalTo(CGSizeMake(68, 22));
+            }];
+            
+            lbl_goods_number=[[UILabel alloc] init];
+            lbl_goods_number.textAlignment=NSTextAlignmentLeft;
+            lbl_goods_number.textColor=COLOR_MAIN;
+            lbl_goods_number.font=FONT_SIZE_SMALL;
+            [self.contentView addSubview:lbl_goods_number];
+            
+            [lbl_goods_number mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.top.mas_equalTo(lbl_shelf_code.mas_bottom).offset(2);
+                make.left.mas_equalTo(lbl_title.mas_right);
+                make.size.mas_equalTo(CGSizeMake(60, 23));
             }];
         }
         
-        if (_totalPriceLbl==nil) {
-            _totalPriceLbl=[[UILabel alloc] init];
-            _totalPriceLbl.textAlignment=NSTextAlignmentLeft;
-            _totalPriceLbl.textColor=COLOR_MAIN;
-            _totalPriceLbl.font=FONT_SIZE_MIDDLE;
-            [self.contentView addSubview:_totalPriceLbl];
+        if (lbl_box_name==nil) {
+            lbl_title=[[UILabel alloc] init];
+            lbl_title.textAlignment=NSTextAlignmentLeft;
+            lbl_title.textColor=COLOR_DARKGRAY;
+            lbl_title.font=FONT_SIZE_SMALL;
+            lbl_title.text=@"货箱标志:";
+            [self.contentView addSubview:lbl_title];
             
-            [_totalPriceLbl mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.bottom.mas_equalTo(-10);
+            [lbl_title mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.top.mas_equalTo(lbl_goods_number.mas_bottom).offset(2);
                 make.left.mas_equalTo(_iconImageView.mas_right).offset(10);
-                make.size.mas_equalTo(CGSizeMake(68, 20));
+                make.size.mas_equalTo(CGSizeMake(68, 22));
+            }];
+            
+            lbl_box_name=[[UILabel alloc] init];
+            lbl_box_name.textAlignment=NSTextAlignmentLeft;
+            lbl_box_name.textColor=COLOR_BLACK;
+            lbl_box_name.font=FONT_SIZE_SMALL;
+            [self.contentView addSubview:lbl_box_name];
+            
+            [lbl_box_name mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.top.mas_equalTo(lbl_goods_number.mas_bottom).offset(2);
+                make.left.mas_equalTo(lbl_title.mas_right);
+                make.size.mas_equalTo(CGSizeMake(80, 24));
             }];
         }
-        
-        
-        if (_shelf_no==nil) {
-            _shelf_no=[[UILabel alloc] init];
-            _shelf_no.textAlignment=NSTextAlignmentCenter;
-            _shelf_no.textColor=COLOR_WHITE;
-            _shelf_no.font=FONT_SIZE_SMALL;
-            _shelf_no.backgroundColor=COLOR_MAIN;
-            _shelf_no.layer.cornerRadius=10;
-            _shelf_no.clipsToBounds=YES;
-            [self.contentView addSubview:_shelf_no];
+
+        if (lbl_goods_name==nil) {
+            lbl_goods_name=[[UILabel alloc] init];
+            lbl_goods_name.textAlignment=NSTextAlignmentLeft;
+            lbl_goods_name.textColor=COLOR_BLACK;
+            lbl_goods_name.font=FONT_SIZE_SMALL;
+            lbl_goods_name.lineBreakMode = NSLineBreakByWordWrapping|NSLineBreakByTruncatingTail;
+            lbl_goods_name.numberOfLines = 2;
+            [self.contentView addSubview:lbl_goods_name];
             
-            [_shelf_no mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.bottom.mas_equalTo(-10);
-                make.right.mas_equalTo(-8);
-                make.size.mas_equalTo(CGSizeMake(76, 20));
+            [lbl_goods_name mas_makeConstraints:^(MASConstraintMaker *make) {
+                @strongify(self);
+                make.top.mas_equalTo(lbl_box_name.mas_bottom).offset(2);
+                make.left.mas_equalTo(_iconImageView.mas_right).offset(10);
+                make.right.mas_equalTo(self.mas_right).offset(-12);
+                make.size.mas_equalTo(CGSizeMake(40, 38));
             }];
         }
     }
@@ -108,11 +154,11 @@
 -(void)layoutSubviews{
     [super layoutSubviews];
     [_iconImageView sd_setImageWithURL:[NSURL URLWithString:self.entity.goods_thumb] placeholderImage:[UIImage imageNamed:@"defaut_list"]];
-    _itemLbl.text=self.entity.goods_name;
-    _numLbl.text=[NSString stringWithFormat:@"×%@",self.entity.number];
-    _shelf_no.text=self.entity.shelves_no;
-    _priceLbl.text=[NSString stringWithFormat:@"$%@/件",self.entity.cost];
-    _totalPriceLbl.text=[NSString stringWithFormat:@"$%@",self.entity.sum];
+    lbl_goods_name.text=self.entity.goods_name;
+    lbl_goods_number.text=[NSString stringWithFormat:@"%@",self.entity.goods_number];
+    lbl_shelf_code.text=self.entity.shelves_code;
+    lbl_box_name.text=@"A1";
+    [lbl_box_name sizeToFit];
 }
 
 

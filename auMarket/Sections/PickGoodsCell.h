@@ -7,17 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "GoodsEntity.h"
+#import <AVFoundation/AVFoundation.h>
+#import "PickGoodsEntity.h"
 
 @interface PickGoodsCell : UITableViewCell
 {
     UIImageView *_iconImageView;
-    UILabel *_itemLbl;
-    UILabel *_numLbl;
-    UILabel *_priceLbl;
-    UILabel *_totalPriceLbl;
-    UILabel *_shelf_no;
+    UILabel *lbl_box_mark;
+    UILabel *lbl_goods_name;
+    UILabel *lbl_goods_number;
+    UILabel *lbl_box_name;
+    UILabel *lbl_shelf_code;
 }
 
-@property(nonatomic,retain) GoodsEntity *entity;
+@property(nonatomic,retain) PickGoodsEntity *entity;
 @end

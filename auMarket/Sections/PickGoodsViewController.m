@@ -19,11 +19,6 @@
 
     [self initUI];
     [self initData];
-    [self addNotification];
-}
-
--(void)dealloc{
-    [self removeNotification];
 }
 
 -(void)initUI{
@@ -33,49 +28,62 @@
 }
 
 -(void)initData{
-    [self loadGoodsInBatch];
+    [self loadPickGoodsList];
 }
 
 -(void)setNavigation{
     self.title=@"拣货";
 }
 
--(void)addNotification{
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadGoodsInBatch) name:@"RELOAD_GOODS_LIST" object:nil];
-}
-
-- (void)removeNotification{
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"RELOAD_GOODS_LIST" object:nil];
-}
-
 -(void)createCategoryView{
     UIView *blockView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, CATEGORY_BAR)];
-    blockView.backgroundColor=COLOR_BG_VIEW;
+    blockView.backgroundColor=COLOR_BG_WHITE;
     CALayer *layer = [CALayer layer];
     layer.frame = CGRectMake(0, blockView.frame.size.height-0.5, blockView.frame.size.width, 0.5);
     layer.backgroundColor = COLOR_BG_LINE_DARK.CGColor;
     [blockView.layer addSublayer:layer];
     [self.view addSubview:blockView];
     
-    
     btn_picking=[UIButton buttonWithType:UIButtonTypeCustom];
-    [btn_picking setTitle:@"拣货中" forState:UIControlStateNormal];
+    [btn_picking setTitle:@"正在拣货" forState:UIControlStateNormal];
+    [btn_picking setTitleColor:COLOR_DARKGRAY forState:UIControlStateNormal];
+    [btn_picking setTitleColor:COLOR_MAIN forState:UIControlStateSelected];
     btn_picking.titleLabel.textAlignment=NSTextAlignmentCenter;
     btn_picking.tintColor=COLOR_WHITE;
-    btn_picking.titleLabel.font=FONT_SIZE_MIDDLE;
+    btn_picking.titleLabel.font=FONT_SIZE_SMALL;
+    btn_picking.selected=YES;
     [btn_picking addTarget:self action:@selector(gotoAddGoodsViewController) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:btn_picking];
     
     [btn_picking mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(blockView.top).offset(12);
-        make.size.mas_equalTo(CGSizeMake(100, 20));
-        make.right.mas_equalTo(blockView.mas_right).offset(-10);
+        make.top.mas_equalTo(0);
+        make.left.mas_equalTo(0);
+        make.width.mas_equalTo(WIDTH_SCREEN/2);
+        make.height.mas_equalTo(blockView.mas_height);
+    }];
+    
+    btn_picked=[UIButton buttonWithType:UIButtonTypeCustom];
+    [btn_picked setTitle:@"拣货完成" forState:UIControlStateNormal];
+    [btn_picked setTitleColor:COLOR_DARKGRAY forState:UIControlStateNormal];
+    [btn_picked setTitleColor:COLOR_MAIN forState:UIControlStateSelected];
+    btn_picked.titleLabel.textAlignment=NSTextAlignmentCenter;
+    btn_picked.tintColor=COLOR_WHITE;
+    btn_picked.titleLabel.font=FONT_SIZE_SMALL;
+    [btn_picked addTarget:self action:@selector(gotoAddGoodsViewController) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:btn_picked];
+    
+    
+    [btn_picked mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(0);
+        make.left.mas_equalTo(WIDTH_SCREEN/2);
+        make.width.mas_equalTo(WIDTH_SCREEN/2);
+        make.height.mas_equalTo(blockView.mas_height);
     }];
 }
 
 -(void)setUpTableView{
-    float table_height=HEIGHT_SCREEN-64-GOODS_SUM_BAR-10-DONE_ACTION_BAR;
-    self.tableView=[[SPBaseTableView alloc] initWithFrame:CGRectMake(0, GOODS_SUM_BAR+10, WIDTH_SCREEN,table_height) style:UITableViewStylePlain];
+    float table_height=HEIGHT_SCREEN-64-CATEGORY_BAR;
+    self.tableView=[[SPBaseTableView alloc] initWithFrame:CGRectMake(0, CATEGORY_BAR, WIDTH_SCREEN,table_height) style:UITableViewStylePlain];
     self.tableView.separatorStyle=UITableViewCellSeparatorStyleSingleLine;
     self.tableView.separatorColor=COLOR_BG_TABLESEPARATE;
     self.tableView.backgroundColor=COLOR_BG_TABLEVIEW;
@@ -89,20 +97,16 @@
 }
 
 
-//请求订单下的商品信息
--(void)loadGoodsInBatch{
+//请求订单下的要拣货的商品
+-(void)loadPickGoodsList{
     [self startLoadingActivityIndicator];
-    [self.model loadBindGoodsWithBatchId:self.batch_id];
+    [self.model loadGoodsListWithOrderIds:self.order_ids];
 }
-
-
 
 -(void)onResponse:(SPBaseModel *)model isSuccess:(BOOL)isSuccess{
     [self stopLoadingActivityIndicator];
     if(model==self.model&&self.model.requestTag==1002){
         if(isSuccess){
-            lbl_sumPrice.text=[NSString  stringWithFormat:@"$%@",self.model.goods_list_entity.sum];
-            lbl_goodsNum.text=[NSString  stringWithFormat:@"(%@件商品)",self.model.goods_list_entity.goods_count];
             [self.tableView reloadData];
         }
         else{
@@ -121,7 +125,7 @@
 
 - (NSInteger)tableView:(UITableView *)tv numberOfRowsInSection:(NSInteger)section
 {
-    return self.model.goods_list_entity.list.count;
+    return self.model.pickGoodsListEntity.list.count;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -136,9 +140,9 @@
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *identifier=@"BindCellIdentifier";
-    GoodsBindCell *cell = [tv dequeueReusableCellWithIdentifier:identifier];
+    PickGoodsCell *cell = [tv dequeueReusableCellWithIdentifier:identifier];
     if (cell == nil) {
-        cell = [[GoodsBindCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
+        cell = [[PickGoodsCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
         cell.showsReorderControl = NO;
         cell.accessoryType=UITableViewCellAccessoryNone;
         cell.backgroundColor=COLOR_BG_TABLEVIEWCELL;
@@ -147,14 +151,14 @@
         cell.textLabel.textColor=COLOR_DARKGRAY;
     }
     
-    GoodsEntity *entity=[self.model.goods_list_entity.list objectAtIndex:indexPath.row];
+    PickGoodsEntity *entity=[self.model.pickGoodsListEntity.list objectAtIndex:indexPath.row];
     cell.entity=entity;
     
     return cell;
 }
 
 -(CGFloat)tableView:(UITableView *)tv heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 108;
+    return 132;
 }
 
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -163,16 +167,10 @@
 }
 
 
--(void)gotoAddGoodsViewController{
-    StockViewController *svc=[[StockViewController alloc] init];
-    svc.batch_id=self.batch_id;
-    [self.navigationController pushViewController:svc animated:YES];
-}
 
-
--(StockModel *)model{
+-(PickModel *)model{
     if(!_model){
-        _model=[[StockModel alloc] init];
+        _model=[[PickModel alloc] init];
         _model.delegate=self;
     }
     return _model;

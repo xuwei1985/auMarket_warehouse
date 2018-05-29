@@ -137,7 +137,7 @@
             [lbl_order_goods_num_value mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.top.mas_equalTo(lbl_order_price_value.mas_bottom).offset(4);
                 make.left.mas_equalTo(lbl_order_goods_num.mas_right);
-                make.size.mas_equalTo(CGSizeMake(120, 20));
+                make.size.mas_equalTo(CGSizeMake(150, 20));
             }];
         }
         
@@ -150,7 +150,7 @@
             [self.contentView addSubview:lbl_bind_tip];
             
             [lbl_bind_tip mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.bottom.mas_equalTo(self.mas_bottom).offset(-12);
+                make.bottom.mas_equalTo(self.mas_bottom).offset(-14);
                 make.left.mas_equalTo(btn_select.mas_right).offset(15);
                 make.size.mas_equalTo(CGSizeMake(90, 18));
             }];
@@ -162,15 +162,19 @@
             lbl_bind_mark.textColor=COLOR_WHITE;
             lbl_bind_mark.backgroundColor=COLOR_MAIN;
             lbl_bind_mark.font=DEFAULT_FONT(10);
-            lbl_bind_mark.text=@"!";
+            lbl_bind_mark.text=@"";
+            lbl_bind_mark.hidden=YES;
             lbl_bind_mark.textAlignment=NSTextAlignmentCenter;
-            lbl_bind_mark.layer.cornerRadius=7;
             lbl_bind_mark.clipsToBounds=YES;
+            lbl_bind_mark.layer.cornerRadius=7.0f;
+            lbl_bind_mark.layer.borderColor = COLOR_WHITE.CGColor;
+            [lbl_bind_mark.layer setBorderWidth:0.5];
+            lbl_bind_mark.layer.shouldRasterize = YES;
             [self.contentView addSubview:lbl_bind_mark];
             
             [lbl_bind_mark mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.bottom.mas_equalTo(self.mas_bottom).offset(-14);
-                make.left.mas_equalTo(lbl_bind_tip.mas_right).offset(4);
+                make.bottom.mas_equalTo(self.mas_bottom).offset(-17);
+                make.right.mas_equalTo(self.mas_right).offset(-15);
                 make.size.mas_equalTo(CGSizeMake(14, 14));
             }];
         }
@@ -189,7 +193,7 @@
             [self.contentView addSubview:btn_type_freeze];
             
             [btn_type_freeze mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.bottom.mas_equalTo(lbl_bind_tip.mas_top).offset(3);
+                make.bottom.mas_equalTo(lbl_bind_tip.mas_top).offset(0);
                 make.left.mas_equalTo(btn_select.mas_right).offset(15);
                 make.size.mas_equalTo(CGSizeMake(60, 32));
             }];
@@ -209,7 +213,7 @@
             [self.contentView addSubview:btn_type_zero];
             
             [btn_type_zero mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.bottom.mas_equalTo(lbl_bind_tip.mas_top).offset(3);
+                make.bottom.mas_equalTo(lbl_bind_tip.mas_top).offset(0);
                 make.left.mas_equalTo(btn_type_freeze.mas_right).offset(5);
                 make.size.mas_equalTo(CGSizeMake(60, 32));
             }];
@@ -229,7 +233,7 @@
             [self.contentView addSubview:btn_type_box];
             
             [btn_type_box mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.bottom.mas_equalTo(lbl_bind_tip.mas_top).offset(3);
+                make.bottom.mas_equalTo(lbl_bind_tip.mas_top).offset(0);
                 make.left.mas_equalTo(btn_type_zero.mas_right).offset(5);
                 make.size.mas_equalTo(CGSizeMake(60, 32));
             }];
@@ -240,7 +244,40 @@
 
 
 -(void)selOrder:(UIButton *)sender{
-    sender.selected=!sender.selected;
+    if(self.entity.box!=nil&&[self.entity.box length]>0){
+        sender.selected=!sender.selected;
+        self.entity.selected=sender.selected;
+        if(self.entity.selected){
+            self.selOrderBlock(self.entity.order_id,1);//选中
+        }
+        else{
+            self.selOrderBlock(self.entity.order_id,0);//取消
+        }
+    }
+    else{
+        sender.selected=NO;
+        self.selOrderBlock(self.entity.order_id,-1);//禁止
+    }
+}
+
+-(void)selOrderId:(SelOrderBlock)block
+{
+    self.selOrderBlock = block;
+}
+
+-(void)toggleOrderSel{
+    if(self.entity.box!=nil&&[self.entity.box length]>0){
+        self.entity.selected=!self.entity.selected;
+        if(self.entity.selected){
+            self.selOrderBlock(self.entity.order_id,1);//选中
+        }
+        else{
+            self.selOrderBlock(self.entity.order_id,0);//取消
+        }
+    }
+    else{
+        self.selOrderBlock(self.entity.order_id,-1);//禁止
+    }
 }
 
 -(void)layoutSubviews{
@@ -254,6 +291,42 @@
     btn_type_zero.hidden=[self.entity.attribute.cold intValue]<=0;
     btn_type_box.hidden=[self.entity.attribute.package intValue]<=0;
     
+    
+    if(btn_type_freeze.hidden){
+        [btn_type_zero mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.bottom.mas_equalTo(lbl_bind_tip.mas_top).offset(0);
+            make.left.mas_equalTo(btn_select.mas_right).offset(15);
+            make.size.mas_equalTo(CGSizeMake(60, 32));
+        }];
+    }
+    
+    if(btn_type_zero.hidden){
+        [btn_type_box mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.bottom.mas_equalTo(lbl_bind_tip.mas_top).offset(0);
+            make.left.mas_equalTo(btn_type_freeze.mas_right).offset(5);
+            make.size.mas_equalTo(CGSizeMake(60, 32));
+        }];
+    }
+    
+    btn_select.selected=self.entity.selected;
+    
+    if(self.entity.box&&[self.entity.box length]>0){
+        NSRange range = [self.entity.box rangeOfString:@"-"];
+        lbl_bind_tip.text=[NSString stringWithFormat:@"拣货箱：%@",[self.entity.box substringToIndex:range.location]];
+        lbl_bind_tip.textColor=COLOR_DARKGRAY;
+        
+        if (range.location != NSNotFound) {
+            lbl_bind_mark.backgroundColor=[Common hexColor:[self.entity.box substringFromIndex:range.location+1]];
+            lbl_bind_mark.text=@"";
+            lbl_bind_mark.hidden=NO;
+        }
+    }
+    else{
+        lbl_bind_tip.text=@"待绑定拣货箱";
+        lbl_bind_tip.textColor=COLOR_MAIN;
+        lbl_bind_mark.backgroundColor=COLOR_MAIN;
+        lbl_bind_mark.hidden=YES;
+    }
 }
 
 

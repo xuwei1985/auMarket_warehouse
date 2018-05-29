@@ -524,32 +524,32 @@
 -(BOOL)checkEntity:(RukuGoodsEntity*)entity{
     if(entity){
         if(entity.batch_id==nil||entity.batch_id.length<=0){
-            [self showToastBottomWithText:@"缺少入库批次信息"];
+            [self showToastWithText:@"缺少入库批次信息"];
             return NO;
         }
         else if(entity.goods_code==nil||entity.goods_code.length<=0){
-            [self showToastBottomWithText:@"缺少商品条形码"];
+            [self showToastWithText:@"缺少商品条形码"];
             return NO;
         }
         else if(entity.shelves_code==nil||entity.shelves_code.length<=0){
-            [self showToastBottomWithText:@"缺少货架号"];
+            [self showToastWithText:@"缺少货架号"];
             return NO;
         }
         else if(entity.number==nil||entity.number.length<=0||[entity.number intValue]<=0){
-            [self showToastBottomWithText:@"无有效的商品数量"];
+            [self showToastWithText:@"无有效的商品数量"];
             return NO;
         }
         else if(entity.cost==nil||entity.cost.length<=0||[entity.cost intValue]<0){
-            [self showToastBottomWithText:@"无有效的商品进价"];
+            [self showToastWithText:@"无有效的商品进价"];
             return NO;
         }
         else if(entity.expired_date==nil||entity.expired_date.length<=0){
-            [self showToastBottomWithText:@"缺少保质期信息"];
+            [self showToastWithText:@"缺少保质期信息"];
             return NO;
         }
     }
     else{
-        [self showToastBottomWithText:@"无效信息"];
+        [self showToastWithText:@"无效信息"];
         return NO;
     }
     return YES;
@@ -587,11 +587,11 @@
         [self.tableView reloadData];
     }
     else{
-        if([[obj objectForKey:@"scan_model"] intValue]==0){//商品条形码
+        if([[obj objectForKey:@"scan_model"] intValue]==SCAN_GOODS){//商品条形码
             self.goods_code=[obj objectForKey:@"code"];
             [self searchGoodsWithCode:self.goods_code];
         }
-        else if([[obj objectForKey:@"scan_model"] intValue]==1){//货架条形码
+        else if([[obj objectForKey:@"scan_model"] intValue]==SCAN_SHELF){//货架条形码
             self.shelf_code=[obj objectForKey:@"code"];
         }
         [self.tableView reloadData];
