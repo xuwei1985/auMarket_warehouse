@@ -9,10 +9,13 @@
 #import "SPBaseViewController.h"
 #import "GoodsShelfCell.h"
 #import "GoodsEntity.h"
+#import "TransferModel.h"
 
 @interface GoodsShelfViewController : SPBaseViewController<UITextFieldDelegate>
 {
     UIAlertView *_inputAlertView;
 }
 @property(nonatomic,retain) GoodsEntity *goods_entity;
+@property(nonatomic,retain) TransferModel *model;
+@property(nonatomic,retain) NSString *goods_shelf;//用于拣货中的商品过来转移库存使用
 @end

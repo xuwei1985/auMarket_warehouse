@@ -12,6 +12,6 @@
 @property (nonatomic,retain) ShelfEntity *entity;
 
 
--(void)loadShelfList:(NSString *)goods_id;
-
+-(void)goodsShelfList:(NSString *)goods_id andGoodsCode:(NSString *)goods_code andShelf:(NSString *)shelf_code;
+-(void)addTransferToStack:(NSString *)goods_id andNewShelf:(NSString *)shelf andNumber:(NSString *)num;
 @end

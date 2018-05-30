@@ -47,7 +47,7 @@
             lbl_order_sn_value=[[UILabel alloc] init];
             lbl_order_sn_value.textColor=COLOR_BLACK;
             lbl_order_sn_value.font=FONT_SIZE_SMALL;
-            lbl_order_sn_value.text=@"201834857";
+            lbl_order_sn_value.text=@"--";
             [self.contentView addSubview:lbl_order_sn_value];
             
             [lbl_order_sn_value mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -76,7 +76,7 @@
             lbl_order_region_value=[[UILabel alloc] init];
             lbl_order_region_value.textColor=COLOR_BLACK;
             lbl_order_region_value.font=FONT_SIZE_SMALL;
-            lbl_order_region_value.text=@"2019.10.02";
+            lbl_order_region_value.text=@"--";
             [self.contentView addSubview:lbl_order_region_value];
             
             [lbl_order_region_value mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -185,6 +185,8 @@
 
 -(void)layoutSubviews{
     [super layoutSubviews];
+    lbl_order_sn_value.text=self.entity.shelves_code;
+    lbl_order_region_value.text=self.entity.expired_date;
 }
 
 

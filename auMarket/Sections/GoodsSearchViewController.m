@@ -250,10 +250,11 @@
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tv deselectRowAtIndexPath:[tv indexPathForSelectedRow] animated:YES];
+    
+    [self disMissSearch];
     if([self.pass_delegate respondsToSelector:@selector(passObject:)]){
         [self.pass_delegate passObject:[self.model.entity.list objectAtIndex:indexPath.row]];
     }
-    [self disMissSearch];
 }
 
 

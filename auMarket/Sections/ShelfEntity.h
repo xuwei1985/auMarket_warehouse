@@ -15,11 +15,12 @@
 @end
 
 @interface ShelfItemEntity : SPBaseEntity
-@property (nonatomic,retain) NSString *order_id;
-@property (nonatomic,retain) NSString *order_sn;
-@property (nonatomic,retain) NSString *total_price;
-@property (nonatomic,retain) NSString *goods_count;
-@property (nonatomic,retain) NSString *region_name;
-@property (nonatomic,retain) NSString *box;//绑定的货箱码
-@property (nonatomic,assign) BOOL selected;//是否选中
+@property (nonatomic,retain) NSString *inventory;
+@property (nonatomic,retain) NSString *shelves_id;
+@property (nonatomic,retain) NSString *batch_id;
+@property (nonatomic,retain) NSString *expired_date;
+@property (nonatomic,retain) NSString *created_at;
+@property (nonatomic,retain) NSString *batch_no;
+@property (nonatomic,retain) NSString *shelves_code;
+@property (nonatomic,retain) NSString *number;
 @end

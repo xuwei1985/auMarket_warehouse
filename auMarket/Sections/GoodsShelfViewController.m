@@ -23,7 +23,7 @@
 }
 
 -(void)initData{
-    
+    [self loadGoodsShelves];
 }
 
 -(void)initUI{
@@ -91,9 +91,6 @@
     return goods_view;
 }
 
--(void)selectAllOrders:(UIButton *)sender{
-    
-}
 
 #pragma mark - Table view delegate
 
@@ -104,7 +101,7 @@
 
 - (NSInteger)tableView:(UITableView *)tv numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    return [self.model.entity.list count];
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -127,7 +124,8 @@
         cell.backgroundColor=COLOR_BG_TABLEVIEWCELL;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
-
+    ShelfItemEntity *entity=[self.model.entity.list objectAtIndex:indexPath.row];
+    cell.entity=entity;
     return cell;
 }
 
@@ -156,6 +154,26 @@
     editingStyle = UITableViewCellEditingStyleDelete;
 }
 
+
+-(void)loadGoodsShelves{
+    [self startLoadingActivityIndicator];
+    [self.model goodsShelfList:self.goods_entity.goods_id andGoodsCode:self.goods_entity.goods_code andShelf:self.goods_shelf];
+}
+
+-(void)onResponse:(SPBaseModel *)model isSuccess:(BOOL)isSuccess{
+    [self stopLoadingActivityIndicator];
+    
+    if(model==self.model){
+        if(model.requestTag==1001){//获取货架列表
+            if(self.model.entity.list!=nil&&self.model.entity.list.count>0){
+                
+            }
+            else{
+                
+            }
+        }
+    }
+}
 
 -(void)showInputBox{
     NSString *tip_title=@"";
@@ -203,6 +221,14 @@
 
 -(void)gotoMyCartView{
     
+}
+
+-(TransferModel *)model{
+    if(!_model){
+        _model=[[TransferModel alloc] init];
+        _model.delegate=self;
+    }
+    return _model;
 }
 
 -(void)viewWillAppear:(BOOL)animated{
