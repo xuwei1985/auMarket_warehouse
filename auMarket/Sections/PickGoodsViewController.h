@@ -15,6 +15,7 @@
 {
     UIButton *btn_picking;
     UIButton *btn_picked;
+    int list_type;
 }
 @property(nonatomic,retain) PickModel *model;
 @property(nonatomic,retain) NSString *order_ids;

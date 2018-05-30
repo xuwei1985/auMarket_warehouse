@@ -33,6 +33,7 @@
 
 -(void)setNavigation{
     self.title=@"拣货";
+    list_type=0;
 }
 
 -(void)createCategoryView{
@@ -100,7 +101,7 @@
 //请求订单下的要拣货的商品
 -(void)loadPickGoodsList{
     [self startLoadingActivityIndicator];
-    [self.model loadGoodsListWithOrderIds:self.order_ids];
+    [self.model loadGoodsListWithOrderIds:self.order_ids andListType:list_type];
 }
 
 -(void)onResponse:(SPBaseModel *)model isSuccess:(BOOL)isSuccess{

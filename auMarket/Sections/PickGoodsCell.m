@@ -99,7 +99,7 @@
             [lbl_goods_number mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.top.mas_equalTo(lbl_shelf_code.mas_bottom).offset(2);
                 make.left.mas_equalTo(lbl_title.mas_right);
-                make.size.mas_equalTo(CGSizeMake(60, 23));
+                make.size.mas_equalTo(CGSizeMake(60, 22));
             }];
         }
         
@@ -126,7 +126,7 @@
             [lbl_box_name mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.top.mas_equalTo(lbl_goods_number.mas_bottom).offset(2);
                 make.left.mas_equalTo(lbl_title.mas_right);
-                make.size.mas_equalTo(CGSizeMake(80, 24));
+                make.size.mas_equalTo(CGSizeMake(80, 22));
             }];
         }
 
@@ -157,8 +157,11 @@
     lbl_goods_name.text=self.entity.goods_name;
     lbl_goods_number.text=[NSString stringWithFormat:@"%@",self.entity.goods_number];
     lbl_shelf_code.text=self.entity.shelves_code;
-    lbl_box_name.text=@"A1";
-    [lbl_box_name sizeToFit];
+    [lbl_goods_name sizeToFit];
+    
+    NSRange range = [self.entity.box rangeOfString:@"-"];
+    lbl_box_name.text=[NSString stringWithFormat:@"%@",[self.entity.box substringToIndex:range.location]];
+    lbl_box_mark.backgroundColor=[Common hexColor:[self.entity.box substringFromIndex:range.location+1]];
 }
 
 
