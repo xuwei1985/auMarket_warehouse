@@ -122,6 +122,9 @@
 		A975688820B5425D003DC139 /* zy_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A975688420B5425D003DC139 /* zy_0@2x.png */; };
 		A975688B20B7072E003DC139 /* GoodsShelfCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A975688920B7072E003DC139 /* GoodsShelfCell.m */; };
 		A975689120B70E5C003DC139 /* GoodsShelfViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A975688F20B70E5C003DC139 /* GoodsShelfViewController.m */; };
+		A97F6C7020BE76E400F98EA4 /* no_data@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A97F6C6F20BE76E400F98EA4 /* no_data@2x.png */; };
+		A97F6C7320BEBBB600F98EA4 /* ShelfEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = A97F6C7120BEBBB500F98EA4 /* ShelfEntity.m */; };
+		A97F6C7620BEBC2A00F98EA4 /* TransferModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A97F6C7520BEBC2A00F98EA4 /* TransferModel.m */; };
 		A982F78F1E0FA87E00DB4C13 /* sign_weixin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A982F78E1E0FA87E00DB4C13 /* sign_weixin@2x.png */; };
 		A982F79A1E1107DA00DB4C13 /* grayline@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A982F7991E1107DA00DB4C13 /* grayline@2x.png */; };
 		A99FB2442006022A005AF4AE /* StockViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A99FB2432006022A005AF4AE /* StockViewController.m */; };
@@ -413,6 +416,11 @@
 		A975688A20B7072E003DC139 /* GoodsShelfCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoodsShelfCell.h; sourceTree = "<group>"; };
 		A975688F20B70E5C003DC139 /* GoodsShelfViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoodsShelfViewController.m; sourceTree = "<group>"; };
 		A975689020B70E5C003DC139 /* GoodsShelfViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoodsShelfViewController.h; sourceTree = "<group>"; };
+		A97F6C6F20BE76E400F98EA4 /* no_data@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "no_data@2x.png"; sourceTree = "<group>"; };
+		A97F6C7120BEBBB500F98EA4 /* ShelfEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelfEntity.m; sourceTree = "<group>"; };
+		A97F6C7220BEBBB500F98EA4 /* ShelfEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelfEntity.h; sourceTree = "<group>"; };
+		A97F6C7420BEBC2A00F98EA4 /* TransferModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferModel.h; sourceTree = "<group>"; };
+		A97F6C7520BEBC2A00F98EA4 /* TransferModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransferModel.m; sourceTree = "<group>"; };
 		A982F78E1E0FA87E00DB4C13 /* sign_weixin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sign_weixin@2x.png"; sourceTree = "<group>"; };
 		A982F7991E1107DA00DB4C13 /* grayline@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grayline@2x.png"; sourceTree = "<group>"; };
 		A99FB2422006022A005AF4AE /* StockViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StockViewController.h; sourceTree = "<group>"; };
@@ -1036,6 +1044,10 @@
 		A975688D20B70739003DC139 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				A97F6C7220BEBBB500F98EA4 /* ShelfEntity.h */,
+				A97F6C7120BEBBB500F98EA4 /* ShelfEntity.m */,
+				A97F6C7420BEBC2A00F98EA4 /* TransferModel.h */,
+				A97F6C7520BEBC2A00F98EA4 /* TransferModel.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -1127,6 +1139,7 @@
 		A9FBC1C61DF93838005ECDDE /* images */ = {
 			isa = PBXGroup;
 			children = (
+				A97F6C6F20BE76E400F98EA4 /* no_data@2x.png */,
 				A9E40EC120B7F79300024C79 /* hs@2x.png */,
 				A9E40EC220B7F79300024C79 /* jhz@2x.png */,
 				A9E40EBF20B7F25600024C79 /* transfer_cart@2x.png */,
@@ -1355,6 +1368,7 @@
 				A9D7E27320B2D90400E02AAA /* AliRefundKit_select_normal@3x.png in Resources */,
 				A9E40EC420B7F79300024C79 /* jhz@2x.png in Resources */,
 				A968117E20497B18008604AC /* Qcodesound.caf in Resources */,
+				A97F6C7020BE76E400F98EA4 /* no_data@2x.png in Resources */,
 				A9F560401FFE68B500EA8116 /* batch_add@2x.png in Resources */,
 				A94A271020B0334E0025A438 /* stock_scan@2x.png in Resources */,
 				A95E109C1DF80ED000660E42 /* Assets.xcassets in Resources */,
@@ -1546,6 +1560,7 @@
 				A968118420497E80008604AC /* QRCodeViewController.m in Sources */,
 				A91EBD4C1FFE115E00DA9D68 /* InformationViewController.m in Sources */,
 				A95E11571DF84E1A00660E42 /* UIView+Toast.m in Sources */,
+				A97F6C7320BEBBB600F98EA4 /* ShelfEntity.m in Sources */,
 				A91EBD711FFE2CB200DA9D68 /* BatchCell.m in Sources */,
 				A95E11431DF8491600660E42 /* NSString+YP.m in Sources */,
 				A9AD42BD1E13B6DC00A4B131 /* ImageRotatorView.m in Sources */,
@@ -1561,6 +1576,7 @@
 				A9FBC1EE1DF96A38005ECDDE /* SPBaseViewController.m in Sources */,
 				A9D7E26620B26D9900E02AAA /* PickOrderCell.m in Sources */,
 				A9187C111DF9ABB200A3E902 /* UserCenterViewController.m in Sources */,
+				A97F6C7620BEBC2A00F98EA4 /* TransferModel.m in Sources */,
 				A9D7E27E20B2DDAB00E02AAA /* GoodsListItemCel.m in Sources */,
 				A91EBD491FFE112900DA9D68 /* PickViewController.m in Sources */,
 				A968117F20497B18008604AC /* QRCodeScanView.m in Sources */,

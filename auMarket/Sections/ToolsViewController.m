@@ -30,9 +30,9 @@
     dic2=[[NSMutableDictionary alloc] initWithObjectsAndKeys:@"盘点库存",@"item_name",@"goods_tansfer",@"item_icon",@"",@"item_value", nil];
     
     item_childs_1=[NSArray arrayWithObjects:dic1, nil];
-    item_childs_2=[NSArray arrayWithObjects:dic1, nil];
+    item_childs_2=[NSArray arrayWithObjects:dic2, nil];
     [itemArr addObject:item_childs_1];
-    [itemArr addObject:item_childs_2];
+    
 }
 
 -(void)initUI{

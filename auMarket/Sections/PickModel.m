@@ -48,6 +48,26 @@
     [self loadInner];
 }
 
+//设定生成开始
+-(void)beginOrders:(NSString *)order_ids{
+    self.parseDataClassType = [SPBaseEntity class];
+    SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
+    self.shortRequestAddress= [NSString stringWithFormat:@"v1/pick/begin?order_id=%@&token=%@",order_ids,user.user_token];
+    self.params = @{};
+    self.requestTag=1004;
+    [self loadInner];
+}
+
+//确认商品拣货
+-(void)finishGoodsPick:(NSString *)rec_id andOrderId:(NSString *)order_id{
+    self.parseDataClassType = [SPBaseEntity class];
+    SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
+    self.shortRequestAddress= [NSString stringWithFormat:@"v1/pick/picking?order_id=%@&rec_id=%@&token=%@",order_id,rec_id,user.user_token];
+    self.params = @{};
+    self.requestTag=1005;
+    [self loadInner];
+}
+
 
 -(void)handleParsedData:(SPBaseEntity*)parsedData{
     if ([parsedData isKindOfClass:[OrderEntity class]]) {
