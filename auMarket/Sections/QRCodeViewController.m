@@ -328,9 +328,13 @@
         // 获取扫描到的信息
         NSString *stringValue = metadataObject.stringValue;
         if([self.pass_delegate respondsToSelector:@selector(passObject:)]){
-            [self.pass_delegate passObject:[NSDictionary dictionaryWithObjectsAndKeys:stringValue,@"code",[NSString stringWithFormat:@"%d",self.scan_model],@"scan_model", nil]];
+            [self.pass_delegate passObject:[NSDictionary dictionaryWithObjectsAndKeys:stringValue,@"code",[NSString stringWithFormat:@"%lu",(unsigned long)self.scan_model],@"scan_model", nil]];
         }
-        [self goBack];
+        
+        dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.4 * NSEC_PER_SEC));
+        dispatch_after(delayTime, dispatch_get_main_queue(), ^{
+            [self goBack];
+        });
 //
 //        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"扫描结果"
 //                                                        message:stringValue
