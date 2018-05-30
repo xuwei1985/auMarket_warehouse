@@ -34,7 +34,7 @@
             lbl_batchNo_prefix=[[UILabel alloc] init];
             lbl_batchNo_prefix.textAlignment=NSTextAlignmentLeft;
             lbl_batchNo_prefix.textColor=COLOR_BLACK;
-            lbl_batchNo_prefix.font=FONT_SIZE_MIDDLE;
+            lbl_batchNo_prefix.font=FONT_SIZE_SMALL;
             lbl_batchNo_prefix.text=@"批次号:";
             [self.contentView addSubview:lbl_batchNo_prefix];
             
@@ -47,7 +47,7 @@
             lbl_batchNo=[[UILabel alloc] init];
             lbl_batchNo.textAlignment=NSTextAlignmentLeft;
             lbl_batchNo.textColor=COLOR_BLACK;
-            lbl_batchNo.font=FONT_SIZE_MIDDLE;
+            lbl_batchNo.font=FONT_SIZE_SMALL;
             [self.contentView addSubview:lbl_batchNo];
             
             [lbl_batchNo mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -63,7 +63,7 @@
             lbl_suppliersName_prefix=[[UILabel alloc] init];
             lbl_suppliersName_prefix.textAlignment=NSTextAlignmentLeft;
             lbl_suppliersName_prefix.textColor=COLOR_BLACK;
-            lbl_suppliersName_prefix.font=FONT_SIZE_MIDDLE_BLOD;
+            lbl_suppliersName_prefix.font=FONT_SIZE_SMALL_BLOD;
             lbl_suppliersName_prefix.text=@"供应商:";
             [self.contentView addSubview:lbl_suppliersName_prefix];
             
@@ -76,7 +76,7 @@
             lbl_suppliersName=[[UILabel alloc] init];
             lbl_suppliersName.textAlignment=NSTextAlignmentLeft;
             lbl_suppliersName.textColor=COLOR_BLACK;
-            lbl_suppliersName.font=FONT_SIZE_MIDDLE_BLOD;
+            lbl_suppliersName.font=FONT_SIZE_SMALL_BLOD;
             [self.contentView addSubview:lbl_suppliersName];
             
             [lbl_suppliersName mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -92,7 +92,7 @@
             lbl_editTime_prefix=[[UILabel alloc] init];
             lbl_editTime_prefix.textAlignment=NSTextAlignmentLeft;
             lbl_editTime_prefix.textColor=COLOR_BLACK;
-            lbl_editTime_prefix.font=FONT_SIZE_MIDDLE;
+            lbl_editTime_prefix.font=FONT_SIZE_SMALL;
             lbl_editTime_prefix.text=@"最后修改:";
             [self.contentView addSubview:lbl_editTime_prefix];
             
@@ -105,7 +105,7 @@
             lbl_editTime=[[UILabel alloc] init];
             lbl_editTime.textAlignment=NSTextAlignmentLeft;
             lbl_editTime.textColor=COLOR_MAIN;
-            lbl_editTime.font=FONT_SIZE_MIDDLE;
+            lbl_editTime.font=FONT_SIZE_SMALL;
             [self.contentView addSubview:lbl_editTime];
             
             [lbl_editTime mas_makeConstraints:^(MASConstraintMaker *make) {

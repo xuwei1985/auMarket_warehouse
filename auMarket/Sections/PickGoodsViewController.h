@@ -15,8 +15,10 @@
 {
     UIButton *btn_picking;
     UIButton *btn_picked;
-    int list_type;
+    UIView *blockView;
+    NSIndexPath *current_confirm_path;
 }
 @property(nonatomic,retain) PickModel *model;
 @property(nonatomic,retain) NSString *order_ids;
+@property(nonatomic,assign) int list_type;
 @end

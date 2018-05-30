@@ -19,7 +19,6 @@
     
     [self initUI];
     [self initData];
-    [self addNotification];
 }
 
 -(void)initData{
@@ -35,16 +34,20 @@
 -(void)setNavigation{
     self.title=@"拣货";
     
-    UIBarButtonItem *left_Item = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"hs"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(gotoMyCartView)];
+    UIBarButtonItem *left_Item = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"hs"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(gotoPickingGoodsView)];
     self.navigationItem.leftBarButtonItem=left_Item;
     
-    UIBarButtonItem *right_Item = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"jhz"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(gotoMyCartView)];
+    UIBarButtonItem *right_Item = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"jhz"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(gotoPickedGoodsView)];
     self.navigationItem.rightBarButtonItem=right_Item;
 }
 
--(void)addNotification{
-    //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onTaskUpdate:) name:TASK_UPDATE_NOTIFICATION object:nil];
-}
+//-(void)addNotification{
+//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadOrders) name:TASK_ORDER_NOTIFICATION object:nil];
+//}
+//
+//- (void)removeNotification{
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"TASK_ORDER_NOTIFICATION" object:nil];
+//}
 
 -(void)createBottomView{
     _summaryView_bottom=[[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, 44)];
@@ -104,9 +107,19 @@
     UIView *view = [UIView new];
     view.backgroundColor = COLOR_CLEAR;
     
-    [self.tableView setTableHeaderView:view];
     [self.tableView setTableFooterView:view];
     [self.view addSubview:self.tableView];
+    
+     MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadOrders)];
+    
+//    [header setTitle:@"加载中..." forState:MJRefreshStateRefreshing]; // 松手刷新
+    header.stateLabel.font = FONT_SIZE_SMALL;
+    header.stateLabel.textColor = COLOR_DARKGRAY;
+    header.automaticallyChangeAlpha = YES;
+    header.lastUpdatedTimeLabel.hidden=YES;
+//    [header beginRefreshing];
+    
+    self.tableView.mj_header=header;
 }
 
 -(void)selectAllOrders:(UIButton *)sender{
@@ -270,7 +283,10 @@
 }
 
 -(void)loadOrders{
-    [self startLoadingActivityIndicator];
+    if(!self.tableView.mj_header.isRefreshing){
+        [self startLoadingActivityIndicator];
+    }
+    
     [self.model loadOrderList];
 }
 
@@ -280,13 +296,29 @@
 }
 
 
+-(void)beginOrders:(NSString *)order_ids{
+    if(order_ids.length>0){
+        [self startLoadingActivityIndicatorWithText:@"生成中"];
+        [self.model beginOrders:order_ids];
+    }
+    else{
+        [self showToastWithText:@"未选择任何订单"];
+    }
+}
+
 -(void)onResponse:(SPBaseModel *)model isSuccess:(BOOL)isSuccess{
     [self stopLoadingActivityIndicator];
     
     if(model==self.model){
         if(model.requestTag==1001){
-            if(self.model.entity.list!=nil&&self.model.entity.list.count>0){
+            [self.tableView.mj_header endRefreshing];
+            if(self.model.entity.list!=nil){
                 [self.tableView reloadData];
+                if([self.model.entity.list count]<=0){
+                    [self showNoContentView];
+                }else{
+                    [self hideNoContentView];
+                }
             }
             else{
                 [self showFailWithText:@"加载订单失败"];
@@ -301,6 +333,18 @@
             else{
                 [self showFailWithText:@"货箱绑定失败"];
             }
+        }
+        else if(model.requestTag==1004){
+            if(isSuccess){
+                PickGoodsViewController *pvc=[[PickGoodsViewController alloc] init];
+                pvc.order_ids=order_ids;
+                isPushToPickGoodsView=YES;
+                [self.navigationController pushViewController:pvc animated:YES];
+            }
+            else{
+                [self showFailWithText:@"拣货订单生成失败"];
+            }
+            
         }
     }
 }
@@ -330,19 +374,29 @@
 }
 
 -(void)gotoPickList{
-    NSString *order_ids= [self getSelectedOrdersId];
+    order_ids= [self getSelectedOrdersId];
     if(order_ids.length>0){
         PickGoodsViewController *pvc=[[PickGoodsViewController alloc] init];
         pvc.order_ids=order_ids;
+        isPushToPickGoodsView=YES;
         [self.navigationController pushViewController:pvc animated:YES];
+//        [self beginOrders:order_ids];
     }
     else{
         [self showToastWithText:@"未选择任何订单"];
     }
 }
 
--(void)gotoPickDoneList{
-    
+-(void)gotoPickingGoodsView{
+    PickGoodsViewController *pvc=[[PickGoodsViewController alloc] init];
+    pvc.list_type=0;
+    [self.navigationController pushViewController:pvc animated:YES];
+}
+
+-(void)gotoPickedGoodsView{
+    PickGoodsViewController *pvc=[[PickGoodsViewController alloc] init];
+    pvc.list_type=1;
+    [self.navigationController pushViewController:pvc animated:YES];
 }
 
 -(PickModel *)model{
@@ -354,6 +408,10 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated{
+    if(isPushToPickGoodsView){
+        isPushToPickGoodsView=NO;
+        [self loadOrders];
+    }
     [super viewWillAppear:animated];
 }
 

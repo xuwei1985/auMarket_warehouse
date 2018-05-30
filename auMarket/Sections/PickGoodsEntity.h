@@ -16,6 +16,7 @@
 
 @interface PickGoodsEntity : SPBaseEntity
 @property (nonatomic,retain) NSString *rec_id;
+@property (nonatomic,retain) NSString *order_id;
 @property (nonatomic,retain) NSString *goods_id;
 @property (nonatomic,retain) NSString *goods_code;
 @property (nonatomic,retain) NSString *goods_name;

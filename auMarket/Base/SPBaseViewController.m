@@ -234,7 +234,7 @@
 -(void)showNoContentViewWithTitle:(NSString*)title subTitle:(NSString*)subTitle icon:(NSString*)imageName button:(UIButton*)button
 {
     if (imageName == nil) {
-        imageName = @"noContent";
+        imageName = @"no_data";
     }
     
     if (self.noContentView == nil) {
@@ -242,8 +242,14 @@
         self.noContentView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, top, WIDTH_SCREEN, CGRectGetHeight(self.view.bounds)-top)];
         self.noContentView.backgroundColor = [UIColor clearColor];
         self.noContentView.showsVerticalScrollIndicator = NO;
+        self.noContentView.scrollEnabled=NO;
         
-        [self.view addSubview:self.noContentView];
+        if(self.tableView){
+            [self.tableView addSubview:self.noContentView];
+        }
+        else{
+            [self.view addSubview:self.noContentView];
+        }
         
         UIView *container = [[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, 667)];
         container.tag = 100;
