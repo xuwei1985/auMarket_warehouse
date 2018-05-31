@@ -18,15 +18,27 @@
     return self;
 }
 
-//加载商品的货架列表
--(void)loadShelfList:(NSString *)goods_id{
-    self.parseDataClassType = [ShelfEntity class];
+//商品的货架列表
+-(void)goodsShelfList:(NSString *)goods_id andGoodsCode:(NSString *)goods_code andShelf:(NSString *)shelf_code{
+    self.parseDataClassType = [ShelfItemEntity class];
     SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
-    self.shortRequestAddress= [NSString stringWithFormat:@"v1/pick/list?page=%@&token=%@",(self.entity.next==nil?@"1":self.entity.next),user.user_token];
+    self.shortRequestAddress= [NSString stringWithFormat:@"v1/ruku-goods/list-by-goods?goods_id=%@&goods_code=%@&shelves_code=%@&token=%@",goods_id,goods_code,shelf_code==nil?@"":shelf_code,user.user_token];
     self.params = @{};
     self.requestTag=1001;
     [self loadInner];
 }
+
+
+//添加待转移的商品到堆栈
+-(void)addTransferToStack:(NSString *)goods_id andNewShelf:(NSString *)shelf andNumber:(NSString *)num{
+    self.parseDataClassType = [SPBaseEntity class];
+    SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
+    self.shortRequestAddress= [NSString stringWithFormat:@"v1/move/add?ruku_goods=%@&new_shelves=%@&number=%@&token=%@",goods_id,shelf,num,user.user_token];
+    self.params = @{};
+    self.requestTag=1002;
+    [self loadInner];
+}
+
 
 
 -(ShelfEntity *)entity{

@@ -128,7 +128,34 @@
     }
 }
 
+-(void)searchGoodsWithCode:(NSString *)goods_code{
+    //执行搜索
+    if(goods_code&&goods_code.length>0){
+        [self startLoadingActivityIndicator];
+        [self.goods_model loadGoodsList:goods_code orGoodsName:nil];
+    }
+}
 
+-(void)onResponse:(SPBaseModel *)model isSuccess:(BOOL)isSuccess{
+    [self stopLoadingActivityIndicator];
+    
+    if(model==self.goods_model){
+        if(model.requestTag==1001){
+            if(self.goods_model.entity.list!=nil&&self.goods_model.entity.list.count>0){
+                self.scan_entity=[self.goods_model.entity.list objectAtIndex:0];
+                self.goods_id=self.scan_entity.goods_id;
+                
+                dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.6 * NSEC_PER_SEC));
+                dispatch_after(delayTime, dispatch_get_main_queue(), ^{
+                    [self gotoGoodsShelfView:self.scan_entity];
+                });
+            }
+            else{
+                [self showFailWithText:@"未匹配到已有商品"];
+            }
+        }
+    }
+}
 
 -(void)gotoScanQRView:(SCAN_MODEL)scan_model{
     QRCodeViewController *qvc=[[QRCodeViewController alloc] init];
@@ -144,23 +171,35 @@
 }
 
 -(void)gotoGoodsShelfView:(GoodsEntity *)entity{
-    GoodsShelfViewController *gvc=[[GoodsShelfViewController alloc] init];
-    gvc.goods_entity=entity;
-    [self.navigationController pushViewController:gvc animated:YES];
+    GoodsShelfViewController *svc=[[GoodsShelfViewController alloc] init];
+    svc.goods_entity=entity;
+    [self.navigationController pushViewController:svc animated:YES];
 }
 
 
 //地址选择器的传值
 -(void)passObject:(id)obj{
     if([obj class]==[GoodsEntity class]){
-        [self gotoGoodsShelfView:(GoodsEntity*)obj];
+        dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.7 * NSEC_PER_SEC));
+        dispatch_after(delayTime, dispatch_get_main_queue(), ^{
+            [self gotoGoodsShelfView:(GoodsEntity*)obj];
+        });
     }
     else if(obj){
-        if([[obj objectForKey:@"scan_model"] intValue]==0){//商品条形码
+        if([[obj objectForKey:@"scan_model"] intValue]==SCAN_GOODS){//商品条形码
             self.goods_code=[obj objectForKey:@"code"];
+            [self searchGoodsWithCode:self.goods_code];
         }
         [self.tableView reloadData];
     }
+}
+
+-(GoodsListModel *)goods_model{
+    if(!_goods_model){
+        _goods_model=[[GoodsListModel alloc] init];
+        _goods_model.delegate=self;
+    }
+    return _goods_model;
 }
 
 - (void)didReceiveMemoryWarning {

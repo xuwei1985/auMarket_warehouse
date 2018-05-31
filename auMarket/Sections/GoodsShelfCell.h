@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ShelfEntity.h"
 
 @interface GoodsShelfCell : UITableViewCell
 {
@@ -23,4 +24,5 @@
     UILabel *lbl_order_region_value;
     UILabel *lbl_order_price_value;
 }
+@property(nonatomic,retain) ShelfItemEntity *entity;
 @end

@@ -11,6 +11,7 @@
 #import "QRCodeViewController.h"
 #import "GoodsSearchViewController.h"
 #import "GoodsShelfViewController.h"
+#import "GoodsListModel.h"
 
 @interface TransferViewController : SPBaseViewController<PassValueDelegate>
 {
@@ -18,5 +19,7 @@
 }
 
 @property(nonatomic,retain) NSString *goods_code;
-
+@property(nonatomic,retain) GoodsListModel *goods_model;
+@property(nonatomic,retain) GoodsEntity *scan_entity;
+@property(nonatomic,retain) NSString *goods_id;
 @end
