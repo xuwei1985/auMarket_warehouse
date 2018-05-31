@@ -14,7 +14,7 @@
 @property (nonatomic,retain) PickGoodsListEntity *pickGoodsListEntity;
 
 -(void)loadOrderList;
--(void)loadGoodsListWithOrderIds:(NSString *)order_ids andListType:(int)type;
+-(void)loadGoodsListWithListType:(int)type;
 -(void)bindBoxToOrder:(NSString *)order_id andBoxCode:(NSString *)box_code;
 -(void)beginOrders:(NSString *)order_ids;
 -(void)finishGoodsPick:(NSString *)rec_id andOrderId:(NSString *)order_id;

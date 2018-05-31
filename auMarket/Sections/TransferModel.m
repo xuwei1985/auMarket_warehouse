@@ -20,7 +20,7 @@
 
 //商品的货架列表
 -(void)goodsShelfList:(NSString *)goods_id andGoodsCode:(NSString *)goods_code andShelf:(NSString *)shelf_code{
-    self.parseDataClassType = [ShelfItemEntity class];
+    self.parseDataClassType = [ShelfEntity class];
     SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
     self.shortRequestAddress= [NSString stringWithFormat:@"v1/ruku-goods/list-by-goods?goods_id=%@&goods_code=%@&shelves_code=%@&token=%@",goods_id,goods_code,shelf_code==nil?@"":shelf_code,user.user_token];
     self.params = @{};
@@ -39,7 +39,11 @@
     [self loadInner];
 }
 
-
+-(void)handleParsedData:(SPBaseEntity*)parsedData{
+    if ([parsedData isKindOfClass:[ShelfEntity class]]) {
+        self.entity = (ShelfEntity*)parsedData;
+    }
+}
 
 -(ShelfEntity *)entity{
     if(!_entity){

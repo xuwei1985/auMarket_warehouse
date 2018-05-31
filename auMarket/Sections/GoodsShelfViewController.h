@@ -14,8 +14,10 @@
 @interface GoodsShelfViewController : SPBaseViewController<UITextFieldDelegate>
 {
     UIAlertView *_inputAlertView;
+    UILabel *lbl_transfer_num;
 }
 @property(nonatomic,retain) GoodsEntity *goods_entity;
 @property(nonatomic,retain) TransferModel *model;
 @property(nonatomic,retain) NSString *goods_shelf;//用于拣货中的商品过来转移库存使用
+@property(nonatomic,retain) NSIndexPath *inputPath;
 @end

@@ -15,12 +15,14 @@
 @end
 
 @interface ShelfItemEntity : SPBaseEntity
-@property (nonatomic,retain) NSString *inventory;
+
 @property (nonatomic,retain) NSString *shelves_id;
 @property (nonatomic,retain) NSString *batch_id;
 @property (nonatomic,retain) NSString *expired_date;
 @property (nonatomic,retain) NSString *created_at;
 @property (nonatomic,retain) NSString *batch_no;
 @property (nonatomic,retain) NSString *shelves_code;
-@property (nonatomic,retain) NSString *number;
+@property (nonatomic,retain) NSString *inventory;//库存量
+@property (nonatomic,retain) NSString *number;//进货量
+@property (nonatomic,retain) NSString *transfer_number;//待转移数量
 @end

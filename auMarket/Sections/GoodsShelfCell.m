@@ -18,6 +18,7 @@
             btn_select=[UIButton buttonWithType:UIButtonTypeCustom];
             [btn_select setImage:[UIImage imageNamed:@"add_transfer_off"] forState:UIControlStateNormal];
             [btn_select setImage:[UIImage imageNamed:@"add_transfer_on"] forState:UIControlStateSelected];
+            [btn_select addTarget:self action:@selector(addStack:) forControlEvents:UIControlEventTouchUpInside];
             [self.contentView addSubview:btn_select];
             
             [btn_select mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -105,7 +106,7 @@
             lbl_order_price_value=[[UILabel alloc] init];
             lbl_order_price_value.textColor=COLOR_BLACK;
             lbl_order_price_value.font=FONT_SIZE_SMALL;
-            lbl_order_price_value.text=@"2017-10-30";
+            lbl_order_price_value.text=@"--";
             [self.contentView addSubview:lbl_order_price_value];
             
             [lbl_order_price_value mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -134,7 +135,7 @@
             lbl_order_goods_num_value=[[UILabel alloc] init];
             lbl_order_goods_num_value.textColor=COLOR_BLACK;
             lbl_order_goods_num_value.font=FONT_SIZE_SMALL;
-            lbl_order_goods_num_value.text=@"65";
+            lbl_order_goods_num_value.text=@"0";
             [self.contentView addSubview:lbl_order_goods_num_value];
             
             [lbl_order_goods_num_value mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -171,7 +172,7 @@
             [lbl_bind_mark mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.top.mas_equalTo(lbl_order_goods_num_value.mas_bottom).offset(5);
                 make.left.mas_equalTo(lbl_bind_tip.mas_right);
-                make.size.mas_equalTo(CGSizeMake(100, 14));
+                make.size.mas_equalTo(CGSizeMake(100, 18));
             }];
         }
     }
@@ -179,14 +180,27 @@
 }
 
 
--(void)selOrder:(UIButton *)sender{
-    sender.selected=!sender.selected;
+-(void)addToStack:(UIButton *)sender{
+    self.addStackBlock(self.entity.shelves_id);
+}
+
+-(void)addStack:(AddStackBlock)block{
+    self.addStackBlock = block;
 }
 
 -(void)layoutSubviews{
     [super layoutSubviews];
     lbl_order_sn_value.text=self.entity.shelves_code;
     lbl_order_region_value.text=self.entity.expired_date;
+    lbl_order_price_value.text=self.entity.created_at;
+    lbl_order_goods_num_value.text=self.entity.inventory;
+    lbl_bind_mark.text=[NSString  stringWithFormat:@"%d",[self.entity.transfer_number intValue]];
+    if([self.entity.transfer_number intValue]>0){
+        btn_select.selected=YES;
+    }
+    else{
+        btn_select.selected=NO;
+    }
 }
 
 

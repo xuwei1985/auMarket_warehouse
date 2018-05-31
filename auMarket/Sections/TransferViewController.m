@@ -126,6 +126,12 @@
     else if(indexPath==[NSIndexPath indexPathForRow:0 inSection:1]){
         [self gotoGoodsSearchView];
     }
+    else if(indexPath==[NSIndexPath indexPathForRow:0 inSection:2]){
+        [self gotoTransferGoodsView:0];
+    }
+    else if(indexPath==[NSIndexPath indexPathForRow:0 inSection:3]){
+        [self gotoTransferGoodsView:1];
+    }
 }
 
 -(void)searchGoodsWithCode:(NSString *)goods_code{
@@ -155,6 +161,12 @@
             }
         }
     }
+}
+
+-(void)gotoTransferGoodsView:(int)list_type{
+    TransferGoodsViewController *tvc=[[TransferGoodsViewController alloc] init];
+    tvc.list_type=list_type;
+    [self.navigationController pushViewController:tvc animated:YES];
 }
 
 -(void)gotoScanQRView:(SCAN_MODEL)scan_model{

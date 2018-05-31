@@ -6,13 +6,13 @@
 //  Copyright © 2016年 daao. All rights reserved.
 //
 #define CATEGORY_BAR 44.0
-#import "PickGoodsViewController.h"
+#import "TransferGoodsViewController.h"
 
-@interface PickGoodsViewController ()
+@interface TransferGoodsViewController ()
 
 @end
 
-@implementation PickGoodsViewController
+@implementation TransferGoodsViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -25,14 +25,15 @@
     [self setNavigation];
     [self createCategoryView];
     [self setUpTableView];
+    [self createBottomView];
 }
 
 -(void)initData{
-    [self loadPickGoodsList];
+    [self loadTransferGoodsList];
 }
 
 -(void)setNavigation{
-    self.title=@"拣货";
+    self.title=@"商品转移";
 }
 
 -(void)createCategoryView{
@@ -45,7 +46,7 @@
     [self.view addSubview:blockView];
     
     btn_picking=[UIButton buttonWithType:UIButtonTypeCustom];
-    [btn_picking setTitle:@"正在拣货" forState:UIControlStateNormal];
+    [btn_picking setTitle:@"待转移" forState:UIControlStateNormal];
     [btn_picking setTitleColor:COLOR_DARKGRAY forState:UIControlStateNormal];
     [btn_picking setTitleColor:COLOR_MAIN forState:UIControlStateSelected];
     btn_picking.titleLabel.textAlignment=NSTextAlignmentCenter;
@@ -63,7 +64,7 @@
     }];
     
     btn_picked=[UIButton buttonWithType:UIButtonTypeCustom];
-    [btn_picked setTitle:@"拣货完成" forState:UIControlStateNormal];
+    [btn_picked setTitle:@"转移完成" forState:UIControlStateNormal];
     [btn_picked setTitleColor:COLOR_DARKGRAY forState:UIControlStateNormal];
     [btn_picked setTitleColor:COLOR_MAIN forState:UIControlStateSelected];
     btn_picked.titleLabel.textAlignment=NSTextAlignmentCenter;
@@ -88,6 +89,55 @@
     }
 }
 
+-(void)createBottomView{
+    _summaryView_bottom=[[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, 44)];
+    _summaryView_bottom.backgroundColor=COLOR_BG_WHITE;
+    [self.view addSubview:_summaryView_bottom];
+    
+    [_summaryView_bottom mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.view.mas_bottom).offset(-44);
+        make.left.mas_equalTo(0);
+        make.width.mas_equalTo(WIDTH_SCREEN);
+        make.height.mas_equalTo(44);
+    }];
+    
+    UIView *_baseLineView=[[UIView alloc] init];
+    _baseLineView.backgroundColor=COLOR_BG_TABLESEPARATE;
+    [_summaryView_bottom addSubview:_baseLineView];
+    
+    [_baseLineView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(_summaryView_bottom.mas_top);
+        make.left.mas_equalTo(0);
+        make.width.mas_equalTo(WIDTH_SCREEN);
+        make.height.mas_equalTo(0.5);
+    }];
+    
+    _sumBtn=[UIButton buttonWithType:UIButtonTypeCustom];
+    _sumBtn.frame=CGRectMake(WIDTH_SCREEN-100, 0,100, 44);
+    [_sumBtn setTitle:@"转移" forState:UIControlStateNormal];
+    _sumBtn.titleLabel.textAlignment=NSTextAlignmentCenter;
+    _sumBtn.backgroundColor=COLOR_MAIN;
+    _sumBtn.titleLabel.font=FONT_SIZE_MIDDLE;
+    [_sumBtn setTitleColor:COLOR_WHITE forState:UIControlStateNormal];
+    [_sumBtn addTarget:self action:@selector(gotoPickList) forControlEvents:UIControlEventTouchUpInside];
+    [_summaryView_bottom addSubview:_sumBtn];
+    
+    
+    _selectAllBtn=[UIButton buttonWithType:UIButtonTypeCustom];
+    _selectAllBtn.frame=CGRectMake(10, 0,72, 44);
+    [_selectAllBtn setTitle:@"全选" forState:UIControlStateNormal];
+    _selectAllBtn.titleLabel.textAlignment=NSTextAlignmentLeft;
+    _selectAllBtn.backgroundColor=COLOR_CLEAR;
+    _selectAllBtn.titleLabel.font=FONT_SIZE_MIDDLE;
+    [_selectAllBtn setTitleColor:COLOR_BLACK forState:UIControlStateNormal];
+    [_selectAllBtn setImage:[UIImage imageNamed:@"AliRefundKit_select_normal"] forState:UIControlStateNormal];
+    [_selectAllBtn setImage:[UIImage imageNamed:@"AliRefundKit_select_checked"] forState:UIControlStateSelected];
+    [_selectAllBtn setImageEdgeInsets:UIEdgeInsetsMake(0.0, -15, 0.0, 0.0)];
+    [_selectAllBtn addTarget:self action:@selector(selectAllOrders:) forControlEvents:UIControlEventTouchUpInside];
+    [_summaryView_bottom addSubview:_selectAllBtn];
+}
+
+
 -(void)changePickState:(UIButton *)sender{
     int btn_index=(int)sender.tag-7000;
     if(self.list_type!=btn_index)
@@ -98,13 +148,13 @@
             ((UIButton *)[blockView viewWithTag:7001]).selected=NO;
             sender.selected=YES;
             
-            [self loadPickGoodsList];
+            [self loadTransferGoodsList];
         }
     }
 }
 
 -(void)setUpTableView{
-    float table_height=HEIGHT_SCREEN-64-CATEGORY_BAR;
+    float table_height=HEIGHT_SCREEN-64-CATEGORY_BAR-44;
     self.tableView=[[SPBaseTableView alloc] initWithFrame:CGRectMake(0, CATEGORY_BAR, WIDTH_SCREEN,table_height) style:UITableViewStylePlain];
     self.tableView.separatorStyle=UITableViewCellSeparatorStyleSingleLine;
     self.tableView.separatorColor=COLOR_BG_TABLESEPARATE;
@@ -120,8 +170,8 @@
 
 
 
-//请求订单下的要拣货的商品
--(void)loadPickGoodsList{
+//请求需要转移的商品
+-(void)loadTransferGoodsList{
     [self startLoadingActivityIndicator];
     [self.model loadGoodsListWithListType:self.list_type];
 }
@@ -190,9 +240,9 @@
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *identifier=@"BindCellIdentifier";
-    PickGoodsCell *cell = [tv dequeueReusableCellWithIdentifier:identifier];
+    TransferGoodsCell *cell = [tv dequeueReusableCellWithIdentifier:identifier];
     if (cell == nil) {
-        cell = [[PickGoodsCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
+        cell = [[TransferGoodsCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
         cell.showsReorderControl = NO;
         cell.accessoryType=UITableViewCellAccessoryNone;
         cell.backgroundColor=COLOR_BG_TABLEVIEWCELL;
@@ -214,6 +264,7 @@
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tv deselectRowAtIndexPath:[tv indexPathForSelectedRow] animated:NO];
+    
 }
 
 
@@ -239,6 +290,8 @@
 -(void)goBack{
     [self.navigationController popViewControllerAnimated:YES];
 }
+
+
 
 -(void)doCellDelete{
     [self.model.pickGoodsListEntity.list removeObjectAtIndex:current_confirm_path.row];

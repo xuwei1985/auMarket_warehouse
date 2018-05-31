@@ -37,7 +37,7 @@
     UIBarButtonItem *left_Item = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"hs"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(gotoPickingGoodsView)];
     self.navigationItem.leftBarButtonItem=left_Item;
     
-    UIBarButtonItem *right_Item = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"jhz"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(gotoPickedGoodsView)];
+    UIBarButtonItem *right_Item = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"jhz"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(gotoPickingGoodsView)];
     self.navigationItem.rightBarButtonItem=right_Item;
 }
 
@@ -337,7 +337,6 @@
         else if(model.requestTag==1004){
             if(isSuccess){
                 PickGoodsViewController *pvc=[[PickGoodsViewController alloc] init];
-                pvc.order_ids=order_ids;
                 isPushToPickGoodsView=YES;
                 [self.navigationController pushViewController:pvc animated:YES];
             }
@@ -376,11 +375,7 @@
 -(void)gotoPickList{
     order_ids= [self getSelectedOrdersId];
     if(order_ids.length>0){
-        PickGoodsViewController *pvc=[[PickGoodsViewController alloc] init];
-        pvc.order_ids=order_ids;
-        isPushToPickGoodsView=YES;
-        [self.navigationController pushViewController:pvc animated:YES];
-//        [self beginOrders:order_ids];
+        [self beginOrders:order_ids];
     }
     else{
         [self showToastWithText:@"未选择任何订单"];

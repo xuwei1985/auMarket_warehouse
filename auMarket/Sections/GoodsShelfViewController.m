@@ -17,8 +17,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self initData];
     [self initUI];
+    [self initData];
     [self addNotification];
 }
 
@@ -36,6 +36,16 @@
    UIBarButtonItem *right_Item = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"transfer_cart"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(gotoMyCartView)];
 
     self.navigationItem.rightBarButtonItem=right_Item;
+    
+    lbl_transfer_num=[[UILabel alloc] initWithFrame:CGRectMake(WIDTH_SCREEN-25, 20, 24, 14)];
+    lbl_transfer_num.text=@"3";
+    lbl_transfer_num.font=DEFAULT_FONT(12);
+    lbl_transfer_num.textColor=COLOR_BG_WHITE;
+    lbl_transfer_num.textAlignment=NSTextAlignmentLeft;
+//    lbl_transfer_num.backgroundColor=COLOR_BG_WHITE;
+    [lbl_transfer_num.layer setCornerRadius:7];
+    lbl_transfer_num.clipsToBounds=YES;
+    [self.navigationController.view addSubview:lbl_transfer_num];
 }
 
 -(void)addNotification{
@@ -145,6 +155,7 @@
 
 - (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"输入数量" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+        self.inputPath=indexPath;
         [self showInputBox];
     }];
     return @[deleteAction];
@@ -166,10 +177,11 @@
     if(model==self.model){
         if(model.requestTag==1001){//获取货架列表
             if(self.model.entity.list!=nil&&self.model.entity.list.count>0){
-                
+                [self.tableView reloadData];
+                [self hideNoContentView];
             }
             else{
-                
+                [self showNoContentView];
             }
         }
     }
@@ -197,7 +209,17 @@
     if (buttonIndex == alertView.firstOtherButtonIndex) {
         UITextField *nameField = [alertView textFieldAtIndex:0];
         NSString *txt_value=[nameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-        [self.tableView reloadData];
+        
+        if([txt_value intValue]<=0){
+            [self showToastWithText:@"转移数量应大于0"];
+        }
+        else if([txt_value intValue]>[[self.model.entity.list objectAtIndex:self.inputPath.row].inventory intValue]){
+            [self showToastWithText:@"超过了该货架的商品库存"];
+        }
+        else{
+            [self.model.entity.list objectAtIndex:self.inputPath.row].transfer_number=[NSString stringWithFormat:@"%d",[txt_value intValue]];
+            [self.tableView reloadData];
+        }
     }
 }
 
@@ -233,10 +255,16 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    lbl_transfer_num.hidden=NO;
 }
 
 
+-(void)viewWillDisappear:(BOOL)animated{
+    lbl_transfer_num.hidden=YES;
+}
+
 -(void)viewDidDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
     [super viewDidDisappear:animated];
 }
 

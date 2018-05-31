@@ -12,6 +12,7 @@
 #import "GoodsSearchViewController.h"
 #import "GoodsShelfViewController.h"
 #import "GoodsListModel.h"
+#import "TransferGoodsViewController.h"
 
 @interface TransferViewController : SPBaseViewController<PassValueDelegate>
 {

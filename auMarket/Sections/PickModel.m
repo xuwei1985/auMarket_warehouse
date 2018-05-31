@@ -29,10 +29,10 @@
 }
 
 //加载生成的订单的待拣货商品
--(void)loadGoodsListWithOrderIds:(NSString *)order_ids andListType:(int)type{
+-(void)loadGoodsListWithListType:(int)type{
     self.parseDataClassType = [PickGoodsListEntity class];
     SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
-    self.shortRequestAddress= [NSString stringWithFormat:@"v1/pick/goods?order_id=%@&done=%d&token=%@",order_ids,type,user.user_token];
+    self.shortRequestAddress= [NSString stringWithFormat:@"v1/pick/goods?done=%d&token=%@",type,user.user_token];
     self.params = @{};
     self.requestTag=1002;
     [self loadInner];

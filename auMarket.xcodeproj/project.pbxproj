@@ -122,6 +122,8 @@
 		A975688820B5425D003DC139 /* zy_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A975688420B5425D003DC139 /* zy_0@2x.png */; };
 		A975688B20B7072E003DC139 /* GoodsShelfCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A975688920B7072E003DC139 /* GoodsShelfCell.m */; };
 		A975689120B70E5C003DC139 /* GoodsShelfViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A975688F20B70E5C003DC139 /* GoodsShelfViewController.m */; };
+		A97EFE4F20C0009500DB2518 /* TransferGoodsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A97EFE4D20C0009400DB2518 /* TransferGoodsViewController.m */; };
+		A97EFE5220C005FE00DB2518 /* TransferGoodsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A97EFE5120C005FE00DB2518 /* TransferGoodsCell.m */; };
 		A97F6C7020BE76E400F98EA4 /* no_data@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A97F6C6F20BE76E400F98EA4 /* no_data@2x.png */; };
 		A97F6C7320BEBBB600F98EA4 /* ShelfEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = A97F6C7120BEBBB500F98EA4 /* ShelfEntity.m */; };
 		A97F6C7620BEBC2A00F98EA4 /* TransferModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A97F6C7520BEBC2A00F98EA4 /* TransferModel.m */; };
@@ -416,6 +418,10 @@
 		A975688A20B7072E003DC139 /* GoodsShelfCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoodsShelfCell.h; sourceTree = "<group>"; };
 		A975688F20B70E5C003DC139 /* GoodsShelfViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoodsShelfViewController.m; sourceTree = "<group>"; };
 		A975689020B70E5C003DC139 /* GoodsShelfViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoodsShelfViewController.h; sourceTree = "<group>"; };
+		A97EFE4D20C0009400DB2518 /* TransferGoodsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransferGoodsViewController.m; sourceTree = "<group>"; };
+		A97EFE4E20C0009400DB2518 /* TransferGoodsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferGoodsViewController.h; sourceTree = "<group>"; };
+		A97EFE5020C005FE00DB2518 /* TransferGoodsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferGoodsCell.h; sourceTree = "<group>"; };
+		A97EFE5120C005FE00DB2518 /* TransferGoodsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransferGoodsCell.m; sourceTree = "<group>"; };
 		A97F6C6F20BE76E400F98EA4 /* no_data@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "no_data@2x.png"; sourceTree = "<group>"; };
 		A97F6C7120BEBBB500F98EA4 /* ShelfEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShelfEntity.m; sourceTree = "<group>"; };
 		A97F6C7220BEBBB500F98EA4 /* ShelfEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelfEntity.h; sourceTree = "<group>"; };
@@ -1035,6 +1041,8 @@
 		A975688C20B70732003DC139 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A97EFE5020C005FE00DB2518 /* TransferGoodsCell.h */,
+				A97EFE5120C005FE00DB2518 /* TransferGoodsCell.m */,
 				A975688A20B7072E003DC139 /* GoodsShelfCell.h */,
 				A975688920B7072E003DC139 /* GoodsShelfCell.m */,
 			);
@@ -1057,6 +1065,8 @@
 			children = (
 				A975687F20B538C4003DC139 /* TransferViewController.h */,
 				A975687E20B538C4003DC139 /* TransferViewController.m */,
+				A97EFE4E20C0009400DB2518 /* TransferGoodsViewController.h */,
+				A97EFE4D20C0009400DB2518 /* TransferGoodsViewController.m */,
 				A94A26FC20B008580025A438 /* ToolsViewController.h */,
 				A94A26FD20B008580025A438 /* ToolsViewController.m */,
 				A975689020B70E5C003DC139 /* GoodsShelfViewController.h */,
@@ -1511,6 +1521,7 @@
 				A964741F1E110D5B00A5A39B /* MemberLoginEntity.m in Sources */,
 				A9FBC1FD1DF97314005ECDDE /* PunchScrollView.m in Sources */,
 				A95E10F71DF8104800660E42 /* SPBaseTableViewCell.m in Sources */,
+				A97EFE5220C005FE00DB2518 /* TransferGoodsCell.m in Sources */,
 				A96474251E1111F000A5A39B /* UserRegistViewController.m in Sources */,
 				A95E10F21DF8104800660E42 /* SPUploadFileEntity.m in Sources */,
 				A9D7E29420B3C83F00E02AAA /* GoodsEntity.m in Sources */,
@@ -1543,6 +1554,7 @@
 				A95E113E1DF8491600660E42 /* NSArray+IDPExtension.m in Sources */,
 				A9F4DAD51F68390F00D71774 /* SDWebImageManager+MJ.m in Sources */,
 				A975687420B473EF003DC139 /* GTMBase64.m in Sources */,
+				A97EFE4F20C0009500DB2518 /* TransferGoodsViewController.m in Sources */,
 				A91D539D1DFE99E600A6BB37 /* AdPageViewController.m in Sources */,
 				A942999A1F72BB840078A9AE /* MemberChargeEntity.m in Sources */,
 				A95E113D1DF8491600660E42 /* IDPLog.m in Sources */,

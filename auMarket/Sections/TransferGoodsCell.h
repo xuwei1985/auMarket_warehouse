@@ -1,5 +1,5 @@
 //
-//  PickOrderCell.h
+//  TransferShelfCell.h
 //  auMarket
 //
 //  Created by 吴绪伟 on 2018/5/21.
@@ -9,20 +9,17 @@
 #import <UIKit/UIKit.h>
 #import "ShelfEntity.h"
 typedef void(^AddStackBlock)(NSString *order_id);
-@interface GoodsShelfCell : UITableViewCell
+@interface TransferGoodsCell : UITableViewCell
 {
+    UIImageView *img_goods;
     UIButton *btn_select;
-    UILabel *lbl_order_sn;
-    UILabel *lbl_order_goods_num;
-    UILabel *lbl_order_region;
-    UILabel *lbl_order_price;
-    UILabel *lbl_bind_tip;
-    UILabel *lbl_bind_mark;
-    
-    UILabel *lbl_order_sn_value;
-    UILabel *lbl_order_goods_num_value;
-    UILabel *lbl_order_region_value;
-    UILabel *lbl_order_price_value;
+    UILabel *lbl_goods_num;
+    UILabel *lbl_shelf_old;
+    UILabel *lbl_shelf_new;
+    UILabel *lbl_goods_name_value;
+    UILabel *lbl_goods_num_value;
+    UILabel *lbl_shelf_old_value;
+    UILabel *lbl_shelf_new_value;
 }
 @property(nonatomic,retain) ShelfItemEntity *entity;
 @property (nonatomic, copy) AddStackBlock addStackBlock;
