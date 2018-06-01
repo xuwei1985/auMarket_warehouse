@@ -34,7 +34,7 @@
 -(void)setNavigation{
     self.title=@"拣货";
     
-    UIBarButtonItem *left_Item = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"hs"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(gotoPickingGoodsView)];
+    UIBarButtonItem *left_Item = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"hs"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(gotoPickedGoodsView)];
     self.navigationItem.leftBarButtonItem=left_Item;
     
     UIBarButtonItem *right_Item = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"jhz"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(gotoPickingGoodsView)];
@@ -287,7 +287,7 @@
         [self startLoadingActivityIndicator];
     }
     
-    [self.model loadOrderList];
+    [self.model loadOrdersWithListType:0];
 }
 
 -(void)bindBoxToOrder:(NSString *)order_id andBoxCode:(NSString *)box_code{
@@ -389,8 +389,7 @@
 }
 
 -(void)gotoPickedGoodsView{
-    PickGoodsViewController *pvc=[[PickGoodsViewController alloc] init];
-    pvc.list_type=1;
+    PickedOrdersViewController *pvc=[[PickedOrdersViewController alloc] init];
     [self.navigationController pushViewController:pvc animated:YES];
 }
 

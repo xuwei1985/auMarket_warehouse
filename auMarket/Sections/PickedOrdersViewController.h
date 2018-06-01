@@ -12,16 +12,9 @@
 #import "PickModel.h"
 #import "QRCodeViewController.h"
 #import <MJRefresh.h>
-#import "PickedOrdersViewController.h"
 
-@interface PickViewController : SPBaseViewController<PassValueDelegate>
+@interface PickedOrdersViewController : SPBaseViewController
 {
-    UIView *_summaryView;
-    UIView *_summaryView_bottom;
-    UIButton *_sumBtn;
-    UIButton *_selectAllBtn;
-    NSString *order_ids;
-    Boolean isPushToPickGoodsView;
 }
 
 

@@ -32,6 +32,7 @@ typedef void(^SelOrderBlock)(NSString *order_id,int action);
 
 @property(nonatomic,retain) OrderItemEntity *entity;
 @property (nonatomic, copy) SelOrderBlock selOrderBlock;
+@property (nonatomic, assign) int list_model;//0:待拣货订单 1：已拣货列表
 
 -(void)selOrderId:(SelOrderBlock)block;
 -(void)toggleOrderSel;

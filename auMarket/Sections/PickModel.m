@@ -19,10 +19,10 @@
 }
 
 //加载待拣货的订单列表
--(void)loadOrderList{
+-(void)loadOrdersWithListType:(int)list_type{
     self.parseDataClassType = [OrderEntity class];
     SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
-    self.shortRequestAddress= [NSString stringWithFormat:@"v1/pick/list?page=%@&token=%@",(self.entity.next==nil?@"1":self.entity.next),user.user_token];
+    self.shortRequestAddress= [NSString stringWithFormat:@"v1/pick/list?done=%d&page=%@&token=%@",list_type,(self.entity.next==nil?@"1":self.entity.next),user.user_token];
     self.params = @{};
     self.requestTag=1001;
     [self loadInner];

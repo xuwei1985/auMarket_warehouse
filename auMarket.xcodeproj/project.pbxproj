@@ -127,6 +127,7 @@
 		A97F6C7020BE76E400F98EA4 /* no_data@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A97F6C6F20BE76E400F98EA4 /* no_data@2x.png */; };
 		A97F6C7320BEBBB600F98EA4 /* ShelfEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = A97F6C7120BEBBB500F98EA4 /* ShelfEntity.m */; };
 		A97F6C7620BEBC2A00F98EA4 /* TransferModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A97F6C7520BEBC2A00F98EA4 /* TransferModel.m */; };
+		A97FD0F420C03D74003A40D3 /* PickedOrdersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A97FD0F220C03D74003A40D3 /* PickedOrdersViewController.m */; };
 		A982F78F1E0FA87E00DB4C13 /* sign_weixin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A982F78E1E0FA87E00DB4C13 /* sign_weixin@2x.png */; };
 		A982F79A1E1107DA00DB4C13 /* grayline@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A982F7991E1107DA00DB4C13 /* grayline@2x.png */; };
 		A99FB2442006022A005AF4AE /* StockViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A99FB2432006022A005AF4AE /* StockViewController.m */; };
@@ -427,6 +428,8 @@
 		A97F6C7220BEBBB500F98EA4 /* ShelfEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelfEntity.h; sourceTree = "<group>"; };
 		A97F6C7420BEBC2A00F98EA4 /* TransferModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferModel.h; sourceTree = "<group>"; };
 		A97F6C7520BEBC2A00F98EA4 /* TransferModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransferModel.m; sourceTree = "<group>"; };
+		A97FD0F220C03D74003A40D3 /* PickedOrdersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickedOrdersViewController.m; sourceTree = "<group>"; };
+		A97FD0F320C03D74003A40D3 /* PickedOrdersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickedOrdersViewController.h; sourceTree = "<group>"; };
 		A982F78E1E0FA87E00DB4C13 /* sign_weixin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sign_weixin@2x.png"; sourceTree = "<group>"; };
 		A982F7991E1107DA00DB4C13 /* grayline@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grayline@2x.png"; sourceTree = "<group>"; };
 		A99FB2422006022A005AF4AE /* StockViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StockViewController.h; sourceTree = "<group>"; };
@@ -675,6 +678,8 @@
 			children = (
 				A91EBD471FFE112900DA9D68 /* PickViewController.h */,
 				A91EBD481FFE112900DA9D68 /* PickViewController.m */,
+				A97FD0F320C03D74003A40D3 /* PickedOrdersViewController.h */,
+				A97FD0F220C03D74003A40D3 /* PickedOrdersViewController.m */,
 				A94A937420BA9815002EEE61 /* PickGoodsViewController.h */,
 				A94A937320BA9815002EEE61 /* PickGoodsViewController.m */,
 			);
@@ -1604,6 +1609,7 @@
 				A95E10911DF80ED000660E42 /* main.m in Sources */,
 				A94A937520BA9816002EEE61 /* PickGoodsViewController.m in Sources */,
 				A95E11401DF8491600660E42 /* NSDate+IDPExtension.m in Sources */,
+				A97FD0F420C03D74003A40D3 /* PickedOrdersViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

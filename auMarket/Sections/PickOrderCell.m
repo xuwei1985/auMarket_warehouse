@@ -25,7 +25,7 @@
                 @strongify(self);
                 make.centerY.mas_equalTo(self.mas_centerY);
                 make.left.mas_equalTo(10);
-                make.size.mas_equalTo(CGSizeMake(24, 24));
+                make.size.mas_equalTo(CGSizeMake(20, 20));
             }];
         }
         
@@ -282,6 +282,13 @@
 
 -(void)layoutSubviews{
     [super layoutSubviews];
+    if(self.list_model==1){
+        [btn_select mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.centerY.mas_equalTo(0);
+            make.left.mas_equalTo(10);
+            make.size.mas_equalTo(CGSizeMake(0, 0));
+        }];
+    }
     lbl_order_sn_value.text=self.entity.order_sn;
     lbl_order_region_value.text=self.entity.region_name;
     lbl_order_goods_num_value.text=self.entity.goods_count;
@@ -328,8 +335,6 @@
         lbl_bind_mark.hidden=YES;
     }
 }
-
-
 
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

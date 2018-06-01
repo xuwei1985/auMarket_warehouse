@@ -11,7 +11,7 @@
 #import "TransferGoodsCell.h"
 #import "PickModel.h"
 
-@interface TransferGoodsViewController : SPBaseViewController<UIActionSheetDelegate>
+@interface TransferGoodsViewController : SPBaseViewController<UIActionSheetDelegate,PassValueDelegate>
 {
     UIButton *btn_picking;
     UIButton *btn_picked;

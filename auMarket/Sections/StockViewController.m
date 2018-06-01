@@ -476,7 +476,12 @@
             [[[itemArr objectAtIndex:1] objectAtIndex:1] setValue:[NSString stringWithFormat:@"$%.2f",round([txt_value floatValue]*100)/100] forKey:@"item_value"];
         }
         else if(_current_input_model==INPUT_GOODS_NUM){
-            [[[itemArr objectAtIndex:1] objectAtIndex:2] setValue:[NSString stringWithFormat:@"%d",[txt_value intValue]] forKey:@"item_value"];
+            if([txt_value intValue]>0){
+                [[[itemArr objectAtIndex:1] objectAtIndex:2] setValue:[NSString stringWithFormat:@"%d",[txt_value intValue]] forKey:@"item_value"];
+            }
+            else{
+                [self showToastWithText:@"商品数量需要大于0"];
+            }
         }
         [self.tableView reloadData];
     }
