@@ -28,8 +28,8 @@
     
     dic1=[[NSMutableDictionary alloc] initWithObjectsAndKeys:@"扫描商品条形码",@"item_name",@"zy_0",@"item_icon",@"",@"item_value", nil];
     dic2=[[NSMutableDictionary alloc] initWithObjectsAndKeys:@"手动搜索商品",@"item_name",@"zy_1",@"item_icon",@"",@"item_value", nil];
-    dic3=[[NSMutableDictionary alloc] initWithObjectsAndKeys:@"等待转移",@"item_name",@"zy_2",@"item_icon",@"4",@"item_value", nil];
-    dic4=[[NSMutableDictionary alloc] initWithObjectsAndKeys:@"转移成功",@"item_name",@"zy_3",@"item_icon",@"27",@"item_value", nil];
+    dic3=[[NSMutableDictionary alloc] initWithObjectsAndKeys:@"等待转移",@"item_name",@"zy_2",@"item_icon",@"",@"item_value", nil];
+    dic4=[[NSMutableDictionary alloc] initWithObjectsAndKeys:@"转移成功",@"item_name",@"zy_3",@"item_icon",@"",@"item_value", nil];
     
     item_childs_1=[NSArray arrayWithObjects:dic1, nil];
     item_childs_2=[NSArray arrayWithObjects:dic2, nil];

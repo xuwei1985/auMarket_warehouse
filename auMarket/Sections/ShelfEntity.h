@@ -15,7 +15,7 @@
 @end
 
 @interface ShelfItemEntity : SPBaseEntity
-
+@property (nonatomic,retain) NSString *id;
 @property (nonatomic,retain) NSString *shelves_id;
 @property (nonatomic,retain) NSString *batch_id;
 @property (nonatomic,retain) NSString *expired_date;

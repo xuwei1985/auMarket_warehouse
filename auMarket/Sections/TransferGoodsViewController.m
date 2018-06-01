@@ -258,7 +258,7 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tv heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 132;
+    return 122;
 }
 
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -274,10 +274,15 @@
 }
 
 - (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath{
-    UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"确认拣货" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+    UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"扫描货架" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
         PickGoodsEntity *entity=[self.model.pickGoodsListEntity.list objectAtIndex:indexPath.row];
         current_confirm_path=indexPath;
-        [self finishGoodsPick:entity];
+        if(entity&&[entity.order_id length]>0){
+            [self gotoScanQRView];
+        }
+        else{
+            [self showToastWithText:@"无效的订单信息"];
+        }
         
     }];
     return @[deleteAction];
@@ -287,11 +292,34 @@
     editingStyle = UITableViewCellEditingStyleDelete;
 }
 
+-(void)passObject:(id)obj{
+    if([[obj objectForKey:@"scan_model"] intValue]==SCAN_SHELF){//货架条形码
+        //提交绑定信息到接口
+        if([[obj objectForKey:@"code"] length]>0){
+            //绑定货架信息到商品数据
+            [self.tableView reloadData];
+            [self showSuccesWithText:@"货架扫描成功"];
+        }
+        else{
+            [self showToastWithText:@"扫码结果无效"];
+        }
+    }
+    else{
+        [self showToastWithText:@"未知扫码结果"];
+    }
+}
+
+
 -(void)goBack{
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-
+-(void)gotoScanQRView{
+    QRCodeViewController *qvc=[[QRCodeViewController alloc] init];
+    qvc.scan_model=SCAN_SHELF;
+    qvc.pass_delegate=self;
+    [self.navigationController pushViewController:qvc animated:YES];
+}
 
 -(void)doCellDelete{
     [self.model.pickGoodsListEntity.list removeObjectAtIndex:current_confirm_path.row];
