@@ -26,10 +26,24 @@
     [self createCategoryView];
     [self setUpTableView];
     [self createBottomView];
+    [self fitUI];
 }
 
 -(void)initData{
     [self loadTransferGoodsList];
+}
+
+-(void)fitUI{
+    if(self.list_type==1){
+        _summaryView_bottom.hidden=YES;
+        float table_height=HEIGHT_SCREEN-64-CATEGORY_BAR;
+        self.tableView.frame=CGRectMake(0, CATEGORY_BAR, WIDTH_SCREEN,table_height);
+    }
+    else{
+        _summaryView_bottom.hidden=NO;
+        float table_height=HEIGHT_SCREEN-64-CATEGORY_BAR-44;
+        self.tableView.frame=CGRectMake(0, CATEGORY_BAR, WIDTH_SCREEN,table_height);
+    }
 }
 
 -(void)setNavigation{
@@ -113,8 +127,8 @@
     }];
     
     _sumBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-    _sumBtn.frame=CGRectMake(WIDTH_SCREEN-100, 0,100, 44);
-    [_sumBtn setTitle:@"转移" forState:UIControlStateNormal];
+    _sumBtn.frame=CGRectMake(WIDTH_SCREEN-110, 0,110, 44);
+    [_sumBtn setTitle:@"转移商品" forState:UIControlStateNormal];
     _sumBtn.titleLabel.textAlignment=NSTextAlignmentCenter;
     _sumBtn.backgroundColor=COLOR_MAIN;
     _sumBtn.titleLabel.font=FONT_SIZE_MIDDLE;
@@ -133,7 +147,7 @@
     [_selectAllBtn setImage:[UIImage imageNamed:@"AliRefundKit_select_normal"] forState:UIControlStateNormal];
     [_selectAllBtn setImage:[UIImage imageNamed:@"AliRefundKit_select_checked"] forState:UIControlStateSelected];
     [_selectAllBtn setImageEdgeInsets:UIEdgeInsetsMake(0.0, -15, 0.0, 0.0)];
-    [_selectAllBtn addTarget:self action:@selector(selectAllOrders:) forControlEvents:UIControlEventTouchUpInside];
+    [_selectAllBtn addTarget:self action:@selector(selectAllGoods:) forControlEvents:UIControlEventTouchUpInside];
     [_summaryView_bottom addSubview:_selectAllBtn];
 }
 
@@ -151,10 +165,13 @@
             [self loadTransferGoodsList];
         }
     }
+    
+    [self fitUI];
 }
 
 -(void)setUpTableView{
     float table_height=HEIGHT_SCREEN-64-CATEGORY_BAR-44;
+    
     self.tableView=[[SPBaseTableView alloc] initWithFrame:CGRectMake(0, CATEGORY_BAR, WIDTH_SCREEN,table_height) style:UITableViewStylePlain];
     self.tableView.separatorStyle=UITableViewCellSeparatorStyleSingleLine;
     self.tableView.separatorColor=COLOR_BG_TABLESEPARATE;
@@ -173,44 +190,44 @@
 //请求需要转移的商品
 -(void)loadTransferGoodsList{
     [self startLoadingActivityIndicator];
-    [self.model loadGoodsListWithListType:self.list_type];
+    [self.model goodsTransferList:self.list_type];
 }
 
--(void)finishGoodsPick:(PickGoodsEntity *)entity{
+-(void)bindNewShelf:(TransferGoodsItemEntity *)entity{
     [self startLoadingActivityIndicator];
-    [self.model finishGoodsPick:entity.rec_id andOrderId:entity.order_id];
+    [self.model bindNewShelf:entity.id andTargetShelf:entity.target_shelves];
 }
+
 
 -(void)onResponse:(SPBaseModel *)model isSuccess:(BOOL)isSuccess{
     [self stopLoadingActivityIndicator];
     
-    if(model==self.model&&self.model.requestTag==1002){
-        if(isSuccess){
-            [self.tableView reloadData];
-            if(self.model.pickGoodsListEntity.list&&self.model.pickGoodsListEntity.list.count>0){
-                [self hideNoContentView];
+    if(model==self.model){
+        if(self.model.requestTag==1003){
+            if(isSuccess){
+                [self.tableView reloadData];
+                if(self.model.transfer_entity.list&&self.model.transfer_entity.list.count>0){
+                    [self.tableView reloadData];
+                    [self hideNoContentView];
+                }
+                else{
+                    [self showNoContentView];
+                }
             }
             else{
-                [self showNoContentView];
+                [self showFailWithText:@"获取数据失败"];
             }
         }
-        else{
-            [self showFailWithText:@"获取商品失败"];
-        }
-    }
-    else if(model==self.model&&self.model.requestTag==1005){
-        if(isSuccess){
-            [self doCellDelete];
-            if([self.model.pickGoodsListEntity.list count]<=0){
-                [self showSuccesWithText:@"拣货完成"];
-                dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC));
-                dispatch_after(delayTime, dispatch_get_main_queue(), ^{
-                    [self goBack];
-                });
+        else if(self.model.requestTag==1004){
+            if(isSuccess){
+                //重新请求订单数据
+                [self showSuccesWithText:@"绑定成功"];
+                self.model.entity.next=0;
+                [self loadTransferGoodsList];
             }
-        }
-        else{
-            [self showFailWithText:@"拣货确认提交失败"];
+            else{
+                [self showFailWithText:@"绑定货架失败"];
+            }
         }
     }
 }
@@ -225,7 +242,7 @@
 
 - (NSInteger)tableView:(UITableView *)tv numberOfRowsInSection:(NSInteger)section
 {
-    return self.model.pickGoodsListEntity.list.count;
+    return self.model.transfer_entity.list.count;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -251,14 +268,25 @@
         cell.textLabel.textColor=COLOR_DARKGRAY;
     }
     
-    PickGoodsEntity *entity=[self.model.pickGoodsListEntity.list objectAtIndex:indexPath.row];
+    TransferGoodsItemEntity *entity=[self.model.transfer_entity.list objectAtIndex:indexPath.row];
     cell.entity=entity;
+    cell.cell_model=self.list_type;
+    [cell selStackGoods:^(NSString *goods_id, int action) {
+        if(action>=0){
+            [self handlerGoodsSelect];
+        }
+        else{
+            [self showToastWithText:@"请先侧滑扫描货架"];
+        }
+    }];
     
     return cell;
 }
 
 -(CGFloat)tableView:(UITableView *)tv heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 122;
+    float h=[Common HeightOfLabel:[self.model.transfer_entity.list objectAtIndex:indexPath.row].goods_name ForFont:FONT_SIZE_SMALL withWidth:(WIDTH_SCREEN-(self.list_type==1?136:146))];
+    
+    return 94+h;
 }
 
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -270,18 +298,21 @@
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if(self.list_type==1){
+        return NO;
+    }
     return YES;
 }
 
 - (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"扫描货架" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
-        PickGoodsEntity *entity=[self.model.pickGoodsListEntity.list objectAtIndex:indexPath.row];
+        TransferGoodsItemEntity *entity=[self.model.transfer_entity.list objectAtIndex:indexPath.row];
         current_confirm_path=indexPath;
-        if(entity&&[entity.order_id length]>0){
+        if(entity&&[entity.id length]>0){
             [self gotoScanQRView];
         }
         else{
-            [self showToastWithText:@"无效的订单信息"];
+            [self showToastWithText:@"无效的信息"];
         }
         
     }];
@@ -292,11 +323,63 @@
     editingStyle = UITableViewCellEditingStyleDelete;
 }
 
+
+-(void)selectAllGoods:(UIButton *)sender{
+    int n=0;
+    for(int i=0;i<self.model.entity.list.count;i++){
+        if([self.model.transfer_entity.list objectAtIndex:i].target_shelves!=nil&&[[self.model.transfer_entity.list objectAtIndex:i].target_shelves length]>0){
+            [self.model.transfer_entity.list objectAtIndex:i].selected=!sender.selected;
+            n++;
+        }
+    }
+    
+    if(n>0){
+        sender.selected=!sender.selected;
+        if(n<[self.model.transfer_entity.list count]&&sender.selected){
+            [self showToastWithText:@"有订单未绑定新货架"];
+        }
+    }
+    
+    if(sender.selected){
+        [_sumBtn setTitle:[NSString stringWithFormat:@"转移商品(%d)",n] forState:UIControlStateNormal];
+    }
+    else{
+        [_sumBtn setTitle:[NSString stringWithFormat:@"转移商品"] forState:UIControlStateNormal];
+    }
+    [self.tableView reloadData];
+}
+
+-(void)handlerGoodsSelect{
+    int sel_num=0;
+    for(int i=0;i<self.model.transfer_entity.list.count;i++){
+        if([self.model.transfer_entity.list objectAtIndex:i].selected){
+            sel_num++;
+        }
+    }
+    
+    if(sel_num==0){
+        _selectAllBtn.selected=NO;
+    }
+    else if(sel_num==self.model.entity.list.count){
+        _selectAllBtn.selected=YES;
+    }
+    
+    if(sel_num>0){
+        [_sumBtn setTitle:[NSString stringWithFormat:@"转移商品(%d)",sel_num] forState:UIControlStateNormal];
+    }
+    else{
+        [_sumBtn setTitle:[NSString stringWithFormat:@"转移商品"] forState:UIControlStateNormal];
+    }
+    [self.tableView reloadData];
+}
+
 -(void)passObject:(id)obj{
     if([[obj objectForKey:@"scan_model"] intValue]==SCAN_SHELF){//货架条形码
         //提交绑定信息到接口
         if([[obj objectForKey:@"code"] length]>0){
             //绑定货架信息到商品数据
+            TransferGoodsItemEntity *entity=[self.model.transfer_entity.list objectAtIndex:current_confirm_path.row];
+            [self bindNewShelf:entity];
             [self.tableView reloadData];
             [self showSuccesWithText:@"货架扫描成功"];
         }
@@ -322,15 +405,15 @@
 }
 
 -(void)doCellDelete{
-    [self.model.pickGoodsListEntity.list removeObjectAtIndex:current_confirm_path.row];
+    [self.model.transfer_entity.list removeObjectAtIndex:current_confirm_path.row];
     [self.tableView beginUpdates];
     [self.tableView deleteRowsAtIndexPaths:@[current_confirm_path] withRowAnimation:UITableViewRowAnimationAutomatic];
     [self.tableView endUpdates];
 }
 
--(PickModel *)model{
+-(TransferModel *)model{
     if(!_model){
-        _model=[[PickModel alloc] init];
+        _model=[[TransferModel alloc] init];
         _model.delegate=self;
     }
     return _model;

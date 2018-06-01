@@ -136,6 +136,14 @@
     }
     ShelfItemEntity *entity=[self.model.entity.list objectAtIndex:indexPath.row];
     cell.entity=entity;
+    [cell addStack:^(NSString *ruku_id, NSString *number) {
+        if([ruku_id length]>0&&[number intValue]>0){
+            [self addTransferToStack:ruku_id andNumber:number];
+        }
+        else{
+            [self showToastWithText:@"请先侧滑输入转移数量"];
+        }
+    }];
     return cell;
 }
 
@@ -171,17 +179,37 @@
     [self.model goodsShelfList:self.goods_entity.goods_id andGoodsCode:self.goods_entity.goods_code andShelf:self.goods_shelf];
 }
 
+-(void)addTransferToStack:(NSString *)ruku_id andNumber:(NSString *)num{
+    [self startLoadingActivityIndicator];
+    
+    [self.model addTransferToStack:ruku_id andNumber:num];
+}
+
 -(void)onResponse:(SPBaseModel *)model isSuccess:(BOOL)isSuccess{
     [self stopLoadingActivityIndicator];
     
     if(model==self.model){
         if(model.requestTag==1001){//获取货架列表
-            if(self.model.entity.list!=nil&&self.model.entity.list.count>0){
-                [self.tableView reloadData];
-                [self hideNoContentView];
+            if(isSuccess){
+                if(self.model.entity.list!=nil&&self.model.entity.list.count>0){
+                    [self.tableView reloadData];
+                    [self hideNoContentView];
+                }
+                else{
+                    [self showNoContentView];
+                }
             }
             else{
-                [self showNoContentView];
+                [self showFailWithText:@"获取货架信息失败"];
+            }
+        }
+        else if(model.requestTag==1002){//添加到待转移区域
+            if(isSuccess){
+                [self showSuccesWithText:@"添加成功"];
+                [self loadGoodsShelves];
+            }
+            else{
+                [self showFailWithText:@"加入待转移失败"];
             }
         }
     }

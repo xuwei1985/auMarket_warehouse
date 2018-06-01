@@ -7,11 +7,15 @@
 //
 
 #import "ShelfEntity.h"
+#import "TransferGoodsEntity.h"
 
 @interface TransferModel : SPBaseModel
 @property (nonatomic,retain) ShelfEntity *entity;
+@property (nonatomic,retain) TransferGoodsEntity *transfer_entity;
 
 
 -(void)goodsShelfList:(NSString *)goods_id andGoodsCode:(NSString *)goods_code andShelf:(NSString *)shelf_code;
--(void)addTransferToStack:(NSString *)goods_id andNewShelf:(NSString *)shelf andNumber:(NSString *)num;
+-(void)addTransferToStack:(NSString *)ruku_id andNumber:(NSString *)num;
+-(void)goodsTransferList:(int)list_type;
+-(void)bindNewShelf:(NSString *)move_id andTargetShelf:(NSString *)target_shelf;
 @end

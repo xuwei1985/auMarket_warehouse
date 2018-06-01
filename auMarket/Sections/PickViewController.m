@@ -134,7 +134,7 @@
     if(n>0){
         sender.selected=!sender.selected;
         if(n<[self.model.entity.list count]&&sender.selected){
-            [self showToastWithText:@"有订单未扫码货箱"];
+            [self showToastWithText:@"有订单未绑定货箱"];
         }
     }
     

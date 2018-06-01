@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ShelfEntity.h"
-typedef void(^AddStackBlock)(NSString *order_id);
+#import "TransferGoodsEntity.h"
+typedef void(^SelStackGoodsBlock)(NSString *goods_id,int action);
 @interface TransferGoodsCell : UITableViewCell
 {
     UIImageView *img_goods;
@@ -21,7 +21,8 @@ typedef void(^AddStackBlock)(NSString *order_id);
     UILabel *lbl_shelf_old_value;
     UILabel *lbl_shelf_new_value;
 }
-@property(nonatomic,retain) ShelfItemEntity *entity;
-@property (nonatomic, copy) AddStackBlock addStackBlock;
--(void)addStack:(AddStackBlock)block;
+@property(nonatomic,retain) TransferGoodsItemEntity *entity;
+@property (nonatomic, copy) SelStackGoodsBlock selStackGoodsBlock;
+@property (nonatomic,assign) int cell_model;//0:待转移 1:已转移
+-(void)selStackGoods:(SelStackGoodsBlock)block;
 @end

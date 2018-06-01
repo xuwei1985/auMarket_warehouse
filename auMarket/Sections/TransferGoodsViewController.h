@@ -9,7 +9,7 @@
 #import "SPBaseViewController.h"
 #import "StockViewController.h"
 #import "TransferGoodsCell.h"
-#import "PickModel.h"
+#import "TransferModel.h"
 
 @interface TransferGoodsViewController : SPBaseViewController<UIActionSheetDelegate,PassValueDelegate>
 {
@@ -22,7 +22,7 @@
     UIButton *_sumBtn;
     UIButton *_selectAllBtn;
 }
-@property(nonatomic,retain) PickModel *model;
+@property(nonatomic,retain) TransferModel *model;
 @property(nonatomic,retain) NSString *order_ids;
 @property(nonatomic,assign) int list_type;
 @end

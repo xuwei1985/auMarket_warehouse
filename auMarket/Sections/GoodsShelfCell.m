@@ -18,7 +18,7 @@
             btn_select=[UIButton buttonWithType:UIButtonTypeCustom];
             [btn_select setImage:[UIImage imageNamed:@"add_transfer_off"] forState:UIControlStateNormal];
             [btn_select setImage:[UIImage imageNamed:@"add_transfer_on"] forState:UIControlStateSelected];
-            [btn_select addTarget:self action:@selector(addStack:) forControlEvents:UIControlEventTouchUpInside];
+            [btn_select addTarget:self action:@selector(addToStack:) forControlEvents:UIControlEventTouchUpInside];
             [self.contentView addSubview:btn_select];
             
             [btn_select mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -181,7 +181,7 @@
 
 
 -(void)addToStack:(UIButton *)sender{
-    self.addStackBlock(self.entity.shelves_id);
+    self.addStackBlock(self.entity.id,self.entity.transfer_number);
 }
 
 -(void)addStack:(AddStackBlock)block{
