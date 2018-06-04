@@ -344,12 +344,12 @@
 -(void)passObject:(id)obj{
     if([[obj objectForKey:@"scan_model"] intValue]==SCAN_BOX){//货箱条形码
         //提交绑定信息到接口
-        if([[obj objectForKey:@"code"] length]>0){
+        NSRange range = [[obj objectForKey:@"code"] rangeOfString:@"-"];
+        if([[obj objectForKey:@"code"] length]>0&&range.location != NSNotFound){
             [self bindBoxToOrder:self.bind_order_entity.order_id andBoxCode:[obj objectForKey:@"code"]];
-            
         }
         else{
-            [self showToastWithText:@"扫码结果无效"];
+            [self showToastWithText:@"非法的货箱条码"];
         }
     }
     else{
