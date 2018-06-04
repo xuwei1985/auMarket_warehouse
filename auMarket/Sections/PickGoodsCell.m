@@ -157,7 +157,6 @@
     lbl_goods_name.text=self.entity.goods_name;
     lbl_goods_number.text=[NSString stringWithFormat:@"%@",self.entity.goods_number];
     lbl_shelf_code.text=self.entity.shelves_code;
-    [lbl_goods_name sizeToFit];
     
     NSRange range = [self.entity.box rangeOfString:@"-"];
     lbl_box_name.text=[NSString stringWithFormat:@"%@",[self.entity.box substringToIndex:range.location]];

@@ -24,6 +24,7 @@
 
 -(void)initData{
     [self loadGoodsShelves];
+    
 }
 
 -(void)initUI{
@@ -38,15 +39,16 @@
     
     self.navigationItem.rightBarButtonItem=right_Item;
     
-    lbl_transfer_num=[[UILabel alloc] initWithFrame:CGRectMake(WIDTH_SCREEN-25, 20, 24, 14)];
-    lbl_transfer_num.text=@"3";
-    lbl_transfer_num.font=DEFAULT_FONT(12);
-    lbl_transfer_num.textColor=COLOR_BG_WHITE;
-    lbl_transfer_num.textAlignment=NSTextAlignmentLeft;
-//    lbl_transfer_num.backgroundColor=COLOR_BG_WHITE;
+    lbl_transfer_num=[[UILabel alloc] initWithFrame:CGRectMake(WIDTH_SCREEN-25, 20, 14, 14)];
+    lbl_transfer_num.text=@"0";
+    lbl_transfer_num.font=DEFAULT_FONT(11);
+    lbl_transfer_num.textColor=COLOR_MAIN;
+    lbl_transfer_num.textAlignment=NSTextAlignmentCenter;
+    lbl_transfer_num.backgroundColor=COLOR_BG_WHITE;
     [lbl_transfer_num.layer setCornerRadius:7];
     lbl_transfer_num.clipsToBounds=YES;
-//    [self.navigationController.view addSubview:lbl_transfer_num];
+    lbl_transfer_num.hidden=YES;
+    [self.navigationController.view addSubview:lbl_transfer_num];
 }
 
 -(void)addNotification{
@@ -180,6 +182,12 @@
     [self.model goodsShelfList:self.goods_entity.goods_id andGoodsCode:self.goods_entity.goods_code andShelf:self.goods_entity.shelves_no];
 }
 
+//请求需要转移的商品列表
+-(void)loadTransferGoodsList{
+    [self.model goodsTransferList:0 andTargetShelf:self.from_pick?self.goods_entity.shelves_no:@""];
+}
+
+
 -(void)addTransferToStack:(NSString *)ruku_id andNumber:(NSString *)num{
     [self startLoadingActivityIndicator];
     
@@ -203,9 +211,7 @@
                 else{
                     [self showNoContentView];
                 }
-            }
-            else{
-                [self showFailWithText:@"获取货架信息失败"];
+                [self loadTransferGoodsList];
             }
         }
         else if(model.requestTag==1002){//添加到待转移区域
@@ -215,6 +221,23 @@
             }
             else{
                 [self showFailWithText:@"加入待转移失败"];
+            }
+        }
+        else if(model.requestTag==1003){//获取带转移商品列表
+            if(isSuccess){
+                if(self.model.transfer_entity.list!=nil&&self.model.transfer_entity.list.count>0){
+                    lbl_transfer_num.hidden=NO;
+                    lbl_transfer_num.text=[NSString stringWithFormat:@"%lu",(unsigned long)self.model.transfer_entity.list.count];
+                    if([lbl_transfer_num.text intValue]<99){
+                        lbl_transfer_num.frame=CGRectMake(WIDTH_SCREEN-25, 20, 14, 14);
+                    }
+                    else{
+                        lbl_transfer_num.frame=CGRectMake(WIDTH_SCREEN-25, 20, 22, 14);
+                    }
+                }
+                else{
+                    lbl_transfer_num.hidden=YES;
+                }
             }
         }
     }
@@ -291,7 +314,10 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    lbl_transfer_num.hidden=NO;
+    if([lbl_transfer_num.text intValue]>0){
+       lbl_transfer_num.hidden=NO;
+    }
+    
     if(self.from_pick){
         [self loadGoodsShelves];
     }

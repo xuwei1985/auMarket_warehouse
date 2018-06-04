@@ -110,7 +110,14 @@
     [_iconImageView sd_setImageWithURL:[NSURL URLWithString:self.entity.goods_thumb] placeholderImage:[UIImage imageNamed:@"defaut_list"]];
     _itemLbl.text=self.entity.goods_name;
     _numLbl.text=[NSString stringWithFormat:@"×%@",self.entity.number];
-    _shelf_no.text=self.entity.shelves_no;
+    if(self.entity.shelves_no==nil||[self.entity.shelves_no length]<=0)
+    {
+        _shelf_no.text=@"无货架";
+    }
+    else{
+        _shelf_no.text=self.entity.shelves_no;
+    }
+    
     _priceLbl.text=[NSString stringWithFormat:@"$%@/件",self.entity.cost];
     _totalPriceLbl.text=[NSString stringWithFormat:@"$%@",self.entity.sum];
 }
