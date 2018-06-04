@@ -144,9 +144,6 @@
                 [self showNoContentView];
             }
         }
-        else{
-            [self showFailWithText:@"获取商品失败"];
-        }
     }
     else if(model==self.model&&self.model.requestTag==1005){
         if(isSuccess){
@@ -158,9 +155,6 @@
                     [self goBack];
                 });
             }
-        }
-        else{
-            [self showFailWithText:@"拣货确认提交失败"];
         }
     }
 }
@@ -214,6 +208,20 @@
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tv deselectRowAtIndexPath:[tv indexPathForSelectedRow] animated:NO];
+    
+    if(self.list_type==0){
+        PickGoodsEntity *entity=[self.model.pickGoodsListEntity.list objectAtIndex:indexPath.row];
+        current_confirm_path=indexPath;
+        
+        GoodsEntity *goods_entity=[[GoodsEntity alloc] init];
+        goods_entity.goods_id=entity.goods_id;
+        goods_entity.goods_code=entity.goods_code;
+        goods_entity.goods_name=entity.goods_name;
+        goods_entity.goods_thumb=entity.goods_thumb;
+        goods_entity.shop_price=entity.goods_price;
+        goods_entity.shelves_no=entity.shelves_code;
+        [self showActionSheet:goods_entity];
+    }
 }
 
 
@@ -229,6 +237,7 @@
         [self finishGoodsPick:entity];
         
     }];
+
     return @[deleteAction];
 }
 
@@ -236,8 +245,36 @@
     editingStyle = UITableViewCellEditingStyleDelete;
 }
 
+- (void)showActionSheet:(GoodsEntity *)entity {
+    //显示弹出框列表选择
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"选择操作"
+                                                                   message:nil
+                                                            preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel
+                                                         handler:^(UIAlertAction * action) {
+                                                             
+                                                         }];
+    UIAlertAction* transferAction = [UIAlertAction actionWithTitle:@"转移库存" style:UIAlertActionStyleDestructive
+                                                       handler:^(UIAlertAction * action) {
+                                                           [self gotoGoodsShelfView:entity];
+                                                       }];
+    [alert addAction:cancelAction];
+    [alert addAction:transferAction];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
 -(void)goBack{
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+
+-(void)gotoGoodsShelfView:(GoodsEntity *)entity{
+    GoodsShelfViewController *svc=[[GoodsShelfViewController alloc] init];
+    svc.from_pick=YES;
+    svc.goods_entity=entity;
+    self.isGotoShelvesView=YES;
+    [self.navigationController pushViewController:svc animated:YES];
 }
 
 -(void)doCellDelete{
@@ -257,6 +294,13 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    
+    if(self.isGotoShelvesView){
+        self.isGotoShelvesView=NO;
+        if(self.list_type==0){
+            [self loadPickGoodsList];
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning {

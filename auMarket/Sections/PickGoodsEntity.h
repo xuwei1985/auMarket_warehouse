@@ -25,5 +25,6 @@
 @property (nonatomic,retain) NSString *shelves_code;
 @property (nonatomic,retain) NSString *goods_number;
 @property (nonatomic,retain) NSString *box;
+@property (nonatomic,retain) NSString *goods_price;
 @end
 

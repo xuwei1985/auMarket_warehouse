@@ -198,7 +198,7 @@
             }
             else if (self.showErrorMsg) {
                 [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
-                [SVProgressHUD showErrorWithStatus:entity.err_msg];
+                [SVProgressHUD showErrorWithStatus:entity.msg];
             }
             
         }

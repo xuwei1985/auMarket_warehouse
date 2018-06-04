@@ -43,6 +43,7 @@
     _account.user_token=mEntity.token;
     _account.user_pwd=mEntity.password;
     _account.role_name=mEntity.role_name;
+    _account.menu=mEntity.menu;
     return _account;
 }
 

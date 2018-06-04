@@ -68,14 +68,23 @@
     
     SPNavigationController *nav_batch = [[SPNavigationController alloc] initWithRootViewController:batchViewController];
     SPNavigationController *nav_pick = [[SPNavigationController alloc] initWithRootViewController:pickViewController];
-    SPNavigationController *nav_information = [[SPNavigationController alloc] initWithRootViewController:toolsViewController];
+    SPNavigationController *nav_tools = [[SPNavigationController alloc] initWithRootViewController:toolsViewController];
     SPNavigationController *nav_member = [[SPNavigationController alloc] initWithRootViewController:userCenterViewController];
 
-  
+    NSMutableArray *tabbar=[[NSMutableArray alloc] init];
     self.tabBarController = [[SPTabBarController alloc] init];
     self.tabBarController.tabBar.translucent = NO;
     self.tabBarController.tabBar.tintColor = COLOR_FONT_MAIN;
-    [self.tabBarController setViewControllers:@[nav_pick,nav_batch,nav_information,nav_member]];
+
+    if([self checkMenu:@"picking"]){
+        [tabbar addObject:nav_pick];
+    }
+    if([self checkMenu:@"warehousing"]){
+        [tabbar addObject:nav_batch];
+    }
+    [tabbar addObject:nav_tools];
+    [tabbar addObject:nav_member];
+    [self.tabBarController setViewControllers:tabbar];
     self.tabBarController.selectedIndex = 0;
     self.tabBarController.delegate = self;
     
@@ -109,6 +118,17 @@
         badgeValue = nil;
     }
     [[BadgeManager sharedInstance] setBadgeValue:badgeValue forIndex:3];
+}
+
+-(BOOL)checkMenu:(NSString *)menu_name{
+    SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
+    for(int i=0;i<user.menu.count;i++){
+        if([[[user.menu objectAtIndex:i] objectForKey:@"key"] isEqualToString:menu_name]){
+            return YES;
+            break;
+        }
+    }
+    return NO;
 }
 
 //用户登录之后的业务代码

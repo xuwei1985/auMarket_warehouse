@@ -141,7 +141,7 @@
             [lbl_order_goods_num_value mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.top.mas_equalTo(lbl_order_price_value.mas_bottom).offset(5);
                 make.left.mas_equalTo(lbl_order_goods_num.mas_right);
-                make.size.mas_equalTo(CGSizeMake(120, 20));
+                make.size.mas_equalTo(CGSizeMake(150, 20));
             }];
         }
         
@@ -190,16 +190,25 @@
 
 -(void)layoutSubviews{
     [super layoutSubviews];
-    lbl_order_sn_value.text=self.entity.shelves_code;
+    
     lbl_order_region_value.text=self.entity.expired_date;
     lbl_order_price_value.text=self.entity.created_at;
-    lbl_order_goods_num_value.text=self.entity.inventory;
+    lbl_order_goods_num_value.text=[NSString stringWithFormat:@"%d (未拣货:%@)",([self.entity.inventory intValue]-[self.entity.move_number intValue]),self.entity.number];
     lbl_bind_mark.text=[NSString  stringWithFormat:@"%d",[self.entity.transfer_number intValue]];
     if([self.entity.transfer_number intValue]>0){
         btn_select.selected=YES;
     }
     else{
         btn_select.selected=NO;
+    }
+    
+    if([self.entity.storage intValue]==1){
+        lbl_order_sn_value.textColor=[Common hexColor:@"#0092FF"];
+        lbl_order_sn_value.text=[NSString stringWithFormat:@"%@ (储)",self.entity.shelves_code];
+    }
+    else{
+        lbl_order_sn_value.text=self.entity.shelves_code;
+        lbl_order_sn_value.textColor=COLOR_DARKGRAY;
     }
 }
 

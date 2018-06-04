@@ -66,7 +66,7 @@ DEC_SINGLETON(AccountManager)
 @property (retain,nonatomic) NSString *role_name;
 @property (nonatomic,retain) NSString *user_pwd;
 @property (retain,nonatomic) NSString *isNewUser;
-
+@property (retain,nonatomic) NSArray *menu;
 
 //绑定判断方法
 - (BOOL)isAlphaBind;

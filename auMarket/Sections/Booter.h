@@ -51,4 +51,6 @@
 //网络检测
 - (void)bootReachability;
 -(void)loadParkingList;
+//菜单权限检查
+-(BOOL)checkMenu:(NSString *)menu_name;
 @end

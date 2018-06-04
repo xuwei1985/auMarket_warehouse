@@ -31,13 +31,25 @@
     
     item_childs_1=[NSArray arrayWithObjects:dic1, nil];
     item_childs_2=[NSArray arrayWithObjects:dic2, nil];
-    [itemArr addObject:item_childs_1];
+    
+    Booter *bt=[[Booter alloc] init];
+    if([bt checkMenu:@"inventory_move"])
+    {
+        [itemArr addObject:item_childs_1];
+    }
     
 }
 
 -(void)initUI{
     [self setNavigation];
     [self setUpTableView];
+    
+    if([itemArr count]<=0){
+        [self showNoContentView];
+    }
+    else{
+        [self hideNoContentView];
+    }
 }
 
 -(void)setNavigation{

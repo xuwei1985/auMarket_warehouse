@@ -40,7 +40,7 @@
 
 //绑定货箱到订单
 -(void)bindBoxToOrder:(NSString *)order_id andBoxCode:(NSString *)box_code{
-    self.parseDataClassType = [OrderEntity class];
+    self.parseDataClassType = [SPBaseEntity class];
     SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
     self.shortRequestAddress= [NSString stringWithFormat:@"v1/pick/box?order_id=%@&box=%@&token=%@",order_id,[box_code stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],user.user_token];
     self.params = @{};
@@ -80,9 +80,7 @@
 
 -(OrderEntity *)entity{
     if(!_entity){
-        _entity=[[OrderEntity alloc] init];
-        _entity.err_msg=@"未获取到有效的订单数据";
-    }
+        _entity=[[OrderEntity alloc] init];    }
     
     return _entity;
 }
@@ -90,7 +88,6 @@
 -(PickGoodsListEntity *)pickGoodsListEntity{
     if(!_pickGoodsListEntity){
         _pickGoodsListEntity=[[PickGoodsListEntity alloc] init];
-        _pickGoodsListEntity.err_msg=@"未获取到有效的订单数据";
     }
     
     return _pickGoodsListEntity;

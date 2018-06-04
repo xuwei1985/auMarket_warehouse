@@ -10,6 +10,7 @@
 #import "GoodsShelfCell.h"
 #import "GoodsEntity.h"
 #import "TransferModel.h"
+#import "TransferGoodsViewController.h"
 
 @interface GoodsShelfViewController : SPBaseViewController<UITextFieldDelegate>
 {
@@ -18,6 +19,6 @@
 }
 @property(nonatomic,retain) GoodsEntity *goods_entity;
 @property(nonatomic,retain) TransferModel *model;
-@property(nonatomic,retain) NSString *goods_shelf;//用于拣货中的商品过来转移库存使用
+@property(nonatomic,assign) BOOL from_pick;//用于拣货中的商品过来转移库存使用
 @property(nonatomic,retain) NSIndexPath *inputPath;
 @end

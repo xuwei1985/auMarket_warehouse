@@ -315,23 +315,20 @@
             if(self.model.entity.list!=nil){
                 [self.tableView reloadData];
                 if([self.model.entity.list count]<=0){
+                    _selectAllBtn.selected=NO;
+                    [_sumBtn setTitle:[NSString stringWithFormat:@"生成清单"] forState:UIControlStateNormal];
                     [self showNoContentView];
                 }else{
                     [self hideNoContentView];
                 }
             }
-            else{
-                [self showFailWithText:@"加载订单失败"];
-            }
         }
         else if(model.requestTag==1003){
             if(isSuccess){
                 //重新请求订单数据
+                [self showSuccesWithText:@"货箱绑定成功"];
                 self.model.entity.next=0;
                 [self loadOrders];
-            }
-            else{
-                [self showFailWithText:@"货箱绑定失败"];
             }
         }
         else if(model.requestTag==1004){
@@ -340,10 +337,6 @@
                 isPushToPickGoodsView=YES;
                 [self.navigationController pushViewController:pvc animated:YES];
             }
-            else{
-                [self showFailWithText:@"拣货订单生成失败"];
-            }
-            
         }
     }
 }
@@ -353,8 +346,7 @@
         //提交绑定信息到接口
         if([[obj objectForKey:@"code"] length]>0){
             [self bindBoxToOrder:self.bind_order_entity.order_id andBoxCode:[obj objectForKey:@"code"]];
-            [self.tableView reloadData];
-            [self showSuccesWithText:@"货箱绑定成功"];
+            
         }
         else{
             [self showToastWithText:@"扫码结果无效"];

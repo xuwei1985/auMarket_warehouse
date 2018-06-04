@@ -15,7 +15,6 @@
     self = [super init];
     if (self) {
         self.parseDataClassType = [GoodsListEntity class];
-        self.entity.err_msg=@"未获取到有效的商品数据";
     }
     return self;
 }

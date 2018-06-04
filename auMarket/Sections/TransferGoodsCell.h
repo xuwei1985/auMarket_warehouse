@@ -25,4 +25,5 @@ typedef void(^SelStackGoodsBlock)(NSString *goods_id,int action);
 @property (nonatomic, copy) SelStackGoodsBlock selStackGoodsBlock;
 @property (nonatomic,assign) int cell_model;//0:待转移 1:已转移
 -(void)selStackGoods:(SelStackGoodsBlock)block;
+-(void)toggleGoodsSel;
 @end

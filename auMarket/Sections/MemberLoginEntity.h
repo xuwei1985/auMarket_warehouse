@@ -25,4 +25,7 @@
 @property (nonatomic, copy) NSString *password;
 @property (nonatomic, copy) NSString *nickname;
 @property (nonatomic, copy) NSString *role_name;
+@property (nonatomic, retain) NSArray *menu;
 @end
+
+

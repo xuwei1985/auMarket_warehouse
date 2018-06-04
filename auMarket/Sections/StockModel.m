@@ -66,7 +66,6 @@
 -(BatchEntity *)entity{
     if(!_entity){
         _entity=[[BatchEntity alloc] init];
-        _entity.err_msg=@"未获取到有效的批次数据";
     }
     
     return _entity;
@@ -76,7 +75,6 @@
 -(GoodsListEntity *)goods_list_entity{
     if(!_goods_list_entity){
         _goods_list_entity=[[GoodsListEntity alloc] init];
-        _goods_list_entity.err_msg=@"未获取到有效的数据";
     }
     
     return _goods_list_entity;

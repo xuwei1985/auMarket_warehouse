@@ -22,7 +22,9 @@
 @property (nonatomic,retain) NSString *created_at;
 @property (nonatomic,retain) NSString *batch_no;
 @property (nonatomic,retain) NSString *shelves_code;
+@property (nonatomic,retain) NSString *storage;//货架标记0（普通货架）；1（存储货架）
 @property (nonatomic,retain) NSString *inventory;//库存量
-@property (nonatomic,retain) NSString *number;//进货量
-@property (nonatomic,retain) NSString *transfer_number;//待转移数量
+@property (nonatomic,retain) NSString *number;//当前用户正购买的商品量，还未拣货
+@property (nonatomic,retain) NSString *move_number;//待转移数量(这个货架上已经入库的)
+@property (nonatomic,retain) NSString *transfer_number;//待转移数量（现在需要转移的）
 @end

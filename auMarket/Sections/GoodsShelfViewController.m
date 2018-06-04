@@ -33,8 +33,9 @@
 
 -(void)setNavigation{
     self.title=@"商品货架";
-   UIBarButtonItem *right_Item = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"transfer_cart"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(gotoMyCartView)];
-
+    
+    UIBarButtonItem *right_Item = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"transfer_cart"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(gotoTransferGoodsView)];
+    
     self.navigationItem.rightBarButtonItem=right_Item;
     
     lbl_transfer_num=[[UILabel alloc] initWithFrame:CGRectMake(WIDTH_SCREEN-25, 20, 24, 14)];
@@ -45,7 +46,7 @@
 //    lbl_transfer_num.backgroundColor=COLOR_BG_WHITE;
     [lbl_transfer_num.layer setCornerRadius:7];
     lbl_transfer_num.clipsToBounds=YES;
-    [self.navigationController.view addSubview:lbl_transfer_num];
+//    [self.navigationController.view addSubview:lbl_transfer_num];
 }
 
 -(void)addNotification{
@@ -176,13 +177,17 @@
 
 -(void)loadGoodsShelves{
     [self startLoadingActivityIndicator];
-    [self.model goodsShelfList:self.goods_entity.goods_id andGoodsCode:self.goods_entity.goods_code andShelf:self.goods_shelf];
+    [self.model goodsShelfList:self.goods_entity.goods_id andGoodsCode:self.goods_entity.goods_code andShelf:self.goods_entity.shelves_no];
 }
 
 -(void)addTransferToStack:(NSString *)ruku_id andNumber:(NSString *)num{
     [self startLoadingActivityIndicator];
     
-    [self.model addTransferToStack:ruku_id andNumber:num];
+    NSString *new_shelf_code=@"";
+    if(self.from_pick){
+        new_shelf_code=self.goods_entity.shelves_no;
+    }
+    [self.model addTransferToStack:ruku_id andNumber:num andNewShelf:new_shelf_code];
 }
 
 -(void)onResponse:(SPBaseModel *)model isSuccess:(BOOL)isSuccess{
@@ -269,8 +274,11 @@
 }
 
 
--(void)gotoMyCartView{
-    
+-(void)gotoTransferGoodsView{
+    TransferGoodsViewController *tvc=[[TransferGoodsViewController alloc] init];
+    tvc.list_type=0;
+    tvc.target_shelf=self.goods_entity.shelves_no;
+    [self.navigationController pushViewController:tvc animated:YES];
 }
 
 -(TransferModel *)model{
@@ -284,6 +292,9 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     lbl_transfer_num.hidden=NO;
+    if(self.from_pick){
+        [self loadGoodsShelves];
+    }
 }
 
 

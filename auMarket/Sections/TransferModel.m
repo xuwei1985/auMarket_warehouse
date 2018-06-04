@@ -30,20 +30,23 @@
 
 
 //添加待转移的商品到堆栈
--(void)addTransferToStack:(NSString *)ruku_id andNumber:(NSString *)num{
+-(void)addTransferToStack:(NSString *)ruku_id andNumber:(NSString *)num andNewShelf:(NSString *)new_Shelf{
     self.parseDataClassType = [SPBaseEntity class];
     SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
-    self.shortRequestAddress= [NSString stringWithFormat:@"v1/move/add?ruku_goods=%@&number=%@&token=%@",ruku_id,num,user.user_token];
+    self.shortRequestAddress= [NSString stringWithFormat:@"v1/move/add?ruku_goods=%@&number=%@&shelves_code=%@&token=%@",ruku_id,num,new_Shelf,user.user_token];
     self.params = @{};
     self.requestTag=1002;
     [self loadInner];
 }
 
 //待转移的商品列表
--(void)goodsTransferList:(int)list_type{
+-(void)goodsTransferList:(int)list_type andTargetShelf:(NSString *)target_shelf{
+    if(target_shelf==nil){
+        target_shelf=@"";
+    }
     self.parseDataClassType = [TransferGoodsEntity class];
     SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
-    self.shortRequestAddress= [NSString stringWithFormat:@"v1/move/list?moved=%d&token=%@",list_type,user.user_token];
+    self.shortRequestAddress= [NSString stringWithFormat:@"v1/move/list?moved=%d&target_shelves=%@&token=%@",list_type,target_shelf,user.user_token];
     self.params = @{};
     self.requestTag=1003;
     [self loadInner];
@@ -53,12 +56,32 @@
 -(void)bindNewShelf:(NSString *)move_id andTargetShelf:(NSString *)target_shelf{
     self.parseDataClassType = [SPBaseEntity class];
     SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
-    self.shortRequestAddress= [NSString stringWithFormat:@"v1/move/binding?id=%@&$shelves_code=%@&token=%@",move_id,target_shelf,user.user_token];
+    self.shortRequestAddress= [NSString stringWithFormat:@"v1/move/binding?id=%@&shelves_code=%@&token=%@",move_id,target_shelf,user.user_token];
     self.params = @{};
     self.requestTag=1004;
     [self loadInner];
 }
 
+
+//取消待绑定的商品
+-(void)unBind:(NSString *)move_id{
+    self.parseDataClassType = [SPBaseEntity class];
+    SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
+    self.shortRequestAddress= [NSString stringWithFormat:@"v1/move/delete?id=%@&token=%@",move_id,user.user_token];
+    self.params = @{};
+    self.requestTag=1005;
+    [self loadInner];
+}
+
+//批量转移商品
+-(void)transferGoods:(NSString *)move_ids{
+    self.parseDataClassType = [SPBaseEntity class];
+    SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
+    self.shortRequestAddress= [NSString stringWithFormat:@"v1/move/move?ids=%@&token=%@",move_ids,user.user_token];
+    self.params = @{};
+    self.requestTag=1006;
+    [self loadInner];
+}
 
 
 -(void)handleParsedData:(SPBaseEntity*)parsedData{
@@ -73,7 +96,6 @@
 -(ShelfEntity *)entity{
     if(!_entity){
         _entity=[[ShelfEntity alloc] init];
-        _entity.err_msg=@"未获取到货架数据";
     }
     
     return _entity;
@@ -82,7 +104,6 @@
 -(TransferGoodsEntity *)transfer_entity{
     if(!_transfer_entity){
         _transfer_entity=[[TransferGoodsEntity alloc] init];
-        _transfer_entity.err_msg=@"未获取到转移数据";
     }
     
     return _transfer_entity;

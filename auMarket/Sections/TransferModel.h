@@ -15,7 +15,9 @@
 
 
 -(void)goodsShelfList:(NSString *)goods_id andGoodsCode:(NSString *)goods_code andShelf:(NSString *)shelf_code;
--(void)addTransferToStack:(NSString *)ruku_id andNumber:(NSString *)num;
--(void)goodsTransferList:(int)list_type;
+-(void)addTransferToStack:(NSString *)ruku_id andNumber:(NSString *)num andNewShelf:(NSString *)new_Shelf;
+-(void)goodsTransferList:(int)list_type andTargetShelf:(NSString *)target_shelf;
 -(void)bindNewShelf:(NSString *)move_id andTargetShelf:(NSString *)target_shelf;
+-(void)unBind:(NSString *)move_id;
+-(void)transferGoods:(NSString *)move_ids;
 @end

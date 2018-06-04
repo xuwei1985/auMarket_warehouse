@@ -18,7 +18,7 @@
 @interface SPBaseEntity : NSObject <NSCoding>
 
 @property (nonatomic, strong) NSString *code;
-@property (nonatomic, strong) NSString *err_msg;
+@property (nonatomic, strong) NSString *msg;
 
 - (id)initWithData:(id)data;
 + (id)itemWithData:(id)data;

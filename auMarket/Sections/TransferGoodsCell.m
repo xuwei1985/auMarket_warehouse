@@ -178,13 +178,39 @@
     self.selStackGoodsBlock = block;
 }
 
+-(void)toggleGoodsSel{
+    if(self.entity.target_shelves!=nil&&[self.entity.target_shelves length]>0){
+        self.entity.selected=!self.entity.selected;
+        if(self.entity.selected){
+            self.selStackGoodsBlock(self.entity.id,1);//选中
+        }
+        else{
+            self.selStackGoodsBlock(self.entity.id,0);//取消
+        }
+    }
+    else{
+        self.selStackGoodsBlock(self.entity.id,-1);//禁止
+    }
+}
+
+
 -(void)layoutSubviews{
     [super layoutSubviews];
+    @weakify(self);
     if(self.cell_model==1){
+        @strongify(self);
         [btn_select mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.centerY.mas_equalTo(0);
+            make.centerY.mas_equalTo(self.mas_centerY);
             make.left.mas_equalTo(10);
             make.size.mas_equalTo(CGSizeMake(0, 0));
+        }];
+    }
+    else{
+        @strongify(self);
+        [btn_select mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.centerY.mas_equalTo(self.mas_centerY);
+            make.left.mas_equalTo(10);
+            make.size.mas_equalTo(CGSizeMake(20, 20));
         }];
     }
     lbl_goods_name_value.text=self.entity.goods_name;

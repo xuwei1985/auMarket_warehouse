@@ -48,7 +48,7 @@
    
     SPBaseEntity* item = [(SPBaseEntity*)[self.parseDataClassType alloc] initWithData: [responseData dictAtPath:@"data"]] ;
     [item setCode:[responseData stringAtPath:@"code"]];
-    [item setErr_msg:[responseData stringAtPath:@"msg"]];
+    [item setMsg:[responseData stringAtPath:@"msg"]];
     
     return item;
 }
