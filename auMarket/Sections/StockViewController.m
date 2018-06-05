@@ -592,13 +592,13 @@
             [self searchGoodsWithCode:self.goods_code];
         }
         else if([[obj objectForKey:@"scan_model"] intValue]==SCAN_SHELF){//货架条形码
+            NSArray *array = [[obj objectForKey:@"code"] componentsSeparatedByString:@"."];
             
-            NSRange range = [[obj objectForKey:@"code"] rangeOfString:@"-"];
-            if([[obj objectForKey:@"code"] length]>0&&range.location != NSNotFound){
+            if([[obj objectForKey:@"code"] length]>0&&array.count==4){
                 self.shelf_code=[obj objectForKey:@"code"];
             }
             else{
-                [self showToastWithText:@"无法识别的货箱条码"];
+                [self showToastWithText:@"无法识别的货架条码"];
             }
         }
         [self.tableView reloadData];

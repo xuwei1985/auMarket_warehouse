@@ -319,14 +319,17 @@
     
     if(self.entity.box&&[self.entity.box length]>0){
         NSRange range = [self.entity.box rangeOfString:@"-"];
-        lbl_bind_tip.text=[NSString stringWithFormat:@"拣货箱：%@",[self.entity.box substringToIndex:range.location]];
-        lbl_bind_tip.textColor=COLOR_DARKGRAY;
-        
-        if (range.location != NSNotFound) {
-            lbl_bind_mark.backgroundColor=[Common hexColor:[self.entity.box substringFromIndex:range.location+1]];
-            lbl_bind_mark.text=@"";
-            lbl_bind_mark.hidden=NO;
+        if(range.location != NSNotFound){
+             lbl_bind_tip.text=[NSString stringWithFormat:@"拣货箱：%@",[self.entity.box substringToIndex:range.location]];
+             lbl_bind_mark.backgroundColor=[Common hexColor:[self.entity.box substringFromIndex:range.location+1]];
+             lbl_bind_mark.text=@"";
+             lbl_bind_mark.hidden=NO;
         }
+        else{
+             lbl_bind_tip.text=[NSString stringWithFormat:@"拣货箱：invalid"];
+             lbl_bind_mark.hidden=YES;
+        }
+        lbl_bind_tip.textColor=COLOR_DARKGRAY;
     }
     else{
         lbl_bind_tip.text=@"待绑定拣货箱";

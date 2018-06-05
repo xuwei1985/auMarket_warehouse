@@ -159,8 +159,14 @@
     lbl_shelf_code.text=self.entity.shelves_code;
     
     NSRange range = [self.entity.box rangeOfString:@"-"];
-    lbl_box_name.text=[NSString stringWithFormat:@"%@",[self.entity.box substringToIndex:range.location]];
-    lbl_box_mark.backgroundColor=[Common hexColor:[self.entity.box substringFromIndex:range.location+1]];
+    if(range.location != NSNotFound){
+        lbl_box_name.text=[NSString stringWithFormat:@"%@",[self.entity.box substringToIndex:range.location]];
+        lbl_box_mark.backgroundColor=[Common hexColor:[self.entity.box substringFromIndex:range.location+1]];
+    }
+    else{
+        lbl_box_name.text=@"invalid";
+        lbl_box_mark.backgroundColor=[UIColor clearColor];
+    }
 }
 
 

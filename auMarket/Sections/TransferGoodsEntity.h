@@ -22,5 +22,6 @@
 @property (nonatomic,retain) NSString *goods_name;
 @property (nonatomic,retain) NSString *goods_thumb;
 @property (nonatomic,retain) NSString *batch_no;
+@property (nonatomic,retain) NSString *origin;//1 独立转移，2、商品直接转移
 @property (nonatomic,assign) BOOL selected;
 @end

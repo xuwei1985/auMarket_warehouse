@@ -364,7 +364,7 @@
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     TransferGoodsItemEntity *entity=[self.model.transfer_entity.list objectAtIndex:indexPath.row];
-    if(self.list_type==1||(entity.target_shelves&&entity.target_shelves.length>0)){
+    if(self.list_type==1||[entity.origin intValue]==2){//origin:1 独立转移，2、商品直接转移
         return NO;
     }
     return YES;
@@ -502,7 +502,7 @@
                 [self.tableView reloadData];
             }
             else{
-                [self showFailWithText:@"目标货架与原货架相同"];
+                [self showFailWithText:@"目标货架与原货架不能相同"];
             }
         }
         else{
