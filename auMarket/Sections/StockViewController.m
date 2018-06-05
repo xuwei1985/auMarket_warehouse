@@ -88,9 +88,6 @@
                     [self.tableView reloadData];
                 }
             }
-            else{
-                [self showFailWithText:@"入库保存失败"];
-            }
         }
     }
     else if(model==self.goods_model){
@@ -290,31 +287,28 @@
     }
     else{
         //商品条形码扫描
-        if(indexPath==[NSIndexPath indexPathForRow:0 inSection:0]){
+        if([indexPath compare:[NSIndexPath indexPathForRow:0 inSection:0]]==NSOrderedSame){
             [self gotoScanQRView:SCAN_GOODS];
         }
-        else if(indexPath==[NSIndexPath indexPathForRow:1 inSection:0]){
+        else if([indexPath compare:[NSIndexPath indexPathForRow:1 inSection:0]]==NSOrderedSame){
             [self showInputBox:INPUT_GOODS_CODE];
         }
-        else if(indexPath==[NSIndexPath indexPathForRow:2 inSection:0]){
+        else if([indexPath compare:[NSIndexPath indexPathForRow:2 inSection:0]]==NSOrderedSame){
             [self gotoGoodsSearchView];
         }
-        
-        //货架条形码扫描
-        if(indexPath==[NSIndexPath indexPathForRow:0 inSection:2]){
+        else if([indexPath compare:[NSIndexPath indexPathForRow:0 inSection:2]]==NSOrderedSame){//货架条形码扫描
             [self gotoScanQRView:SCAN_SHELF];
         }
-        else if(indexPath==[NSIndexPath indexPathForRow:1 inSection:2]){
+        else if([indexPath compare:[NSIndexPath indexPathForRow:1 inSection:2]]==NSOrderedSame){
             [self showInputBox:INPUT_SHELF_CODE];
         }
-        
-        if(indexPath==[NSIndexPath indexPathForRow:0 inSection:1]){
+        else if([indexPath compare:[NSIndexPath indexPathForRow:0 inSection:1]]==NSOrderedSame){
             [self showInputBox:INPUT_GOODS_SERIAL];
         }
-        else if(indexPath==[NSIndexPath indexPathForRow:1 inSection:1]){
+        else if([indexPath compare:[NSIndexPath indexPathForRow:1 inSection:1]]==NSOrderedSame){
             [self showInputBox:INPUT_GOODS_PRICE];
         }
-        else if(indexPath==[NSIndexPath indexPathForRow:2 inSection:1]){
+        else if([indexPath compare:[NSIndexPath indexPathForRow:2 inSection:1]]==NSOrderedSame){
             [self showInputBox:INPUT_GOODS_NUM];
         }
         [self hideDatePicker];
@@ -430,6 +424,7 @@
     
     if (_inputAlertView==nil) {
         _inputAlertView = [[UIAlertView alloc] initWithTitle:tip_title message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        _inputAlertView.delegate=self;
     }
     _inputAlertView.title=tip_title;
     [_inputAlertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
@@ -597,7 +592,14 @@
             [self searchGoodsWithCode:self.goods_code];
         }
         else if([[obj objectForKey:@"scan_model"] intValue]==SCAN_SHELF){//货架条形码
-            self.shelf_code=[obj objectForKey:@"code"];
+            
+            NSRange range = [[obj objectForKey:@"code"] rangeOfString:@"-"];
+            if([[obj objectForKey:@"code"] length]>0&&range.location != NSNotFound){
+                self.shelf_code=[obj objectForKey:@"code"];
+            }
+            else{
+                [self showToastWithText:@"无法识别的货箱条码"];
+            }
         }
         [self.tableView reloadData];
     }

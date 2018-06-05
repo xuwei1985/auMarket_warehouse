@@ -26,7 +26,7 @@ typedef enum:NSInteger{
     SAVE_THEN_CONTINUE,
 } SAVE_MODEL;
 
-@interface StockViewController : SPBaseViewController<PassValueDelegate,UITextFieldDelegate>{
+@interface StockViewController : SPBaseViewController<PassValueDelegate,UITextFieldDelegate,UIAlertViewDelegate>{
     NSMutableArray *itemArr;
     UIButton *_btn_back;
     UIButton *_btn_next;

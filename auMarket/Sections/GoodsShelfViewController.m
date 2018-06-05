@@ -219,9 +219,6 @@
                 [self showSuccesWithText:@"添加成功"];
                 [self loadGoodsShelves];
             }
-            else{
-                [self showFailWithText:@"加入待转移失败"];
-            }
         }
         else if(model.requestTag==1003){//获取带转移商品列表
             if(isSuccess){

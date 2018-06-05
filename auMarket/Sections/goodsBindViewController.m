@@ -156,10 +156,14 @@
         if(isSuccess){
             lbl_sumPrice.text=[NSString  stringWithFormat:@"$%@",self.model.goods_list_entity.sum];
             lbl_goodsNum.text=[NSString  stringWithFormat:@"(%@件商品)",self.model.goods_list_entity.goods_count];
+            
+            if(self.model.goods_list_entity.list.count>0){
+                [self hideNoContentView];
+            }
+            else{
+                [self showNoContentView];
+            }
             [self.tableView reloadData];
-        }
-        else{
-            [self showFailWithText:@"获取商品失败"];
         }
     }
 }

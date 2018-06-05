@@ -101,10 +101,16 @@
     [self.view addSubview:label];
     
     
+    UIButton *light_btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [light_btn setImage:[UIImage imageNamed:@"flashlight_close"] forState:UIControlStateNormal];
+    [light_btn setImage:[UIImage imageNamed:@"flashlight_open"] forState:UIControlStateSelected];
+    light_btn.frame=CGRectMake((WIDTH_SCREEN-32)/2, HEIGHT_SCREEN-64-120, 32, 32);
+    [light_btn addTarget:self action:@selector(swichTorch:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:light_btn];
+
     //灯光和相册
 //    NSArray *arr = @[@"灯光",@"相册"];
-    
-    
+//
 //    for (int i = 0; i < arr.count; i++) {
 //        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
 //        [btn setTitle:arr[i] forState:UIControlStateNormal];
@@ -124,28 +130,49 @@
 //    [self.view addSubview:btn];
 }
 
+-(void)swichTorch:(UIButton *)sender{
+    [self popoverPresentationController];
+    Class capture = NSClassFromString(@"AVCaptureDevice");
+    if (capture != nil) {
+        if ([self.device hasTorch] && [self.device hasFlash]) {
+            [self.device lockForConfiguration:nil];
+            
+            sender.selected = !sender.selected;
+            
+            if (sender.selected) {
+                [self.device setTorchMode:AVCaptureTorchModeOn];
+                [self.device setFlashMode:AVCaptureFlashModeOn];
+            } else {
+                [self.device setTorchMode:AVCaptureTorchModeOff];
+                [self.device setFlashMode:AVCaptureFlashModeOff];
+            }
+            [self.device unlockForConfiguration];
+        }
+    }
+}
+
 #pragma mark - 菜单按钮点击事件
 - (void)btnClick:(UIButton *)sender
 {
     if (sender.tag == 0) {
         [self popoverPresentationController];
-//        Class capture = NSClassFromString(@"AVCaptureDevice");
-//        if (capture != nil) {
-//            if ([self.device hasTorch] && [self.device hasFlash]) {
-//                [self.device lockForConfiguration:nil];
-//
-//                sender.selected = !sender.selected;
-//
-//                if (sender.selected) {
-//                    [self.device setTorchMode:AVCaptureTorchModeOn];
-//                    [self.device setFlashMode:AVCaptureFlashModeOn];
-//                } else {
-//                    [self.device setTorchMode:AVCaptureTorchModeOff];
-//                    [self.device setFlashMode:AVCaptureFlashModeOff];
-//                }
-//                [self.device unlockForConfiguration];
-//            }
-//        }
+        Class capture = NSClassFromString(@"AVCaptureDevice");
+        if (capture != nil) {
+            if ([self.device hasTorch] && [self.device hasFlash]) {
+                [self.device lockForConfiguration:nil];
+
+                sender.selected = !sender.selected;
+
+                if (sender.selected) {
+                    [self.device setTorchMode:AVCaptureTorchModeOn];
+                    [self.device setFlashMode:AVCaptureFlashModeOn];
+                } else {
+                    [self.device setTorchMode:AVCaptureTorchModeOff];
+                    [self.device setFlashMode:AVCaptureFlashModeOff];
+                }
+                [self.device unlockForConfiguration];
+            }
+        }
     } else {
         UIImagePickerController *imagrPicker = [[UIImagePickerController alloc]init];
         imagrPicker.delegate = self;

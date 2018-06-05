@@ -62,7 +62,7 @@
                 @strongify(self);
                 make.centerY.mas_equalTo(self.mas_centerY);
                 make.right.mas_equalTo(self.mas_right).offset(-35);
-                make.height.mas_equalTo(24);
+                make.size.mas_equalTo(CGSizeMake(150, 24));
             }];
         }
     }

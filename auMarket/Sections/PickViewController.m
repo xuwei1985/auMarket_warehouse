@@ -349,7 +349,7 @@
             [self bindBoxToOrder:self.bind_order_entity.order_id andBoxCode:[obj objectForKey:@"code"]];
         }
         else{
-            [self showToastWithText:@"非法的货箱条码"];
+            [self showToastWithText:@"无法识别的货箱条码"];
         }
     }
     else{

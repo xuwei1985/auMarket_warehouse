@@ -10,9 +10,11 @@
 #import "GoodsBindViewController.h"
 #import "StockModel.h"
 #import "BatchCell.h"
+#import <MJRefresh.h>
 
 @interface BatchViewController : SPBaseViewController
 {
+    
 }
 @property(nonatomic,retain) StockModel *model;
 @end

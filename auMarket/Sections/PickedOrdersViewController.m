@@ -154,9 +154,6 @@
                     [self hideNoContentView];
                 }
             }
-            else{
-                [self showFailWithText:@"加载订单失败"];
-            }
         }
     }
 }

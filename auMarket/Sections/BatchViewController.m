@@ -43,7 +43,9 @@
     if (!self.tableView.isLoading&&!self.tableView.isEmptyLoad&&self.tableView.hasMore)
     {
         if(self.tableView.isFirstLoad){
-            [self startLoadingActivityIndicator];
+            if(!self.tableView.mj_header.isRefreshing){
+                [self startLoadingActivityIndicator];
+            }
         }
         else{
             [self.tableView startLoadingActivityIndicatorView:nil];
@@ -52,6 +54,17 @@
         
         self.tableView.isLoading=YES;
     }
+}
+
+-(void)reloadbatchList{
+    if (!self.tableView.isLoading)
+    {
+        self.model.entity.next=0;
+        self.tableView.isFirstLoad=YES;
+        [self.tableView reloadData];
+        [self loadBatchList];
+    }
+    
 }
 
 -(void)handlerListPage:(BatchEntity *)entity{
@@ -88,14 +101,18 @@
     [self stopLoadingActivityIndicator];
     
     if(model==self.model&&model.requestTag==1001){//获取列表
+        [self.tableView.mj_header endRefreshing];
+        
+        if(self.tableView.isFirstLoad){
+            [self.tableView.itemArray removeAllObjects];
+            [self.tableView reloadData];
+        }
+        
         if(isSuccess){
             if(self.model.entity!=nil){
                 [self handlerListPage:self.model.entity];
             }
-            else{
-                NSLog(@"未获取到订单数据");
-            }
-            
+
             if(self.tableView.itemArray==nil||self.tableView.itemArray.count<=0){
                 [self showNoContentViewWithTitle:@"你还没有订单信息！" icon:@"SHJ_NoRequest" button:nil];
             }
@@ -118,6 +135,17 @@
     self.tableView.backgroundColor=COLOR_BG_VIEW;
     [self.view addSubview:self.tableView];
     [self.tableView showTableFooterView];
+    
+    MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(reloadbatchList)];
+    
+    //    [header setTitle:@"加载中..." forState:MJRefreshStateRefreshing]; // 松手刷新
+    header.stateLabel.font = FONT_SIZE_SMALL;
+    header.stateLabel.textColor = COLOR_DARKGRAY;
+    header.automaticallyChangeAlpha = YES;
+    header.lastUpdatedTimeLabel.hidden=YES;
+    //    [header beginRefreshing];
+    
+    self.tableView.mj_header=header;
 }
 
 #pragma mark - Table view delegate

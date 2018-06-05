@@ -271,16 +271,10 @@
                 self.model.entity.next=0;
                 [self loadTransferGoodsList];
             }
-            else{
-                [self showFailWithText:@"绑定货架失败"];
-            }
         }
         else if(self.model.requestTag==1005){
             if(isSuccess){
                 [self showSuccesWithText:@"取消绑定成功"];
-            }
-            else{
-                [self showFailWithText:@"取消绑定失败"];
             }
         }
         else if(self.model.requestTag==1006){
@@ -290,9 +284,6 @@
                 [self fitUI];
                 self.model.entity.next=0;
                 [self loadTransferGoodsList];
-            }
-            else{
-                [self showFailWithText:@"转移失败"];
             }
         }
     }

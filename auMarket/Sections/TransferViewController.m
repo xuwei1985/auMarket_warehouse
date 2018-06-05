@@ -97,7 +97,7 @@
     StockCell *cell = [tv dequeueReusableCellWithIdentifier:identifier];
     if (cell == nil) {
         cell = [[StockCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
-        cell.showsReorderControl = YES;
+        cell.showsReorderControl = NO;
         cell.accessoryType=UITableViewCellAccessoryNone;
         cell.backgroundColor=COLOR_BG_TABLEVIEWCELL;
         cell.selectionStyle = UITableViewCellSelectionStyleDefault;
@@ -119,17 +119,18 @@
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tv deselectRowAtIndexPath:[tv indexPathForSelectedRow] animated:YES];
+
     //商品条形码扫描
-    if(indexPath==[NSIndexPath indexPathForRow:0 inSection:0]){
+    if([indexPath compare:[NSIndexPath indexPathForRow:0 inSection:0]]==NSOrderedSame){
         [self gotoScanQRView:SCAN_GOODS];
     }
-    else if(indexPath==[NSIndexPath indexPathForRow:0 inSection:1]){
+    else if([indexPath compare:[NSIndexPath indexPathForRow:0 inSection:1]]==NSOrderedSame){
         [self gotoGoodsSearchView];
     }
-    else if(indexPath==[NSIndexPath indexPathForRow:0 inSection:2]){
+    else if([indexPath compare:[NSIndexPath indexPathForRow:0 inSection:2]]==NSOrderedSame){
         [self gotoTransferGoodsView:0];
     }
-    else if(indexPath==[NSIndexPath indexPathForRow:0 inSection:3]){
+    else if([indexPath compare:[NSIndexPath indexPathForRow:0 inSection:3]]==NSOrderedSame){
         [self gotoTransferGoodsView:1];
     }
 }
