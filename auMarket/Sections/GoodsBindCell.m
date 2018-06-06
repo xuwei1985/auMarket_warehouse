@@ -24,13 +24,8 @@
             _itemLbl=[[UILabel alloc] init];
             _itemLbl.textAlignment=NSTextAlignmentLeft;
             _itemLbl.textColor=COLOR_BLACK;
-            if(WIDTH_SCREEN<=320){
-                _itemLbl.font=DEFAULT_FONT(13.0);
-            }
-            else{
-                _itemLbl.font=DEFAULT_FONT(14.0);
-            }
-            _itemLbl.numberOfLines=0;
+            _itemLbl.font=DEFAULT_FONT(14.0);
+            _itemLbl.numberOfLines=2;
             _itemLbl.lineBreakMode=NSLineBreakByWordWrapping;
             [self.contentView addSubview:_itemLbl];
             
@@ -66,7 +61,7 @@
             [_priceLbl mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.top.mas_equalTo(_itemLbl.mas_bottom).offset(6);
                 make.left.mas_equalTo(_iconImageView.mas_right).offset(10);
-                make.size.mas_equalTo(CGSizeMake(60, 20));
+                make.size.mas_equalTo(CGSizeMake(80, 20));
             }];
         }
         
@@ -108,7 +103,13 @@
 -(void)layoutSubviews{
     [super layoutSubviews];
     [_iconImageView sd_setImageWithURL:[NSURL URLWithString:self.entity.goods_thumb] placeholderImage:[UIImage imageNamed:@"defaut_list"]];
-    _itemLbl.text=self.entity.goods_name;
+    
+    if(self.entity.goods_name==nil||self.entity.goods_name.length<=0){
+        _itemLbl.text=@"未命名商品";
+    }
+    else{
+        _itemLbl.text=self.entity.goods_name;
+    }
     _numLbl.text=[NSString stringWithFormat:@"×%@",self.entity.number];
     if(self.entity.shelves_no==nil||[self.entity.shelves_no length]<=0)
     {

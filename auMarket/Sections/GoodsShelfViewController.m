@@ -23,7 +23,6 @@
 }
 
 -(void)initData{
-    [self loadGoodsShelves];
     
 }
 
@@ -178,7 +177,10 @@
 
 
 -(void)loadGoodsShelves{
-    [self startLoadingActivityIndicator];
+    if(self.tableView.isFirstLoad){
+        [self startLoadingActivityIndicator];
+    }
+    
     [self.model goodsShelfList:self.goods_entity.goods_id andGoodsCode:self.goods_entity.goods_code andShelf:self.goods_entity.shelves_no];
 }
 
@@ -186,7 +188,6 @@
 -(void)loadTransferGoodsList{
     [self.model goodsTransferList:0 andTargetShelf:self.from_pick?self.goods_entity.shelves_no:@""];
 }
-
 
 -(void)addTransferToStack:(NSString *)ruku_id andNumber:(NSString *)num{
     [self startLoadingActivityIndicator];
@@ -205,6 +206,7 @@
         if(model.requestTag==1001){//获取货架列表
             if(isSuccess){
                 if(self.model.entity.list!=nil&&self.model.entity.list.count>0){
+                    self.tableView.isFirstLoad=NO;
                     [self.tableView reloadData];
                     [self hideNoContentView];
                 }
@@ -311,15 +313,22 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    if([lbl_transfer_num.text intValue]>0){
-       lbl_transfer_num.hidden=NO;
-    }
+    
     
     if(self.from_pick){
         [self loadGoodsShelves];
     }
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [self loadGoodsShelves];
+    if([lbl_transfer_num.text intValue]>0){
+        lbl_transfer_num.hidden=NO;
+    }
+}
 
 -(void)viewWillDisappear:(BOOL)animated{
     lbl_transfer_num.hidden=YES;

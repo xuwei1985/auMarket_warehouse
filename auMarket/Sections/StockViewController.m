@@ -558,7 +558,7 @@
 -(void)saveRukuGoods{
     RukuGoodsEntity *entity=[[RukuGoodsEntity alloc] init];
     entity.batch_id=self.batch_id;
-    entity.goods_id=self.goods_id;
+    entity.goods_id=self.goods_id==nil?@"0":self.goods_id;
     entity.goods_code=self.goods_code;
     entity.shelves_code=[self.shelf_code uppercaseString];
     entity.expired_date=[[[itemArr objectAtIndex:1] objectAtIndex:3] valueForKey:@"item_value"];
