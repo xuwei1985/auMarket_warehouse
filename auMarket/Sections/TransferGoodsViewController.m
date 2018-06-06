@@ -279,6 +279,8 @@
         }
         else if(self.model.requestTag==1006){
             if(isSuccess){
+                _selectAllBtn.selected=NO;
+                [_sumBtn setTitle:@"转移商品" forState:UIControlStateNormal];
                 [self showSuccesWithText:@"转移成功"];
                 self.list_type=1;
                 [self fitUI];
@@ -338,12 +340,18 @@
         }
     }];
     
-    UILongPressGestureRecognizer *longPressGR = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(cellLongAction:)];
-    longPressGR.minimumPressDuration = 0.8;
-    [cell addGestureRecognizer:longPressGR];
-
-    
-    
+    if(self.list_type==0){
+        UILongPressGestureRecognizer *longPressGR = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(cellLongAction:)];
+        longPressGR.minimumPressDuration = 0.8;
+        [cell addGestureRecognizer:longPressGR];
+    }
+    else{
+        NSMutableArray *newges = [NSMutableArray arrayWithArray:cell.gestureRecognizers];
+        for (int i =0; i<[newges count]; i++) {
+            [cell removeGestureRecognizer:[newges objectAtIndex:i]];
+        }
+    }
+   
     return cell;
 }
 
