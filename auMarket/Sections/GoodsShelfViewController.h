@@ -16,7 +16,9 @@
 {
     UIAlertView *_inputAlertView;
     UILabel *lbl_transfer_num;
+    BOOL hasHideTransferNum;
 }
+
 @property(nonatomic,retain) GoodsEntity *goods_entity;
 @property(nonatomic,retain) TransferModel *model;
 @property(nonatomic,assign) BOOL from_pick;//用于拣货中的商品过来转移库存使用

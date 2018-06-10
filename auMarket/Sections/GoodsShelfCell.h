@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ShelfEntity.h"
-typedef void(^AddStackBlock)(NSString *ruku_id,NSString *number);
+typedef void(^AddStackBlock)(ShelfItemEntity *entity);
 @interface GoodsShelfCell : UITableViewCell
 {
     UIButton *btn_select;

@@ -321,7 +321,6 @@
     [self.requestTask cancel];
 }
 
-
 - (void)downFileFromServerWithUrl:(NSString *)url andCategory:(NSString *)category{
     NSURLSessionDownloadTask *_downloadTask;
     //远程地址

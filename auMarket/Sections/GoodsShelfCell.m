@@ -181,7 +181,7 @@
 
 
 -(void)addToStack:(UIButton *)sender{
-    self.addStackBlock(self.entity.id,self.entity.transfer_number);
+    self.addStackBlock(self.entity);
 }
 
 -(void)addStack:(AddStackBlock)block{

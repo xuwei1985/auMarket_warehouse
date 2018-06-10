@@ -138,9 +138,9 @@
     }
     ShelfItemEntity *entity=[self.model.entity.list objectAtIndex:indexPath.row];
     cell.entity=entity;
-    [cell addStack:^(NSString *ruku_id, NSString *number) {
-        if([ruku_id length]>0&&[number intValue]>0){
-            [self addTransferToStack:ruku_id andNumber:number];
+    [cell addStack:^(ShelfItemEntity *entity){
+        if([entity.id length]>0&&[entity.transfer_number intValue]>0){
+            [self addTransferToStack:entity];
         }
         else{
             [self showToastWithText:@"请先侧滑输入转移数量"];
@@ -189,14 +189,19 @@
     [self.model goodsTransferList:0 andTargetShelf:self.from_pick?self.goods_entity.shelves_no:@""];
 }
 
--(void)addTransferToStack:(NSString *)ruku_id andNumber:(NSString *)num{
-    [self startLoadingActivityIndicator];
-    
-    NSString *new_shelf_code=@"";
-    if(self.from_pick){
-        new_shelf_code=self.goods_entity.shelves_no;
+-(void)addTransferToStack:(ShelfItemEntity *)entity{
+    if(entity.shelves_code&&[entity.shelves_code length]>0){
+        [self startLoadingActivityIndicator];
+        
+        NSString *new_shelf_code=@"";
+        if(self.from_pick){//从拣货商品流程中来
+            new_shelf_code=self.goods_entity.shelves_no;
+        }
+        [self.model addTransferToStack:entity.id andNumber:entity.transfer_number andNewShelf:new_shelf_code];
     }
-    [self.model addTransferToStack:ruku_id andNumber:num andNewShelf:new_shelf_code];
+    else{
+        [self showToastWithText:@"缺少源货架数据"];
+    }
 }
 
 -(void)onResponse:(SPBaseModel *)model isSuccess:(BOOL)isSuccess{
@@ -225,7 +230,11 @@
         else if(model.requestTag==1003){//获取带转移商品列表
             if(isSuccess){
                 if(self.model.transfer_entity.list!=nil&&self.model.transfer_entity.list.count>0){
-                    lbl_transfer_num.hidden=NO;
+                    if(!hasHideTransferNum){
+                        lbl_transfer_num.hidden=NO;
+                    }
+                    
+
                     lbl_transfer_num.text=[NSString stringWithFormat:@"%lu",(unsigned long)self.model.transfer_entity.list.count];
                     if([lbl_transfer_num.text intValue]<99){
                         lbl_transfer_num.frame=CGRectMake(WIDTH_SCREEN-25, 20, 14, 14);
@@ -295,12 +304,66 @@
     return YES;
 }
 
+//检查是否还有未加入带转移区域的商品数量
+-(BOOL)hasUnConfirmNum{
+    for (ShelfItemEntity *entity in self.model.entity.list) {
+        if([entity.transfer_number intValue]>0){
+            return YES;
+        }
+    }
+    return NO;
+}
 
 -(void)gotoTransferGoodsView{
-    TransferGoodsViewController *tvc=[[TransferGoodsViewController alloc] init];
-    tvc.list_type=0;
-    tvc.target_shelf=self.goods_entity.shelves_no;
-    [self.navigationController pushViewController:tvc animated:YES];
+    
+    if([self hasUnConfirmNum]){
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"有未加入待转移区域的商品，确认离开吗？" preferredStyle:UIAlertControllerStyleAlert];
+        // 确定
+        UIAlertAction *_okAction= [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *_Nonnull action) {
+            TransferGoodsViewController *tvc=[[TransferGoodsViewController alloc] init];
+            tvc.list_type=0;
+            tvc.target_shelf=self.goods_entity.shelves_no;
+            [self.navigationController pushViewController:tvc animated:YES];
+        }];
+        UIAlertAction *_cancelAction =[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+        
+        [alert addAction:_okAction];
+        [alert addAction:_cancelAction];
+        // 弹出对话框
+        [self presentViewController:alert animated:true completion:nil];
+    }
+    else{
+        TransferGoodsViewController *tvc=[[TransferGoodsViewController alloc] init];
+        tvc.list_type=0;
+        tvc.target_shelf=self.goods_entity.shelves_no;
+        [self.navigationController pushViewController:tvc animated:YES];
+    }
+}
+
+- (void)willMoveToParentViewController:(UIViewController*)parent{
+    [super willMoveToParentViewController:parent];
+    lbl_transfer_num.hidden=YES;
+    hasHideTransferNum=YES;
+}
+
+-(void)onBack
+{
+    if([self hasUnConfirmNum]){
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"有未加入待转移区域的商品，确认离开吗？" preferredStyle:UIAlertControllerStyleAlert];
+        // 确定
+        UIAlertAction *_okAction= [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *_Nonnull action) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }];
+        UIAlertAction *_cancelAction =[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+
+        [alert addAction:_okAction];
+        [alert addAction:_cancelAction];
+        // 弹出对话框
+        [self presentViewController:alert animated:true completion:nil];
+    }
+    else{
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 -(TransferModel *)model{
@@ -313,7 +376,7 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    
+    hasHideTransferNum=NO;
     
     if(self.from_pick){
         [self loadGoodsShelves];
@@ -332,6 +395,7 @@
 
 -(void)viewWillDisappear:(BOOL)animated{
     lbl_transfer_num.hidden=YES;
+    hasHideTransferNum=YES;
 }
 
 -(void)viewDidDisappear:(BOOL)animated{
