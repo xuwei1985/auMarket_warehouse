@@ -274,7 +274,7 @@
         }
         else if(self.model.requestTag==1005){
             if(isSuccess){
-                [self showSuccesWithText:@"取消绑定成功"];
+                [self showSuccesWithText:@"取消成功"];
             }
         }
         else if(self.model.requestTag==1006){
