@@ -144,7 +144,7 @@
                 make.top.mas_equalTo(lbl_box_name.mas_bottom).offset(2);
                 make.left.mas_equalTo(_iconImageView.mas_right).offset(10);
                 make.right.mas_equalTo(self.mas_right).offset(-12);
-                make.size.mas_equalTo(CGSizeMake(40, 38));
+                make.height.mas_equalTo(38);
             }];
         }
     }
@@ -153,8 +153,18 @@
 
 -(void)layoutSubviews{
     [super layoutSubviews];
+    
     [_iconImageView sd_setImageWithURL:[NSURL URLWithString:self.entity.goods_thumb] placeholderImage:[UIImage imageNamed:@"defaut_list"]];
     lbl_goods_name.text=self.entity.goods_name;
+    
+    @weakify(self);
+    [lbl_goods_name mas_updateConstraints:^(MASConstraintMaker *make) {
+        @strongify(self);
+        make.top.mas_equalTo(lbl_box_name.mas_bottom).offset(2);
+        make.left.mas_equalTo(_iconImageView.mas_right).offset(10);
+        make.right.mas_equalTo(self.mas_right).offset(-12);
+        make.height.mas_equalTo(38);
+    }];
     lbl_goods_number.text=[NSString stringWithFormat:@"%@",self.entity.goods_number];
     lbl_shelf_code.text=self.entity.shelves_code;
     

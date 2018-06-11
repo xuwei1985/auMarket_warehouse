@@ -141,11 +141,41 @@
             }];
         }
         
+        if(!lbl_done_time){
+            lbl_done_time=[[UILabel alloc] init];
+            lbl_done_time.textColor=COLOR_DARKGRAY;
+            lbl_done_time.font=FONT_SIZE_SMALL;
+            lbl_done_time.text=@"完成时间：";
+            lbl_done_time.hidden=YES;
+            [self.contentView addSubview:lbl_done_time];
+            
+            [lbl_done_time mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.top.mas_equalTo(lbl_order_goods_num.mas_bottom).offset(4);
+                make.left.mas_equalTo(btn_select.mas_right).offset(15);
+                make.size.mas_equalTo(CGSizeMake(74, 20));
+            }];
+        }
+        
+        if(!lbl_done_time_value){
+            lbl_done_time_value=[[UILabel alloc] init];
+            lbl_done_time_value.textColor=COLOR_DARKGRAY;
+            lbl_done_time_value.font=FONT_SIZE_SMALL;
+            lbl_done_time_value.text=@"--";
+            lbl_done_time_value.hidden=YES;
+            [self.contentView addSubview:lbl_done_time_value];
+            
+            [lbl_done_time_value mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.top.mas_equalTo(lbl_order_goods_num_value.mas_bottom).offset(4);
+                make.left.mas_equalTo(lbl_done_time.mas_right);
+                make.size.mas_equalTo(CGSizeMake(150, 20));
+            }];
+        }
+        
         if(!lbl_bind_tip){
             @strongify(self);
             lbl_bind_tip=[[UILabel alloc] init];
             lbl_bind_tip.textColor=COLOR_MAIN;
-            lbl_bind_tip.font=FONT_SIZE_MINI;
+            lbl_bind_tip.font=FONT_SIZE_SMALL;
             lbl_bind_tip.text=@"待绑定拣货箱";
             [self.contentView addSubview:lbl_bind_tip];
             
@@ -295,9 +325,20 @@
     lbl_order_goods_num_value.text=self.entity.goods_count;
     lbl_order_price_value.text=[NSString stringWithFormat:@"$%@",self.entity.total_price];
     
+    if(self.list_model==1){
+        lbl_done_time.hidden=NO;
+        lbl_done_time_value.hidden=NO;
+        lbl_done_time_value.text=self.entity.end_time;
+    }
+    else{
+        lbl_done_time.hidden=YES;
+        lbl_done_time_value.hidden=YES;
+    }
+    
     btn_type_freeze.hidden=[self.entity.attribute.frozen intValue]<=0;//冷冻
     btn_type_zero.hidden=[self.entity.attribute.cold intValue]<=0;//冷藏
     btn_type_box.hidden=[self.entity.attribute.package intValue]<=0;//整箱
+    
     
     if(btn_type_freeze.hidden){
         [btn_type_zero mas_updateConstraints:^(MASConstraintMaker *make) {

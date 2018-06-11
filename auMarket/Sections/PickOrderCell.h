@@ -20,11 +20,13 @@ typedef void(^SelOrderBlock)(NSString *order_id,int action);
     UILabel *lbl_order_price;
     UILabel *lbl_bind_tip;
     UILabel *lbl_bind_mark;
+    UILabel *lbl_done_time;
     
     UILabel *lbl_order_sn_value;
     UILabel *lbl_order_goods_num_value;
     UILabel *lbl_order_region_value;
     UILabel *lbl_order_price_value;
+    UILabel *lbl_done_time_value;
     UIButton *btn_type_freeze;
     UIButton *btn_type_zero;
     UIButton *btn_type_box;
