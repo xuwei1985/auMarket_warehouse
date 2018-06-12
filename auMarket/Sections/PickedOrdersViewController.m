@@ -100,10 +100,10 @@
 -(CGFloat)tableView:(UITableView *)tv heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     OrderItemEntity *entity=[self.model.entity.list objectAtIndex:indexPath.row];
     if([self hasSpecialPackage:entity]){
-        return 172;
+        return 198;
     }
     else{
-        return 142;
+        return 168;
     }
 }
 

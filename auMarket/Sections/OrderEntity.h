@@ -20,6 +20,7 @@
 @property (nonatomic,retain) NSString *total_price;
 @property (nonatomic,retain) NSString *goods_count;
 @property (nonatomic,retain) NSString *region_name;
+@property (nonatomic,retain) NSString *end_time;
 @property (nonatomic,retain) PackageFormEntity *attribute;
 @property (nonatomic,retain) NSString *box;//绑定的货箱码
 @property (nonatomic,assign) BOOL selected;//是否选中
