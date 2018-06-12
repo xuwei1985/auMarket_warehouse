@@ -289,7 +289,6 @@
                                                    AVMetadataObjectTypeEAN13Code,
                                                    AVMetadataObjectTypeEAN8Code,
                                                    AVMetadataObjectTypeCode128Code,
-                                                   AVMetadataObjectTypeQRCode,
                                                    AVMetadataObjectTypeCode39Code,
                                                    AVMetadataObjectTypeCode93Code,
                                                    AVMetadataObjectTypeCode39Mod43Code
@@ -297,6 +296,7 @@
 //        AVMetadataObjectTypePDF417Code,
 //        AVMetadataObjectTypeAztecCode,
 //        AVMetadataObjectTypeUPCECode,
+//        AVMetadataObjectTypeQRCode,
         
         // >= ios /Users/wuxuwei/Projects/IOS_Projects/auMarket_warehouse/auMarket/Sections8
         if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_7_1) {
@@ -321,7 +321,27 @@
     self.preview.frame = CGRectMake(0, 0, WIDTH_SCREEN, HEIGHT_SCREEN);
     // 因为 AVCaptureVideoPreviewLayer是继承CALayer,所以添加到当前view的layer层
     [self.view.layer insertSublayer:self.preview atIndex:0];
+    //放大焦距
     
+    NSError *error = nil;
+    
+    [self.device lockForConfiguration:&error];
+    
+    
+    
+    if (self.device.activeFormat.videoMaxZoomFactor > 1.5) {
+        
+        self.device.videoZoomFactor = 1.3;
+        
+    }else{
+        
+        self.device.videoZoomFactor = self.device.activeFormat.videoMaxZoomFactor;
+        
+    }
+    
+    
+    
+    [self.device unlockForConfiguration];
     //开始
     [self.session startRunning];
 }
