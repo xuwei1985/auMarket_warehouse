@@ -354,6 +354,11 @@
         
         // 获取扫描到的信息
         NSString *stringValue = metadataObject.stringValue;
+        if(self.scan_model==SCAN_GOODS){
+            if(stringValue!=nil&&stringValue.length==13&&[stringValue hasPrefix:@"0"]){
+                stringValue=[stringValue substringFromIndex:1];
+            }
+        }
         if([self.pass_delegate respondsToSelector:@selector(passObject:)]){
             [self.pass_delegate passObject:[NSDictionary dictionaryWithObjectsAndKeys:stringValue,@"code",[NSString stringWithFormat:@"%lu",(unsigned long)self.scan_model],@"scan_model", nil]];
         }
