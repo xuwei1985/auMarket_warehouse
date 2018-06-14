@@ -12,6 +12,7 @@
 #import "QRCodeViewController.h"
 #import "GoodsSearchViewController.h"
 #import "GoodsListModel.h"
+#import "GoodsShelfViewController.h"
 
 typedef enum:NSInteger{
     INPUT_GOODS_NUM,

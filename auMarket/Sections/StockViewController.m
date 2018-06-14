@@ -209,6 +209,8 @@
     if(section==0&&self.scan_entity){
         goods_view=[[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, 92)];
         goods_view.backgroundColor=COLOR_WHITE;
+        goods_view.userInteractionEnabled=YES;
+        [goods_view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gotoGoodsShelfView)]];
         
         CALayer *layer = [CALayer layer];
         layer.frame = CGRectMake(0, 0, WIDTH_SCREEN, 0.5);
@@ -219,25 +221,24 @@
         goods_img.frame=CGRectMake(10, 10, 72, 72);
         [goods_view addSubview:goods_img];
         
-        goodsNameLbl=[[UILabel alloc] initWithFrame:CGRectMake(92, 10, WIDTH_SCREEN-95 , 24)];
+        goodsNameLbl=[[UILabel alloc] initWithFrame:CGRectMake(92, 10, WIDTH_SCREEN-105 , 24)];
         goodsNameLbl.textAlignment=NSTextAlignmentLeft;
         goodsNameLbl.textColor=COLOR_DARKGRAY;
         goodsNameLbl.font=DEFAULT_FONT(14.0);
         goodsNameLbl.numberOfLines=0;
         goodsNameLbl.lineBreakMode=NSLineBreakByWordWrapping;
-        [goodsNameLbl sizeToFit];
         [goods_view addSubview:goodsNameLbl];
         
         goodsPriceLbl=[[UILabel alloc] initWithFrame:CGRectMake(92, 58, 100, 24)];
         goodsPriceLbl.textAlignment=NSTextAlignmentLeft;
-        goodsPriceLbl.textColor=COLOR_MAIN;
+        goodsPriceLbl.textColor=COLOR_DARKGRAY;
         goodsPriceLbl.font=DEFAULT_FONT(14.0);
         [goods_view addSubview:goodsPriceLbl];
         
         if(self.scan_entity){
             [goods_img sd_setImageWithURL:[NSURL URLWithString:self.scan_entity.goods_thumb] placeholderImage:[UIImage imageNamed:@"defaut_list"]];
             goodsNameLbl.text=self.scan_entity.goods_name;
-            goodsPriceLbl.text=[NSString stringWithFormat:@"$%@",self.scan_entity.shop_price];
+            goodsPriceLbl.text=[NSString stringWithFormat:@"库存：%@",self.scan_entity.number];
             [goodsNameLbl sizeToFit];
         }
         else{
@@ -610,6 +611,16 @@
     gvc.pass_delegate=self;
     [self.navigationController pushViewController:gvc animated:YES];
 }
+
+-(void)gotoGoodsShelfView{
+    if(self.scan_entity){
+        GoodsShelfViewController *gvc=[[GoodsShelfViewController alloc] init];
+        gvc.goods_entity=self.scan_entity;
+        gvc.shelf_list_model=SHELF_LIST_MODEL_VIEW;
+        [self.navigationController pushViewController:gvc animated:YES];
+    }
+}
+
 
 -(void)goBack{
     [self.navigationController popViewControllerAnimated:YES];

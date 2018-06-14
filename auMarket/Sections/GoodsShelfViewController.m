@@ -34,20 +34,21 @@
 -(void)setNavigation{
     self.title=@"商品货架";
     
-    UIBarButtonItem *right_Item = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"transfer_cart"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(gotoTransferGoodsView)];
-    
-    self.navigationItem.rightBarButtonItem=right_Item;
-    
-    lbl_transfer_num=[[UILabel alloc] initWithFrame:CGRectMake(WIDTH_SCREEN-25, 20, 14, 14)];
-    lbl_transfer_num.text=@"0";
-    lbl_transfer_num.font=DEFAULT_FONT(11);
-    lbl_transfer_num.textColor=COLOR_MAIN;
-    lbl_transfer_num.textAlignment=NSTextAlignmentCenter;
-    lbl_transfer_num.backgroundColor=COLOR_BG_WHITE;
-    [lbl_transfer_num.layer setCornerRadius:7];
-    lbl_transfer_num.clipsToBounds=YES;
-    lbl_transfer_num.hidden=YES;
-    [self.navigationController.view addSubview:lbl_transfer_num];
+    if(self.shelf_list_model!=SHELF_LIST_MODEL_VIEW){//非货架的浏览模式
+        UIBarButtonItem *right_Item = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"transfer_cart"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(gotoTransferGoodsView)];
+        self.navigationItem.rightBarButtonItem=right_Item;
+        
+        lbl_transfer_num=[[UILabel alloc] initWithFrame:CGRectMake(WIDTH_SCREEN-25, 20, 14, 14)];
+        lbl_transfer_num.text=@"0";
+        lbl_transfer_num.font=DEFAULT_FONT(11);
+        lbl_transfer_num.textColor=COLOR_MAIN;
+        lbl_transfer_num.textAlignment=NSTextAlignmentCenter;
+        lbl_transfer_num.backgroundColor=COLOR_BG_WHITE;
+        [lbl_transfer_num.layer setCornerRadius:7];
+        lbl_transfer_num.clipsToBounds=YES;
+        lbl_transfer_num.hidden=YES;
+        [self.navigationController.view addSubview:lbl_transfer_num];
+    }
 }
 
 -(void)addNotification{
@@ -138,6 +139,7 @@
     }
     ShelfItemEntity *entity=[self.model.entity.list objectAtIndex:indexPath.row];
     cell.entity=entity;
+    cell.shelf_list_model=self.shelf_list_model;
     [cell addStack:^(ShelfItemEntity *entity){
         if([entity.id length]>0&&[entity.transfer_number intValue]>0){
             [self addTransferToStack:entity];
@@ -150,7 +152,12 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tv heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 148;
+    if(self.shelf_list_model!=SHELF_LIST_MODEL_VIEW){
+        return 148;
+    }
+    else{
+        return 128;
+    }
 }
 
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -160,7 +167,10 @@
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return YES;
+    if(self.shelf_list_model!=SHELF_LIST_MODEL_VIEW){
+        return YES;
+    }
+    return NO;
 }
 
 - (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -186,7 +196,7 @@
 
 //请求需要转移的商品列表
 -(void)loadTransferGoodsList{
-    [self.model goodsTransferList:0 andTargetShelf:self.from_pick?self.goods_entity.shelves_no:@""];
+    [self.model goodsTransferList:0 andTargetShelf:(self.shelf_list_model==SHELF_LIST_MODEL_PICK)?self.goods_entity.shelves_no:@""];
 }
 
 -(void)addTransferToStack:(ShelfItemEntity *)entity{
@@ -194,7 +204,7 @@
         [self startLoadingActivityIndicator];
         
         NSString *new_shelf_code=@"";
-        if(self.from_pick){//从拣货商品流程中来
+        if(self.shelf_list_model==SHELF_LIST_MODEL_PICK){//从拣货商品流程中来
             new_shelf_code=self.goods_entity.shelves_no;
         }
         [self.model addTransferToStack:entity.id andNumber:entity.transfer_number andNewShelf:new_shelf_code];
@@ -378,9 +388,9 @@
     [super viewWillAppear:animated];
     hasHideTransferNum=NO;
     
-    if(self.from_pick){
-        [self loadGoodsShelves];
-    }
+//    if(self.shelf_list_model==SHELF_LIST_MODEL_PICK){
+//        [self loadGoodsShelves];
+//    }
 }
 
 -(void)viewDidAppear:(BOOL)animated

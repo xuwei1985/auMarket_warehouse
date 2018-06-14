@@ -19,6 +19,7 @@
             [btn_select setImage:[UIImage imageNamed:@"add_transfer_off"] forState:UIControlStateNormal];
             [btn_select setImage:[UIImage imageNamed:@"add_transfer_on"] forState:UIControlStateSelected];
             [btn_select addTarget:self action:@selector(addToStack:) forControlEvents:UIControlEventTouchUpInside];
+            btn_select.hidden=YES;
             [self.contentView addSubview:btn_select];
             
             [btn_select mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -145,12 +146,14 @@
             }];
         }
         
+        
         if(!lbl_bind_tip){
             @strongify(self);
             lbl_bind_tip=[[UILabel alloc] init];
             lbl_bind_tip.textColor=COLOR_DARKGRAY;
             lbl_bind_tip.font=FONT_SIZE_SMALL;
             lbl_bind_tip.text=@"待转移";
+            lbl_bind_tip.hidden=YES;
             [self.contentView addSubview:lbl_bind_tip];
             
             [lbl_bind_tip mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -167,6 +170,7 @@
             lbl_bind_mark.font=FONT_SIZE_SMALL;
             lbl_bind_mark.text=@"0";
             lbl_bind_mark.textAlignment=NSTextAlignmentLeft;
+            lbl_bind_mark.hidden=YES;
             [self.contentView addSubview:lbl_bind_mark];
             
             [lbl_bind_mark mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -191,16 +195,29 @@
 -(void)layoutSubviews{
     [super layoutSubviews];
     
+    if(self.shelf_list_model!=SHELF_LIST_MODEL_VIEW){
+        btn_select.hidden=NO;
+        lbl_bind_tip.hidden=NO;
+        lbl_bind_mark.hidden=NO;
+        
+        if([self.entity.transfer_number intValue]>0){
+            btn_select.selected=YES;
+        }
+        else{
+            btn_select.selected=NO;
+        }
+        
+        lbl_bind_mark.text=[NSString  stringWithFormat:@"%d",[self.entity.transfer_number intValue]];
+    }
+    else{
+        btn_select.hidden=YES;
+        lbl_bind_tip.hidden=YES;
+        lbl_bind_mark.hidden=YES;
+    }
+    
     lbl_order_region_value.text=self.entity.expired_date;
     lbl_order_price_value.text=self.entity.created_at;
     lbl_order_goods_num_value.text=[NSString stringWithFormat:@"%d (未拣货:%@)",([self.entity.inventory intValue]-[self.entity.move_number intValue]),self.entity.number];
-    lbl_bind_mark.text=[NSString  stringWithFormat:@"%d",[self.entity.transfer_number intValue]];
-    if([self.entity.transfer_number intValue]>0){
-        btn_select.selected=YES;
-    }
-    else{
-        btn_select.selected=NO;
-    }
     
     if([self.entity.storage intValue]==1){
         lbl_order_sn_value.textColor=[Common hexColor:@"#0092FF"];
@@ -211,7 +228,6 @@
         lbl_order_sn_value.textColor=COLOR_DARKGRAY;
     }
 }
-
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

@@ -18,6 +18,7 @@
     UILabel *lbl_goods_number;
     UILabel *lbl_box_name;
     UILabel *lbl_shelf_code;
+    UILabel *lbl_care_mark;
 }
 
 @property(nonatomic,retain) PickGoodsEntity *entity;

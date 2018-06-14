@@ -61,7 +61,7 @@
             [_priceLbl mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.top.mas_equalTo(_itemLbl.mas_bottom).offset(6);
                 make.left.mas_equalTo(_iconImageView.mas_right).offset(10);
-                make.size.mas_equalTo(CGSizeMake(80, 20));
+                make.size.mas_equalTo(CGSizeMake(100, 20));
             }];
         }
         
@@ -75,7 +75,7 @@
             [_totalPriceLbl mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.bottom.mas_equalTo(-10);
                 make.left.mas_equalTo(_iconImageView.mas_right).offset(10);
-                make.size.mas_equalTo(CGSizeMake(68, 20));
+                make.size.mas_equalTo(CGSizeMake(120, 20));
             }];
         }
         

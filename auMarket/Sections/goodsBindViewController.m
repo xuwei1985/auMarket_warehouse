@@ -148,8 +148,6 @@
     [self.model loadBindGoodsWithBatchId:self.batch_id];
 }
 
-
-
 -(void)onResponse:(SPBaseModel *)model isSuccess:(BOOL)isSuccess{
     [self stopLoadingActivityIndicator];
     if(model==self.model&&self.model.requestTag==1002){

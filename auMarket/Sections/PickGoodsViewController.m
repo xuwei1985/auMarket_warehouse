@@ -276,7 +276,7 @@
 
 -(void)gotoGoodsShelfView:(GoodsEntity *)entity{
     GoodsShelfViewController *svc=[[GoodsShelfViewController alloc] init];
-    svc.from_pick=YES;
+    svc.shelf_list_model=SHELF_LIST_MODEL_PICK;
     svc.goods_entity=entity;
     self.isGotoShelvesView=YES;
     [self.navigationController pushViewController:svc animated:YES];

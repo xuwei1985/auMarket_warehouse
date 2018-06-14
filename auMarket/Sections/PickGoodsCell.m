@@ -92,7 +92,7 @@
             
             lbl_goods_number=[[UILabel alloc] init];
             lbl_goods_number.textAlignment=NSTextAlignmentLeft;
-            lbl_goods_number.textColor=COLOR_MAIN;
+            lbl_goods_number.textColor=COLOR_DARKGRAY;
             lbl_goods_number.font=FONT_SIZE_SMALL;
             [self.contentView addSubview:lbl_goods_number];
             
@@ -147,6 +147,28 @@
                 make.height.mas_equalTo(38);
             }];
         }
+        
+        if (lbl_care_mark==nil) {
+            lbl_care_mark=[[UILabel alloc] init];
+            lbl_care_mark.textAlignment=NSTextAlignmentCenter;
+            lbl_care_mark.textColor=COLOR_WHITE;
+            lbl_care_mark.backgroundColor=RGBCOLOR(244, 66, 72);
+            lbl_care_mark.text=@"易错";
+            lbl_care_mark.font=DEFAULT_FONT(11);
+            lbl_care_mark.clipsToBounds=YES;
+            lbl_care_mark.layer.borderColor=RGBCOLOR(244, 66, 72).CGColor;
+            lbl_care_mark.layer.cornerRadius=3;
+            lbl_care_mark.hidden=YES;
+            [self.contentView addSubview:lbl_care_mark];
+            
+            [lbl_care_mark mas_makeConstraints:^(MASConstraintMaker *make) {
+                @strongify(self);
+                make.centerY.mas_equalTo(self.mas_centerY).offset(-3);
+                make.right.mas_equalTo(self.mas_right).offset(-12);
+                make.height.mas_equalTo(18);
+                make.width.mas_equalTo(34);
+            }];
+        }
     }
     return self;
 }
@@ -166,6 +188,12 @@
         make.height.mas_equalTo(38);
     }];
     lbl_goods_number.text=[NSString stringWithFormat:@"%@",self.entity.goods_number];
+    if([self.entity.goods_number intValue]>1){
+        lbl_goods_number.textColor=COLOR_MAIN;
+    }
+    else{
+        lbl_goods_number.textColor=COLOR_DARKGRAY;
+    }
     lbl_shelf_code.text=self.entity.shelves_code;
     
     NSRange range = [self.entity.box rangeOfString:@"-"];
@@ -176,6 +204,13 @@
     else{
         lbl_box_name.text=@"invalid";
         lbl_box_mark.backgroundColor=[UIColor clearColor];
+    }
+    
+    if([self.entity.need_care intValue]==1){
+        lbl_care_mark.hidden=NO;
+    }
+    else{
+        lbl_care_mark.hidden=YES;
     }
 }
 
