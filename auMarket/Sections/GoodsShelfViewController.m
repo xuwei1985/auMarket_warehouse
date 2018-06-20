@@ -306,8 +306,8 @@
         return YES;
     }
     //长度限制
-    if([textField.text length] > 3){
-        textField.text = [textField.text substringToIndex:3];
+    if([textField.text length] > 5){
+        textField.text = [textField.text substringToIndex:5];
         return NO;
     }
     

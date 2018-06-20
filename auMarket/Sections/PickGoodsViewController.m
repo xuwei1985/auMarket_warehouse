@@ -33,6 +33,18 @@
 
 -(void)setNavigation{
     self.title=@"拣货";
+    
+    UIButton *doneBtn=[[UIButton alloc] initWithFrame:CGRectMake(WIDTH_SCREEN-40, 4, 40, 32)];
+    [doneBtn addTarget:self action:@selector(finishPicking) forControlEvents:UIControlEventTouchUpInside];
+    [doneBtn setTitle:@"完成拣货" forState:UIControlStateNormal];
+    [doneBtn setTitleColor:COLOR_WHITE forState:UIControlStateNormal];
+    [doneBtn setTitleColor:COLOR_WHITE forState:UIControlStateHighlighted];
+    doneBtn.titleLabel.font=FONT_SIZE_MIDDLE;
+    doneBtn.titleLabel.textAlignment=NSTextAlignmentCenter;
+    
+    UIBarButtonItem *right_Item_cart = [[UIBarButtonItem alloc] initWithCustomView:doneBtn];
+    self.navigationItem.leftBarButtonItem =  [[UIBarButtonItem alloc] initWithCustomView:[[UIView alloc] initWithFrame:CGRectZero]];
+    self.navigationItem.rightBarButtonItem=right_Item_cart;
 }
 
 -(void)createCategoryView{
@@ -129,6 +141,11 @@
 -(void)finishGoodsPick:(PickGoodsEntity *)entity{
     [self startLoadingActivityIndicator];
     [self.model finishGoodsPick:entity.rec_id andOrderId:entity.order_id];
+}
+
+-(void)finishPicking{
+    [self startLoadingActivityIndicator];
+//    [self.model finishGoodsPick:entity.rec_id andOrderId:entity.order_id];
 }
 
 -(void)onResponse:(SPBaseModel *)model isSuccess:(BOOL)isSuccess{
@@ -272,7 +289,6 @@
 -(void)goBack{
     [self.navigationController popViewControllerAnimated:YES];
 }
-
 
 -(void)gotoGoodsShelfView:(GoodsEntity *)entity{
     GoodsShelfViewController *svc=[[GoodsShelfViewController alloc] init];
