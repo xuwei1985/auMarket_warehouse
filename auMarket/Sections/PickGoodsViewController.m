@@ -33,6 +33,17 @@
 
 -(void)setNavigation{
     self.title=@"拣货";
+    
+    UIButton *doneBtn=[[UIButton alloc] initWithFrame:CGRectMake(WIDTH_SCREEN-40, 4, 40, 32)];
+    [doneBtn addTarget:self action:@selector(finishPicking) forControlEvents:UIControlEventTouchUpInside];
+    [doneBtn setTitle:@"批量完成" forState:UIControlStateNormal];
+    [doneBtn setTitleColor:COLOR_WHITE forState:UIControlStateNormal];
+    [doneBtn setTitleColor:COLOR_WHITE forState:UIControlStateHighlighted];
+    doneBtn.titleLabel.font=FONT_SIZE_MIDDLE;
+    doneBtn.titleLabel.textAlignment=NSTextAlignmentCenter;
+    
+    UIBarButtonItem *right_Item_cart = [[UIBarButtonItem alloc] initWithCustomView:doneBtn];
+    self.navigationItem.rightBarButtonItem=right_Item_cart;
 }
 
 -(void)createCategoryView{
@@ -119,7 +130,6 @@
 }
 
 
-
 //请求订单下的要拣货的商品
 -(void)loadPickGoodsList{
     [self startLoadingActivityIndicator];
@@ -130,6 +140,60 @@
     [self startLoadingActivityIndicator];
     [self.model finishGoodsPick:entity.rec_id andOrderId:entity.order_id];
 }
+
+//批量拣货完成
+-(void)finishPicking{
+    [self showAllPickConfirm];
+}
+
+-(void)showAllPickConfirm{
+    NSString *tip_title=@"确认商品全部拣货完成吗？";
+    if (_inputAlertView==nil) {
+        _inputAlertView = [[UIAlertView alloc] initWithTitle:tip_title message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    }
+    _inputAlertView.title=tip_title;
+    [_inputAlertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
+    
+    UITextField *nameField = [_inputAlertView textFieldAtIndex:0];
+    nameField.delegate=self;
+    nameField.placeholder =[NSString stringWithFormat:@"请输入确认码"];
+    nameField.keyboardType=UIKeyboardTypeNumberPad;
+    [_inputAlertView show];
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    
+    if (buttonIndex == alertView.firstOtherButtonIndex) {
+        UITextField *nameField = [alertView textFieldAtIndex:0];
+        NSString *txt_value=[nameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+        
+        if([txt_value isEqualToString:@"1234"]){
+            [self startLoadingActivityIndicator];
+            [self.model finishAllGoodsPick];
+        }
+        else{
+            [self showToastWithText:@"确认码不正确"];
+        }
+    }
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    //判断是否为删除字符，如果为删除则让执行
+    char c=[string UTF8String][0];
+    if (c=='\000') {
+        //numberOfCharsLabel.text=[NSString stringWithFormat:@"%d",50-[[self.textView text] length]+1];
+        return YES;
+    }
+    //长度限制
+    if([textField.text length] > 10){
+        textField.text = [textField.text substringToIndex:10];
+        return NO;
+    }
+    
+    return YES;
+}
+
 
 -(void)onResponse:(SPBaseModel *)model isSuccess:(BOOL)isSuccess{
     [self stopLoadingActivityIndicator];
@@ -150,11 +214,28 @@
             [self doCellDelete];
             if([self.model.pickGoodsListEntity.list count]<=0){
                 [self showSuccesWithText:@"拣货完成"];
-                dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC));
-                dispatch_after(delayTime, dispatch_get_main_queue(), ^{
-                    [self goBack];
-                });
+                
+                self.list_type=1;
+                btn_picking.selected=NO;
+                btn_picked.selected=YES;
+                [self loadPickGoodsList];
+//                dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC));
+//                dispatch_after(delayTime, dispatch_get_main_queue(), ^{
+//                    [self goBack];
+//                });
             }
+        }
+    }
+    else if(model==self.model&&self.model.requestTag==1006){
+        if(isSuccess){
+            [self.model.pickGoodsListEntity.list removeAllObjects];
+            [self.tableView reloadData];
+            
+            [self showSuccesWithText:@"拣货完成"];
+            self.list_type=1;
+            btn_picking.selected=NO;
+            btn_picked.selected=YES;
+            [self loadPickGoodsList];
         }
     }
 }
@@ -272,7 +353,6 @@
 -(void)goBack{
     [self.navigationController popViewControllerAnimated:YES];
 }
-
 
 -(void)gotoGoodsShelfView:(GoodsEntity *)entity{
     GoodsShelfViewController *svc=[[GoodsShelfViewController alloc] init];

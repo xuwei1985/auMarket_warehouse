@@ -68,6 +68,15 @@
     [self loadInner];
 }
 
+-(void)finishAllGoodsPick{
+    self.parseDataClassType = [SPBaseEntity class];
+    SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
+    self.shortRequestAddress= [NSString stringWithFormat:@"v1/pick/picking-all?token=%@",user.user_token];
+    self.params = @{};
+    self.requestTag=1006;
+    [self loadInner];
+}
+
 
 -(void)handleParsedData:(SPBaseEntity*)parsedData{
     if ([parsedData isKindOfClass:[OrderEntity class]]) {

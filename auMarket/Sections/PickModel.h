@@ -18,4 +18,5 @@
 -(void)bindBoxToOrder:(NSString *)order_id andBoxCode:(NSString *)box_code;
 -(void)beginOrders:(NSString *)order_ids;
 -(void)finishGoodsPick:(NSString *)rec_id andOrderId:(NSString *)order_id;
+-(void)finishAllGoodsPick;
 @end

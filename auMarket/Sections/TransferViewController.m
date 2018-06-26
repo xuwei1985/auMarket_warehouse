@@ -152,7 +152,7 @@
                 self.scan_entity=[self.goods_model.entity.list objectAtIndex:0];
                 self.goods_id=self.scan_entity.goods_id;
                 
-                dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.6 * NSEC_PER_SEC));
+                dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC));
                 dispatch_after(delayTime, dispatch_get_main_queue(), ^{
                     [self gotoGoodsShelfView:self.scan_entity];
                 });

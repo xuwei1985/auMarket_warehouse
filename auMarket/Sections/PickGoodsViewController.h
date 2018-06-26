@@ -12,12 +12,13 @@
 #import "PickModel.h"
 #import "GoodsShelfViewController.h"
 
-@interface PickGoodsViewController : SPBaseViewController<UIActionSheetDelegate>
+@interface PickGoodsViewController : SPBaseViewController<UIActionSheetDelegate,UITextFieldDelegate>
 {
     UIButton *btn_picking;
     UIButton *btn_picked;
     UIView *blockView;
     NSIndexPath *current_confirm_path;
+    UIAlertView *_inputAlertView;
 }
 @property(nonatomic,retain) PickModel *model;
 @property(nonatomic,retain) NSString *order_ids;
