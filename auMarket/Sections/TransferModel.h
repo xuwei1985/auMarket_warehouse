@@ -20,4 +20,5 @@
 -(void)bindNewShelf:(NSString *)move_id andTargetShelf:(NSString *)target_shelf;
 -(void)unBind:(NSString *)move_id;
 -(void)transferGoods:(NSString *)move_ids;
+-(void)transferGoodsDirectly:(NSString *)ruku_id andShelves:(NSString *)shelves_code;
 @end

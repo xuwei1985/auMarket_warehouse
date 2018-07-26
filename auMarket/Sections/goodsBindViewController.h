@@ -9,13 +9,18 @@
 #import "SPBaseViewController.h"
 #import "StockViewController.h"
 #import "GoodsBindCell.h"
+#import "QRCodeViewController.h"
+#import "TransferModel.h"
 
-@interface GoodsBindViewController : SPBaseViewController<UIActionSheetDelegate>
+@interface GoodsBindViewController : SPBaseViewController<UIActionSheetDelegate,PassValueDelegate>
 {
     UILabel *lbl_goodsNum;
     UILabel *lbl_sumPrice;
     UIButton *_btn_doneAction;
+    GoodsEntity *select_entity;
+    NSString *scan_shelf_code;
 }
 @property(nonatomic,retain) StockModel *model;
+@property(nonatomic,retain) TransferModel *transfer_model;
 @property(nonatomic,retain) NSString *batch_id;
 @end
