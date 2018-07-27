@@ -148,6 +148,12 @@
     [self.model loadBindGoodsWithBatchId:self.batch_id];
 }
 
+//绑定货架
+-(void)bindNewShelf{
+    [self startLoadingActivityIndicator];
+    [self.transfer_model transferGoodsDirectly:select_entity.id andShelves:scan_shelf_code];
+}
+
 -(void)onResponse:(SPBaseModel *)model isSuccess:(BOOL)isSuccess{
     [self stopLoadingActivityIndicator];
     if(model==self.model&&self.model.requestTag==1002){
@@ -161,6 +167,13 @@
             else{
                 [self showNoContentView];
             }
+            [self.tableView reloadData];
+        }
+    }
+    else if(model==self.transfer_model&&self.transfer_model.requestTag==1007){
+        if(isSuccess){
+            [self showToastWithText:@"绑定货架成功"];
+            select_entity.shelves_no=scan_shelf_code;
             [self.tableView reloadData];
         }
     }
@@ -215,6 +228,29 @@
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tv deselectRowAtIndexPath:[tv indexPathForSelectedRow] animated:NO];
+    
+    select_entity=[self.model.goods_list_entity.list objectAtIndex:indexPath.row];
+    if([select_entity.shelves_no isEqualToString:@"A1.1.1.1"]){
+        [self gotoScanQRView:SCAN_SHELF];
+    }
+    else{
+        select_entity=nil;
+        [self showToastWithText:@"已经绑定货架，如需转移请至货架转移中操作。"];
+    }
+}
+
+-(void)passObject:(id)obj{
+    if([[obj objectForKey:@"scan_model"] intValue]==SCAN_SHELF){//货架条形码
+        NSArray *array = [[obj objectForKey:@"code"] componentsSeparatedByString:@"."];
+        if([[obj objectForKey:@"code"] length]>0&&array.count==4){
+            scan_shelf_code=[obj objectForKey:@"code"];
+            [self bindNewShelf];
+        }
+        else{
+            [self showToastWithText:@"无法识别的货架条码"];
+        }
+    }
+    [self.tableView reloadData];
 }
 
 
@@ -224,6 +260,12 @@
     [self.navigationController pushViewController:svc animated:YES];
 }
 
+-(void)gotoScanQRView:(SCAN_MODEL)scan_model{
+    QRCodeViewController *qvc=[[QRCodeViewController alloc] init];
+    qvc.scan_model=scan_model;
+    qvc.pass_delegate=self;
+    [self.navigationController pushViewController:qvc animated:YES];
+}
 
 -(StockModel *)model{
     if(!_model){
@@ -232,6 +274,15 @@
     }
     return _model;
 }
+
+-(TransferModel *)transfer_model{
+    if(!_transfer_model){
+        _transfer_model=[[TransferModel alloc] init];
+        _transfer_model.delegate=self;
+    }
+    return _transfer_model;
+}
+
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];

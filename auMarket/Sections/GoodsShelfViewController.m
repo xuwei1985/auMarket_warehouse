@@ -140,14 +140,25 @@
     ShelfItemEntity *entity=[self.model.entity.list objectAtIndex:indexPath.row];
     cell.entity=entity;
     cell.shelf_list_model=self.shelf_list_model;
-    [cell addStack:^(ShelfItemEntity *entity){
-        if([entity.id length]>0&&[entity.transfer_number intValue]>0){
-            [self addTransferToStack:entity];
-        }
-        else{
-            [self showToastWithText:@"请先侧滑输入转移数量"];
-        }
-    }];
+    
+    if(![self.goods_entity.shelves_no isEqualToString:entity.shelves_code]){
+        [cell addStack:^(ShelfItemEntity *entity){
+            if([entity.id length]>0&&[entity.transfer_number intValue]>0){
+                [self addTransferToStack:entity];
+            }
+            else{
+                [self showToastWithText:@"请先侧滑输入转移数量"];
+            }
+        }];
+        cell.contentView.backgroundColor=RGBCOLOR(255, 255, 255);
+    }
+    else{
+        [cell addStack:^(ShelfItemEntity *entity){
+            [self showToastWithText:@"商品当前所在的货架禁止操作"];
+        }];
+        cell.contentView.backgroundColor=RGBCOLOR(225, 225, 225);
+    }
+    
     return cell;
 }
 
@@ -167,7 +178,8 @@
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(self.shelf_list_model!=SHELF_LIST_MODEL_VIEW){
+    ShelfItemEntity *entity=[self.model.entity.list objectAtIndex:indexPath.row];
+    if(self.shelf_list_model!=SHELF_LIST_MODEL_VIEW&&![self.goods_entity.shelves_no isEqualToString:entity.shelves_code]){
         return YES;
     }
     return NO;

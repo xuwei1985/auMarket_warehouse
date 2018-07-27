@@ -83,6 +83,16 @@
     [self loadInner];
 }
 
+//直接转移到目标货架（仅限A1.1.1.1上的商品）
+-(void)transferGoodsDirectly:(NSString *)ruku_id andShelves:(NSString *)shelves_code{
+    self.parseDataClassType = [SPBaseEntity class];
+    SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
+    self.shortRequestAddress= [NSString stringWithFormat:@"v1/move/move-directly?ruku_id=%@&shelves_code=%@&token=%@",ruku_id,shelves_code,user.user_token];
+    self.params = @{};
+    self.requestTag=1007;
+    [self loadInner];
+}
+
 
 -(void)handleParsedData:(SPBaseEntity*)parsedData{
     if ([parsedData isKindOfClass:[ShelfEntity class]]) {

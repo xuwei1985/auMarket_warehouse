@@ -17,6 +17,7 @@
 @end
 
 @interface GoodsEntity : SPBaseEntity
+@property (nonatomic,retain) NSString *id;
 @property (nonatomic,retain) NSString *goods_id;
 @property (nonatomic,retain) NSString *goods_code;
 @property (nonatomic,retain) NSString *cat_id;
