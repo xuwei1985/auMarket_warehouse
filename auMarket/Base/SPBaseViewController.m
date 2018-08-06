@@ -518,10 +518,10 @@
 
 - (void)onNetworkSetting{
     if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
-        NSURL * url = [NSURL URLWithString:OPEN_WIFI_SETTING_URL];
-        if([[UIApplication sharedApplication] canOpenURL:url]) {
-            [[UIApplication sharedApplication] openURL:url];
-        }
+//        NSURL * url = [NSURL URLWithString:OPEN_WIFI_SETTING_URL];
+//        if([[UIApplication sharedApplication] canOpenURL:url]) {
+//            [[UIApplication sharedApplication] openURL:url];
+//        }
     }
 }
 

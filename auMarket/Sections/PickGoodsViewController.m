@@ -34,7 +34,7 @@
 -(void)setNavigation{
     self.title=@"拣货";
     
-    UIButton *doneBtn=[[UIButton alloc] initWithFrame:CGRectMake(WIDTH_SCREEN-40, 4, 40, 32)];
+    doneBtn=[[UIButton alloc] initWithFrame:CGRectMake(WIDTH_SCREEN-40, 4, 40, 32)];
     [doneBtn addTarget:self action:@selector(finishPicking) forControlEvents:UIControlEventTouchUpInside];
     [doneBtn setTitle:@"批量完成" forState:UIControlStateNormal];
     [doneBtn setTitleColor:COLOR_WHITE forState:UIControlStateNormal];
@@ -108,6 +108,13 @@
             ((UIButton *)[blockView viewWithTag:7000]).selected=NO;
             ((UIButton *)[blockView viewWithTag:7001]).selected=NO;
             sender.selected=YES;
+            
+            if(self.list_type==1){
+                doneBtn.hidden=YES;
+            }
+            else{
+                doneBtn.hidden=NO;
+            }
             
             [self loadPickGoodsList];
         }
@@ -218,6 +225,8 @@
                 self.list_type=1;
                 btn_picking.selected=NO;
                 btn_picked.selected=YES;
+                doneBtn.hidden=YES;
+                
                 [self loadPickGoodsList];
 //                dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC));
 //                dispatch_after(delayTime, dispatch_get_main_queue(), ^{
@@ -235,6 +244,8 @@
             self.list_type=1;
             btn_picking.selected=NO;
             btn_picked.selected=YES;
+            doneBtn.hidden=YES;
+            
             [self loadPickGoodsList];
         }
     }

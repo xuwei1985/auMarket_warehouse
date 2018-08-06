@@ -31,8 +31,8 @@ return __singleton__; \
     #define SERVER_HTTP_ADDRESS   @"http://api2.bigau.com"
 
 #else//正式
-    #define SERVER_ADDRESS          @"http://api2.bigau.com"
-    #define SERVER_HTTP_ADDRESS     @"http://api2.bigau.com"
+    #define SERVER_ADDRESS          @"https://api2.bigau.com"
+    #define SERVER_HTTP_ADDRESS     @"https://api2.bigau.com"
 
 #endif
 
@@ -45,7 +45,7 @@ return __singleton__; \
 #define APP_WINDOW [UIApplication sharedApplication]
 #define APP_DELEGATE ((AppDelegate *)[[UIApplication sharedApplication] delegate])
 #define USER_DEFAULT [NSUserDefaults standardUserDefaults]
-#define OPEN_WIFI_SETTING_URL @"prefs:root=WIFI"
+//#define OPEN_WIFI_SETTING_URL @"prefs:root=WIFI"
 #define SYSTEM_VERSION_STRING  [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]
 
 #define IPHONE6PLUS ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? (CGSizeEqualToSize(CGSizeMake(1242,2208), [[UIScreen mainScreen] currentMode].size)||CGSizeEqualToSize(CGSizeMake(1125,2001), [[UIScreen mainScreen] currentMode].size)): NO)

@@ -19,6 +19,7 @@
     UIView *blockView;
     NSIndexPath *current_confirm_path;
     UIAlertView *_inputAlertView;
+    UIButton *doneBtn;
 }
 @property(nonatomic,retain) PickModel *model;
 @property(nonatomic,retain) NSString *order_ids;
