@@ -27,12 +27,23 @@
 
 -(void)initUI{
     [self setNavigation];
+    [self setUpRegionsView];
     [self setUpTableView];
     [self createBottomView];
 }
 
 -(void)setNavigation{
-    self.title=@"拣货";
+//    self.title=@"拣货";
+    
+    btn_region = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn_region.frame= CGRectMake(0, 0, 100, 29);
+    [btn_region setBackgroundImage:[UIImage imageNamed:@"1_04"] forState:UIControlStateNormal];
+    [btn_region setBackgroundImage:[UIImage imageNamed:@"1_03"] forState:UIControlStateSelected];
+    [btn_region setTitle:@"全部区域" forState:UIControlStateNormal];
+    btn_region.titleLabel.font=FONT_SIZE_MIDDLE;
+    [btn_region setTitleColor:COLOR_BLACK forState:UIControlStateNormal];
+    [btn_region addTarget:self action:@selector(showRegionsView) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.titleView=btn_region;
     
     UIBarButtonItem *left_Item = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"hs"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(gotoPickedGoodsView)];
     self.navigationItem.leftBarButtonItem=left_Item;
@@ -108,7 +119,7 @@
     view.backgroundColor = COLOR_CLEAR;
     
     [self.tableView setTableFooterView:view];
-    [self.view addSubview:self.tableView];
+    [self.view insertSubview:self.tableView belowSubview:regionsView];
     
      MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadOrders)];
     
@@ -120,6 +131,50 @@
 //    [header beginRefreshing];
     
     self.tableView.mj_header=header;
+}
+
+-(void)setUpRegionsView{
+    regionsView=[[SPBaseTableView alloc] initWithFrame:CGRectMake(WIDTH_SCREEN*0.2, 10, WIDTH_SCREEN*0.6,WIDTH_SCREEN*0.6*1.4) style:UITableViewStylePlain];
+    regionsView.separatorStyle=UITableViewCellSeparatorStyleSingleLine;
+    regionsView.separatorColor=COLOR_BG_TABLESEPARATE;
+    regionsView.backgroundColor=COLOR_BG_WHITE;
+    regionsView.layer.borderColor=COLOR_LIGHTGRAY.CGColor;
+    regionsView.layer.borderWidth=1;
+    regionsView.layer.cornerRadius=8;
+    regionsView.clipsToBounds=YES;
+    regionsView.tag=1234;
+    regionsView.delegate=self;
+    regionsView.dataSource=self;
+    regionsView.hidden=YES;
+    
+    UIView *view = [UIView new];
+    view.backgroundColor = COLOR_CLEAR;
+    [self.tableView setTableFooterView:view];
+    [self.view addSubview:regionsView];
+}
+
+-(void)showRegionsView{
+    [self showMaskView];
+    regionsView.alpha=0;
+    regionsView.hidden=NO;
+    _summaryView_bottom.hidden=YES;
+    float table_height=HEIGHT_SCREEN-64-48;
+    self.tableView.frame=CGRectMake(0, 0, WIDTH_SCREEN,table_height);
+    [UIView animateWithDuration:0.35 animations:^{
+        regionsView.alpha=1;
+    }];
+}
+
+-(void)hideRegionsView{
+    [self hideMaskView];
+    _summaryView_bottom.hidden=NO;
+    float table_height=HEIGHT_SCREEN-64-48-44;
+    self.tableView.frame=CGRectMake(0, 0, WIDTH_SCREEN,table_height);
+    [UIView animateWithDuration:0.35 animations:^{
+        regionsView.alpha=0;
+    } completion:^(BOOL finished) {
+        regionsView.hidden=YES;
+    }];
 }
 
 -(void)selectAllOrders:(UIButton *)sender{
@@ -193,7 +248,12 @@
 
 - (NSInteger)tableView:(UITableView *)tv numberOfRowsInSection:(NSInteger)section
 {
-    return self.model.entity.list.count;
+    if(tv.tag==1234){
+        return 10;
+    }
+    else{
+        return self.model.entity.list.count;
+    }
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -207,49 +267,86 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *identifier=@"pickCellIdentifier";
-    PickOrderCell *cell = [tv dequeueReusableCellWithIdentifier:identifier];
-    if (cell == nil) {
-        cell = [[PickOrderCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
-        cell.showsReorderControl = NO;
-        cell.accessoryType=UITableViewCellAccessoryNone;
-        cell.backgroundColor=COLOR_BG_TABLEVIEWCELL;
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    }
-    OrderItemEntity *entity=[self.model.entity.list objectAtIndex:indexPath.row];
-    cell.entity=entity;
-    [cell selOrderId:^(NSString *order_id,int action) {
-        if(action>=0){
-            [self handlerOrdersSelect];
+    if(tv.tag==1234){
+        NSString *identifier=@"regionCellIdentifier";
+        UITableViewCell *cell = [tv dequeueReusableCellWithIdentifier:identifier];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
+            cell.showsReorderControl = NO;
+            cell.accessoryType=UITableViewCellAccessoryNone;
+            cell.backgroundColor=COLOR_BG_TABLEVIEWCELL;
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+           
+        }
+         cell.textLabel.font=FONT_SIZE_SMALL;
+        if(indexPath.row%2==0){
+            cell.textLabel.text=@"City区块";
         }
         else{
-            [self showToastWithText:@"请先侧滑扫描货箱"];
+            cell.textLabel.text=@"St Kilda区块";
         }
-    }];
-    return cell;
+        return cell;
+    }
+    else{
+        NSString *identifier=@"pickCellIdentifier";
+        PickOrderCell *cell = [tv dequeueReusableCellWithIdentifier:identifier];
+        if (cell == nil) {
+            cell = [[PickOrderCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
+            cell.showsReorderControl = NO;
+            cell.accessoryType=UITableViewCellAccessoryNone;
+            cell.backgroundColor=COLOR_BG_TABLEVIEWCELL;
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        }
+        OrderItemEntity *entity=[self.model.entity.list objectAtIndex:indexPath.row];
+        cell.entity=entity;
+        [cell selOrderId:^(NSString *order_id,int action) {
+            if(action>=0){
+                [self handlerOrdersSelect];
+            }
+            else{
+                [self showToastWithText:@"请先侧滑扫描货箱"];
+            }
+        }];
+        return cell;
+    }
 }
 
 -(CGFloat)tableView:(UITableView *)tv heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    OrderItemEntity *entity=[self.model.entity.list objectAtIndex:indexPath.row];
-    if([self hasSpecialPackage:entity]){
-        return 175;
+    if(tv.tag==1234){
+        return 38;
     }
     else{
-        return 145;
+        OrderItemEntity *entity=[self.model.entity.list objectAtIndex:indexPath.row];
+        if([self hasSpecialPackage:entity]){
+            return 175;
+        }
+        else{
+            return 145;
+        }
     }
 }
 
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tv deselectRowAtIndexPath:[tv indexPathForSelectedRow] animated:NO];
-    PickOrderCell *cell=[tv cellForRowAtIndexPath:indexPath];
-    [cell toggleOrderSel];
+    if(tv.tag==1234){
+        
+    }
+    else{
+        PickOrderCell *cell=[tv cellForRowAtIndexPath:indexPath];
+        [cell toggleOrderSel];
+    }
 }
 
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return YES;
+    if(tableView.tag==1234){
+        return YES;
+    }
+    else{
+        return NO;
+    }
 }
 
 - (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -268,6 +365,14 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
     editingStyle = UITableViewCellEditingStyleDelete;
+}
+
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(tableView.tag==1234){
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
 }
 
 -(BOOL)hasSpecialPackage:(OrderItemEntity *)entity{

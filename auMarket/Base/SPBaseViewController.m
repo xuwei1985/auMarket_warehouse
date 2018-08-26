@@ -145,7 +145,12 @@
     [_maskLayer setFrame:[UIScreen mainScreen].bounds];
     [_maskLayer setBackgroundColor:[[UIColor grayColor] CGColor]];
     _maskLayer.opacity=0.4;
-    [APP_DELEGATE.window.layer addSublayer:_maskLayer];
+    if(self.tableView!=nil){
+        [self.tableView.layer addSublayer:_maskLayer];
+    }
+    else{
+        [self.view.layer addSublayer:_maskLayer];
+    }
 }
 
 - (void)hideMaskView {
