@@ -22,6 +22,7 @@
     UIButton *_selectAllBtn;
     NSString *order_ids;
     Boolean isPushToPickGoodsView;
+    UITableView *regionsView;
 }
 
 
