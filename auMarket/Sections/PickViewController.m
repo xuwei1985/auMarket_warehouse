@@ -22,6 +22,7 @@
 }
 
 -(void)initData{
+    [self loadRegions];
     [self loadOrders];
 }
 
@@ -253,7 +254,7 @@
 - (NSInteger)tableView:(UITableView *)tv numberOfRowsInSection:(NSInteger)section
 {
     if(tv.tag==1234){
-        return 10;
+        return region_data.count;
     }
     else{
         return self.model.entity.list.count;
@@ -389,6 +390,12 @@
         }
     }
     return NO;
+}
+
+-(void)loadRegions{
+    region_data=[[NSArray alloc] initWithObjects:@"City区块",@"东区",@"St Kilda区块",@"南区",@"Glen区块",@"Clay区块",@"南区偏远",@"东区偏远",@"Doncaster区块", nil];
+    [regionsView reloadData];
+    
 }
 
 -(void)loadOrders{
