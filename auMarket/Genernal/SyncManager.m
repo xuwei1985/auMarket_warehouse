@@ -132,7 +132,7 @@ DEF_SINGLETON(YPSyncManager)
 }
 
 - (NSString *)getHost{
-    return SERVER_HTTP_ADDRESS;
+    return SERVER_ADDRESS;
 }
 
 @end

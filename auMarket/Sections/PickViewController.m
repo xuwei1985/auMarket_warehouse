@@ -284,12 +284,8 @@
         }
         
         cell.textLabel.font=FONT_SIZE_SMALL;
-        if(indexPath.row%2==0){
-            cell.textLabel.text=@"City区块";
-        }
-        else{
-            cell.textLabel.text=@"St Kilda区块";
-        }
+        cell.textLabel.text=[region_data objectAtIndex:indexPath.row];
+        cell.textLabel.textAlignment=NSTextAlignmentCenter;
         return cell;
     }
     else{
