@@ -22,7 +22,8 @@
 }
 
 -(void)initData{
-    [self loadRegions];
+    region_data=[[NSArray<RegionBlockEntity *> alloc] init];
+    [self loadRegionBlocks];
     [self loadOrders];
 }
 
@@ -284,7 +285,7 @@
         }
         
         cell.textLabel.font=FONT_SIZE_SMALL;
-        cell.textLabel.text=[region_data objectAtIndex:indexPath.row];
+        cell.textLabel.text=[region_data objectAtIndex:indexPath.row].name;
         cell.textLabel.textAlignment=NSTextAlignmentCenter;
         return cell;
     }
@@ -331,7 +332,7 @@
 {
     [tv deselectRowAtIndexPath:[tv indexPathForSelectedRow] animated:NO];
     if(tv.tag==1234){
-
+            
     }
     else{
         PickOrderCell *cell=[tv cellForRowAtIndexPath:indexPath];
@@ -388,10 +389,8 @@
     return NO;
 }
 
--(void)loadRegions{
-    region_data=[[NSArray alloc] initWithObjects:@"City区块",@"东区",@"St Kilda区块",@"南区",@"Glen区块",@"Clay区块",@"南区偏远",@"东区偏远",@"Doncaster区块", nil];
-    [regionsView reloadData];
-    
+-(void)loadRegionBlocks{
+    [self.region_model loadRegionBlocks];
 }
 
 -(void)loadOrders{
@@ -451,6 +450,12 @@
             }
         }
     }
+    else if(model==self.region_model&&model.requestTag==2001){
+        if(isSuccess){
+            region_data=self.region_model.regionBlockList.list;
+            [regionsView reloadData];
+        }
+    }
 }
 
 -(void)passObject:(id)obj{
@@ -504,6 +509,15 @@
     }
     return _model;
 }
+
+-(RegionModel *)region_model{
+    if(!_region_model){
+        _region_model=[[RegionModel alloc] init];
+        _region_model.delegate=self;
+    }
+    return _region_model;
+}
+
 
 -(void)viewWillAppear:(BOOL)animated{
     if(isPushToPickGoodsView){

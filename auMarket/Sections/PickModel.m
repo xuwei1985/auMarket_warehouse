@@ -77,7 +77,6 @@
     [self loadInner];
 }
 
-
 -(void)handleParsedData:(SPBaseEntity*)parsedData{
     if ([parsedData isKindOfClass:[OrderEntity class]]) {
         self.entity = (OrderEntity*)parsedData;
@@ -101,6 +100,7 @@
     
     return _pickGoodsListEntity;
 }
+
 
 
 @end

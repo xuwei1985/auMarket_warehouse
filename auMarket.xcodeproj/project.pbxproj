@@ -133,6 +133,8 @@
 		A97FD0F420C03D74003A40D3 /* PickedOrdersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A97FD0F220C03D74003A40D3 /* PickedOrdersViewController.m */; };
 		A982F78F1E0FA87E00DB4C13 /* sign_weixin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A982F78E1E0FA87E00DB4C13 /* sign_weixin@2x.png */; };
 		A982F79A1E1107DA00DB4C13 /* grayline@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A982F7991E1107DA00DB4C13 /* grayline@2x.png */; };
+		A98FE44B2136D2A700606177 /* RegionBlockEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = A98FE4492136D2A600606177 /* RegionBlockEntity.m */; };
+		A98FE44E2136FC2800606177 /* RegionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A98FE44D2136FC2800606177 /* RegionModel.m */; };
 		A99FB2442006022A005AF4AE /* StockViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A99FB2432006022A005AF4AE /* StockViewController.m */; };
 		A99FB24720060998005AF4AE /* StockCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A99FB24520060998005AF4AE /* StockCell.m */; };
 		A9AD42AD1E12B0CF00A4B131 /* search@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9AD42AB1E12B0CF00A4B131 /* search@2x.png */; };
@@ -439,6 +441,10 @@
 		A97FD0F320C03D74003A40D3 /* PickedOrdersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickedOrdersViewController.h; sourceTree = "<group>"; };
 		A982F78E1E0FA87E00DB4C13 /* sign_weixin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sign_weixin@2x.png"; sourceTree = "<group>"; };
 		A982F7991E1107DA00DB4C13 /* grayline@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grayline@2x.png"; sourceTree = "<group>"; };
+		A98FE4492136D2A600606177 /* RegionBlockEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegionBlockEntity.m; sourceTree = "<group>"; };
+		A98FE44A2136D2A700606177 /* RegionBlockEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegionBlockEntity.h; sourceTree = "<group>"; };
+		A98FE44C2136FC2700606177 /* RegionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegionModel.h; sourceTree = "<group>"; };
+		A98FE44D2136FC2800606177 /* RegionModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegionModel.m; sourceTree = "<group>"; };
 		A99FB2422006022A005AF4AE /* StockViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StockViewController.h; sourceTree = "<group>"; };
 		A99FB2432006022A005AF4AE /* StockViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StockViewController.m; sourceTree = "<group>"; };
 		A99FB24520060998005AF4AE /* StockCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StockCell.m; sourceTree = "<group>"; };
@@ -659,10 +665,14 @@
 		A9187C031DF9AB4600A3E902 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				A98FE44A2136D2A700606177 /* RegionBlockEntity.h */,
+				A98FE4492136D2A600606177 /* RegionBlockEntity.m */,
 				A9E40EC520BBB1E900024C79 /* PickGoodsEntity.h */,
 				A9E40EC620BBB1E900024C79 /* PickGoodsEntity.m */,
 				A90A0AE520BA48230069A609 /* OrderEntity.h */,
 				A90A0AE620BA48230069A609 /* OrderEntity.m */,
+				A98FE44C2136FC2700606177 /* RegionModel.h */,
+				A98FE44D2136FC2800606177 /* RegionModel.m */,
 				A90A0AE320B9AE700069A609 /* PickModel.h */,
 				A90A0AE220B9AE700069A609 /* PickModel.m */,
 			);
@@ -1535,6 +1545,7 @@
 				A9633B8C204D547A00F2FFEB /* GoodsBindCell.m in Sources */,
 				A9D7E28420B2DE0000E02AAA /* GoodsListModel.m in Sources */,
 				A95E113F1DF8491600660E42 /* NSData+IDPExtension.m in Sources */,
+				A98FE44E2136FC2800606177 /* RegionModel.m in Sources */,
 				A95E11671DF850D000660E42 /* SPRedirect.m in Sources */,
 				A964741F1E110D5B00A5A39B /* MemberLoginEntity.m in Sources */,
 				A9FBC1FD1DF97314005ECDDE /* PunchScrollView.m in Sources */,
@@ -1559,6 +1570,7 @@
 				A975688B20B7072E003DC139 /* GoodsShelfCell.m in Sources */,
 				A95E11471DF8491600660E42 /* UIView+IDPExtension.m in Sources */,
 				A90A0AE420B9AE700069A609 /* PickModel.m in Sources */,
+				A98FE44B2136D2A700606177 /* RegionBlockEntity.m in Sources */,
 				A94A937820BA985A002EEE61 /* PickGoodsCell.m in Sources */,
 				A95E10F61DF8104800660E42 /* SPBaseTableView.m in Sources */,
 				A95E11421DF8491600660E42 /* NSDictionary+IDPExtension.m in Sources */,
