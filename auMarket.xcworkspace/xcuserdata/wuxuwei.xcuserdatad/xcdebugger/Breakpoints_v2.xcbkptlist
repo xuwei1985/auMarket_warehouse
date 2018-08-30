@@ -16,16 +16,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "auMarket/Base/SPBaseModel.m"
-            timestampString = "554311310.667873"
+            filePath = "auMarket/Sections/PickViewController.m"
+            timestampString = "557338893.135035"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "138"
-            endingLineNumber = "138"
-            landmarkName = "-loadInner"
+            startingLineNumber = "235"
+            endingLineNumber = "235"
+            landmarkName = "-getSelectedOrdersId"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -23,7 +23,7 @@
 
 -(void)initData{
     region_block_id=0;
-    region_data=[[NSArray<RegionBlockEntity *> alloc] init];
+    region_data=[[NSMutableArray<RegionBlockEntity *> alloc] init];
     [self loadRegionBlocks];
     [self loadOrders];
 }
@@ -39,11 +39,11 @@
 //    self.title=@"拣货";
     
     btn_region = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn_region.frame= CGRectMake(0, 0, 100, 29);
+    btn_region.frame= CGRectMake(0, 0, 126, 33);
     [btn_region setBackgroundImage:[UIImage imageNamed:@"1_04"] forState:UIControlStateNormal];
     [btn_region setBackgroundImage:[UIImage imageNamed:@"1_03"] forState:UIControlStateSelected];
     [btn_region setTitle:@"全部区域" forState:UIControlStateNormal];
-    btn_region.titleLabel.font=FONT_SIZE_MIDDLE;
+    btn_region.titleLabel.font=FONT_SIZE_SMALL;
     [btn_region setTitleColor:COLOR_BLACK forState:UIControlStateNormal];
     [btn_region addTarget:self action:@selector(showRegionsView) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.titleView=btn_region;
@@ -334,7 +334,9 @@
     [tv deselectRowAtIndexPath:[tv indexPathForSelectedRow] animated:NO];
     if(tv.tag==1234){
         region_block_id=[[region_data objectAtIndex:indexPath.row].id intValue];
+        [btn_region setTitle:[region_data objectAtIndex:indexPath.row].name forState:UIControlStateNormal];
         [self loadOrders];
+        [self hideRegionsView];
     }
     else{
         PickOrderCell *cell=[tv cellForRowAtIndexPath:indexPath];
@@ -399,9 +401,6 @@
     if(!self.tableView.mj_header.isRefreshing){
         [self startLoadingActivityIndicator];
     }
-    else{
-        region_block_id=0;
-    }
     
     [self.model loadOrdersWithListType:0 andRegionBlock:region_block_id];
 }
@@ -431,10 +430,12 @@
             if(self.model.entity.list!=nil){
                 [self.tableView reloadData];
                 if([self.model.entity.list count]<=0){
+                    _summaryView_bottom.hidden=YES;
                     _selectAllBtn.selected=NO;
                     [_sumBtn setTitle:[NSString stringWithFormat:@"生成清单"] forState:UIControlStateNormal];
                     [self showNoContentView];
                 }else{
+                    _summaryView_bottom.hidden=NO;
                     [self hideNoContentView];
                 }
             }
@@ -458,6 +459,10 @@
     else if(model==self.region_model&&model.requestTag==2001){
         if(isSuccess){
             region_data=self.region_model.regionBlockList.list;
+            RegionBlockEntity *entity=[[RegionBlockEntity alloc] init];
+            entity.id=0;
+            entity.name=@"全部区域";
+            [region_data insertObject:entity atIndex:0];
             [regionsView reloadData];
         }
     }
