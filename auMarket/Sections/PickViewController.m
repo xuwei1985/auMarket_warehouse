@@ -22,8 +22,9 @@
 }
 
 -(void)initData{
-    block_id=0;
-    [self loadRegions];
+    region_block_id=0;
+    region_data=[[NSArray<RegionBlockEntity *> alloc] init];
+    [self loadRegionBlocks];
     [self loadOrders];
 }
 
@@ -285,7 +286,7 @@
         }
         
         cell.textLabel.font=FONT_SIZE_SMALL;
-        cell.textLabel.text=[region_data objectAtIndex:indexPath.row];
+        cell.textLabel.text=[region_data objectAtIndex:indexPath.row].name;
         cell.textLabel.textAlignment=NSTextAlignmentCenter;
         return cell;
     }
@@ -332,7 +333,8 @@
 {
     [tv deselectRowAtIndexPath:[tv indexPathForSelectedRow] animated:NO];
     if(tv.tag==1234){
-        block_id=[region_data objectAtIndex:indexPath.row];
+        region_block_id=[[region_data objectAtIndex:indexPath.row].id intValue];
+        [self loadOrders];
     }
     else{
         PickOrderCell *cell=[tv cellForRowAtIndexPath:indexPath];
@@ -389,18 +391,19 @@
     return NO;
 }
 
--(void)loadRegions{
-    region_data=[[NSArray alloc] initWithObjects:@"City区块",@"东区",@"St Kilda区块",@"南区",@"Glen区块",@"Clay区块",@"南区偏远",@"东区偏远",@"Doncaster区块", nil];
-    [regionsView reloadData];
-    
+-(void)loadRegionBlocks{
+    [self.region_model loadRegionBlocks];
 }
 
 -(void)loadOrders{
     if(!self.tableView.mj_header.isRefreshing){
         [self startLoadingActivityIndicator];
     }
+    else{
+        region_block_id=0;
+    }
     
-    [self.model loadOrdersWithListType:0];
+    [self.model loadOrdersWithListType:0 andRegionBlock:region_block_id];
 }
 
 -(void)bindBoxToOrder:(NSString *)order_id andBoxCode:(NSString *)box_code{
@@ -450,6 +453,12 @@
                 isPushToPickGoodsView=YES;
                 [self.navigationController pushViewController:pvc animated:YES];
             }
+        }
+    }
+    else if(model==self.region_model&&model.requestTag==2001){
+        if(isSuccess){
+            region_data=self.region_model.regionBlockList.list;
+            [regionsView reloadData];
         }
     }
 }
@@ -505,6 +514,15 @@
     }
     return _model;
 }
+
+-(RegionModel *)region_model{
+    if(!_region_model){
+        _region_model=[[RegionModel alloc] init];
+        _region_model.delegate=self;
+    }
+    return _region_model;
+}
+
 
 -(void)viewWillAppear:(BOOL)animated{
     if(isPushToPickGoodsView){

@@ -10,6 +10,7 @@
 #import "PickGoodsViewController.h"
 #import "PickOrderCell.h"
 #import "PickModel.h"
+#import "RegionModel.h"
 #import "QRCodeViewController.h"
 #import <MJRefresh.h>
 #import "PickedOrdersViewController.h"
@@ -24,11 +25,12 @@
     Boolean isPushToPickGoodsView;
     SPBaseTableView *regionsView;
     UIButton *btn_region;
-    NSArray *region_data;
-    int block_id;//区块id
+    NSArray<RegionBlockEntity *> *region_data;
+    int region_block_id;
 }
 
 
 @property(nonatomic,retain) PickModel *model;
+@property(nonatomic,retain) RegionModel *region_model;
 @property(nonatomic,retain) OrderItemEntity *bind_order_entity;
 @end
