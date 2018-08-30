@@ -25,6 +25,7 @@
     SPBaseTableView *regionsView;
     UIButton *btn_region;
     NSArray *region_data;
+    int block_id;//区块id
 }
 
 

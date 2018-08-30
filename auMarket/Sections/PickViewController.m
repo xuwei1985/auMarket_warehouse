@@ -22,6 +22,7 @@
 }
 
 -(void)initData{
+    block_id=0;
     [self loadRegions];
     [self loadOrders];
 }
@@ -331,7 +332,7 @@
 {
     [tv deselectRowAtIndexPath:[tv indexPathForSelectedRow] animated:NO];
     if(tv.tag==1234){
-
+        block_id=[region_data objectAtIndex:indexPath.row];
     }
     else{
         PickOrderCell *cell=[tv cellForRowAtIndexPath:indexPath];
