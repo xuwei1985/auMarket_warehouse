@@ -136,7 +136,7 @@
         [self startLoadingActivityIndicator];
     }
     
-    [self.model loadOrdersWithListType:1];
+    [self.model loadOrdersWithListType:1 andRegionBlock:0];
 }
 
 

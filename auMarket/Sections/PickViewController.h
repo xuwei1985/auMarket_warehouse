@@ -26,6 +26,7 @@
     SPBaseTableView *regionsView;
     UIButton *btn_region;
     NSArray<RegionBlockEntity *> *region_data;
+    int region_block_id;
 }
 
 

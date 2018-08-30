@@ -332,7 +332,8 @@
 {
     [tv deselectRowAtIndexPath:[tv indexPathForSelectedRow] animated:NO];
     if(tv.tag==1234){
-            
+        region_block_id=[[region_data objectAtIndex:indexPath.row].id intValue];
+        [self loadOrders];
     }
     else{
         PickOrderCell *cell=[tv cellForRowAtIndexPath:indexPath];
@@ -397,8 +398,11 @@
     if(!self.tableView.mj_header.isRefreshing){
         [self startLoadingActivityIndicator];
     }
+    else{
+        region_block_id=0;
+    }
     
-    [self.model loadOrdersWithListType:0];
+    [self.model loadOrdersWithListType:0 andRegionBlock:region_block_id];
 }
 
 -(void)bindBoxToOrder:(NSString *)order_id andBoxCode:(NSString *)box_code{

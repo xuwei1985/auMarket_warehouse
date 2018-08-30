@@ -13,7 +13,7 @@
 @property (nonatomic,retain) OrderEntity *entity;
 @property (nonatomic,retain) PickGoodsListEntity *pickGoodsListEntity;
 
--(void)loadOrdersWithListType:(int)list_type;
+-(void)loadOrdersWithListType:(int)list_type andRegionBlock:(int)region_block_id;
 -(void)loadGoodsListWithListType:(int)type;
 -(void)bindBoxToOrder:(NSString *)order_id andBoxCode:(NSString *)box_code;
 -(void)beginOrders:(NSString *)order_ids;
