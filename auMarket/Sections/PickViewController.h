@@ -25,7 +25,7 @@
     Boolean isPushToPickGoodsView;
     SPBaseTableView *regionsView;
     UIButton *btn_region;
-    NSArray<RegionBlockEntity *> *region_data;
+    NSMutableArray<RegionBlockEntity *> *region_data;
     int region_block_id;
 }
 
