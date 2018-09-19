@@ -298,19 +298,19 @@
             [self gotoGoodsSearchView];
         }
         else if([indexPath compare:[NSIndexPath indexPathForRow:0 inSection:2]]==NSOrderedSame){//货架条形码扫描
-            [self gotoScanQRView:SCAN_SHELF];
+//            [self gotoScanQRView:SCAN_SHELF];
         }
         else if([indexPath compare:[NSIndexPath indexPathForRow:1 inSection:2]]==NSOrderedSame){
-            [self showInputBox:INPUT_SHELF_CODE];
+//            [self showInputBox:INPUT_SHELF_CODE];
         }
         else if([indexPath compare:[NSIndexPath indexPathForRow:0 inSection:1]]==NSOrderedSame){
             [self showInputBox:INPUT_GOODS_SERIAL];
         }
         else if([indexPath compare:[NSIndexPath indexPathForRow:1 inSection:1]]==NSOrderedSame){
-            [self showInputBox:INPUT_GOODS_PRICE];
+//            [self showInputBox:INPUT_GOODS_PRICE];
         }
         else if([indexPath compare:[NSIndexPath indexPathForRow:2 inSection:1]]==NSOrderedSame){
-            [self showInputBox:INPUT_GOODS_NUM];
+//            [self showInputBox:INPUT_GOODS_NUM];
         }
         [self hideDatePicker];
     }
@@ -561,12 +561,28 @@
     entity.batch_id=self.batch_id;
     entity.goods_id=self.goods_id==nil?@"0":self.goods_id;
     entity.goods_code=self.goods_code;
-    entity.shelves_code=[self.shelf_code uppercaseString];
+    if([[self.shelf_code stringByReplacingOccurrencesOfString:@" " withString:@""] length]<=0){
+        self.shelf_code=@"A1.1.1.1";
+    }
+    else{
+        entity.shelves_code=[self.shelf_code uppercaseString];
+    }
     entity.expired_date=[[[itemArr objectAtIndex:1] objectAtIndex:3] valueForKey:@"item_value"];
     entity.no=[[[itemArr objectAtIndex:1] objectAtIndex:0] valueForKey:@"item_value"];
-    entity.number=[[[itemArr objectAtIndex:1] objectAtIndex:2] valueForKey:@"item_value"];
-    entity.cost=[[[[itemArr objectAtIndex:1] objectAtIndex:1] valueForKey:@"item_value"] stringByReplacingOccurrencesOfString:@"$" withString:@""];
+    if([[[[itemArr objectAtIndex:1] objectAtIndex:2] valueForKey:@"item_value"] intValue]<=0){
+        entity.number=@"1";
+    }
+    else{
+         entity.number=[[[itemArr objectAtIndex:1] objectAtIndex:2] valueForKey:@"item_value"];
+    }
     
+    if([[[[[itemArr objectAtIndex:1] objectAtIndex:1] valueForKey:@"item_value"] stringByReplacingOccurrencesOfString:@"$" withString:@""] floatValue]<=0){
+        entity.cost=@"0.01";
+    }
+    else{
+        entity.cost=[[[[itemArr objectAtIndex:1] objectAtIndex:1] valueForKey:@"item_value"] stringByReplacingOccurrencesOfString:@"$" withString:@""];
+    }
+
     if([self checkEntity:entity]){
         [self startLoadingActivityIndicator];
         [self.model addRukuGoods:entity];
