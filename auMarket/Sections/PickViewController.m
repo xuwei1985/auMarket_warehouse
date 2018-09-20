@@ -458,11 +458,12 @@
     }
     else if(model==self.region_model&&model.requestTag==2001){
         if(isSuccess){
+            RegionBlockEntity *allRegions=[[RegionBlockEntity alloc] init];
+            allRegions.id=0;
+            allRegions.name=@"全部区域";
+            [self.region_model.regionBlockList.list insertObject:allRegions atIndex:0];
+            
             region_data=self.region_model.regionBlockList.list;
-            RegionBlockEntity *entity=[[RegionBlockEntity alloc] init];
-            entity.id=0;
-            entity.name=@"全部区域";
-            [region_data insertObject:entity atIndex:0];
             [regionsView reloadData];
         }
     }
