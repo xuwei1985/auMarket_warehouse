@@ -347,7 +347,7 @@
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(tableView.tag==1234){
+    if(tableView.tag!=1234){
         return YES;
     }
     else{

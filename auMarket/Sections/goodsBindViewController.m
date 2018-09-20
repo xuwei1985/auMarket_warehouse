@@ -257,6 +257,7 @@
 -(void)gotoAddGoodsViewController{
     StockViewController *svc=[[StockViewController alloc] init];
     svc.batch_id=self.batch_id;
+    isGotoBindGoods=YES;
     [self.navigationController pushViewController:svc animated:YES];
 }
 
@@ -286,6 +287,10 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    if(isGotoBindGoods){
+        isGotoBindGoods=NO;
+        [self loadGoodsInBatch];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

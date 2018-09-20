@@ -562,7 +562,7 @@
     entity.goods_id=self.goods_id==nil?@"0":self.goods_id;
     entity.goods_code=self.goods_code;
     if([[self.shelf_code stringByReplacingOccurrencesOfString:@" " withString:@""] length]<=0){
-        self.shelf_code=@"A1.1.1.1";
+        entity.shelves_code=@"A1.1.1.1";
     }
     else{
         entity.shelves_code=[self.shelf_code uppercaseString];
