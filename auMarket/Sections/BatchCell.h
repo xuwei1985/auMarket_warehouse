@@ -20,6 +20,8 @@ typedef void(^AddGoodsBlock)(NSString *batch_id);
     UILabel *lbl_suppliersName;
     UILabel *lbl_editTime_prefix;
     UILabel *lbl_editTime;
+    UILabel *lbl_needbind_prefix;
+    UILabel *lbl_needbind;
 }
 
 @property(nonatomic,retain) BatchItemEntity *entity;

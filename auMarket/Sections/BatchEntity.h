@@ -19,4 +19,5 @@
 @property (nonatomic,retain) NSString *batch_no;
 @property (nonatomic,retain) NSString *suppliers_name;
 @property (nonatomic,retain) NSString *update;
+@property (nonatomic,retain) NSString *need_bind;//需要绑定货架的商品数量
 @end

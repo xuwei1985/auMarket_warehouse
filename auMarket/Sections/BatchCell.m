@@ -117,6 +117,36 @@
             }];
             
         }
+        
+        if (lbl_needbind_prefix==nil) {
+            lbl_needbind_prefix=[[UILabel alloc] init];
+            lbl_needbind_prefix.textAlignment=NSTextAlignmentLeft;
+            lbl_needbind_prefix.textColor=COLOR_BLACK;
+            lbl_needbind_prefix.font=FONT_SIZE_SMALL;
+            lbl_needbind_prefix.text=@"待绑货架:";
+            [self.contentView addSubview:lbl_needbind_prefix];
+            
+            [lbl_needbind_prefix mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.top.mas_equalTo(lbl_editTime_prefix.mas_bottom);
+                make.left.mas_equalTo(15);
+                make.size.mas_equalTo(CGSizeMake(78, 24));
+            }];
+            
+            lbl_needbind=[[UILabel alloc] init];
+            lbl_needbind.textAlignment=NSTextAlignmentLeft;
+            lbl_needbind.textColor=COLOR_BLACK;
+            lbl_needbind.font=FONT_SIZE_SMALL;
+            [self.contentView addSubview:lbl_needbind];
+            
+            [lbl_needbind mas_makeConstraints:^(MASConstraintMaker *make) {
+                @strongify(self);
+                make.top.mas_equalTo(lbl_needbind_prefix.mas_top);
+                make.left.mas_equalTo(lbl_needbind_prefix.mas_right).offset(2);
+                make.right.mas_equalTo(self.mas_right).offset(-10);
+                make.height.mas_equalTo(24);
+            }];
+            
+        }
     }
     return self;
 }
@@ -135,6 +165,7 @@
     lbl_batchNo.text=self.entity.batch_no;
     lbl_suppliersName.text=self.entity.suppliers_name;
     lbl_editTime.text=self.entity.update;
+    lbl_needbind.text=self.entity.need_bind;
 }
 
 
