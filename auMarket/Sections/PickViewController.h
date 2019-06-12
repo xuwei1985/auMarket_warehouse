@@ -27,6 +27,7 @@
     UIButton *btn_region;
     NSMutableArray<RegionBlockEntity *> *region_data;
     int region_block_id;
+    Boolean isCreating;
 }
 
 

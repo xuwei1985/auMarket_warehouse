@@ -23,6 +23,7 @@
 
 -(void)initData{
     region_block_id=0;
+    isCreating=NO;
     region_data=[[NSMutableArray<RegionBlockEntity *> alloc] init];
     [self loadRegionBlocks];
     [self loadOrders];
@@ -417,6 +418,7 @@
         [self.model beginOrders:order_ids];
     }
     else{
+        isCreating=NO;
         [self showToastWithText:@"未选择任何订单"];
     }
 }
@@ -449,6 +451,7 @@
             }
         }
         else if(model.requestTag==1004){
+            isCreating=NO;
             if(isSuccess){
                 PickGoodsViewController *pvc=[[PickGoodsViewController alloc] init];
                 isPushToPickGoodsView=YES;
@@ -493,13 +496,18 @@
 }
 
 -(void)gotoPickList{
-    order_ids= [self getSelectedOrdersId];
-    if(order_ids.length>0){
-        [self beginOrders:order_ids];
+    if(isCreating==NO){
+        isCreating=YES;
+        order_ids= [self getSelectedOrdersId];
+        if(order_ids.length>0){
+            [self beginOrders:order_ids];
+        }
+        else{
+            isCreating=NO;
+            [self showToastWithText:@"未选择任何订单"];
+        }
     }
-    else{
-        [self showToastWithText:@"未选择任何订单"];
-    }
+    
 }
 
 -(void)gotoPickingGoodsView{

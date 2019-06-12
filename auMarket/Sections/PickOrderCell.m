@@ -225,7 +225,7 @@
             [btn_type_freeze mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.bottom.mas_equalTo(lbl_bind_tip.mas_top).offset(0);
                 make.left.mas_equalTo(btn_select.mas_right).offset(15);
-                make.size.mas_equalTo(CGSizeMake(60, 32));
+                make.size.mas_equalTo(CGSizeMake(65, 32));
             }];
         }
         
@@ -244,8 +244,8 @@
             
             [btn_type_zero mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.bottom.mas_equalTo(lbl_bind_tip.mas_top).offset(0);
-                make.left.mas_equalTo(btn_type_freeze.mas_right).offset(5);
-                make.size.mas_equalTo(CGSizeMake(60, 32));
+                make.left.mas_equalTo(btn_type_freeze.mas_right);
+                make.size.mas_equalTo(CGSizeMake(65, 32));
             }];
         }
         
@@ -264,8 +264,8 @@
             
             [btn_type_box mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.bottom.mas_equalTo(lbl_bind_tip.mas_top).offset(0);
-                make.left.mas_equalTo(btn_type_zero.mas_right).offset(5);
-                make.size.mas_equalTo(CGSizeMake(60, 32));
+                make.left.mas_equalTo(btn_type_zero.mas_right);
+                make.size.mas_equalTo(CGSizeMake(65, 32));
             }];
         }
     }
@@ -320,6 +320,15 @@
             make.size.mas_equalTo(CGSizeMake(0, 0));
         }];
     }
+    else{
+        @weakify(self);
+        [btn_select mas_updateConstraints:^(MASConstraintMaker *make) {
+            @strongify(self);
+            make.centerY.mas_equalTo(self.mas_centerY);
+            make.left.mas_equalTo(10);
+            make.size.mas_equalTo(CGSizeMake(20, 20));
+        }];
+    }
     lbl_order_sn_value.text=self.entity.order_sn;
     lbl_order_region_value.text=self.entity.region_name;
     lbl_order_goods_num_value.text=self.entity.goods_count;
@@ -339,55 +348,90 @@
     btn_type_zero.hidden=[self.entity.attribute.cold intValue]<=0;//冷藏
     btn_type_box.hidden=[self.entity.attribute.package intValue]<=0;//整箱
     
-    
-    if(btn_type_freeze.hidden){
-        if(!btn_type_zero.isHidden){
-            [btn_type_zero mas_updateConstraints:^(MASConstraintMaker *make) {
-                make.bottom.mas_equalTo(lbl_bind_tip.mas_top).offset(0);
-                make.left.mas_equalTo(lbl_order_goods_num.mas_left);
-                make.size.mas_equalTo(CGSizeMake(60, 32));
-            }];
-        }
+    if(btn_type_freeze.hidden){//冷冻没有
+        [btn_type_freeze mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.size.mas_equalTo(CGSizeMake(0, 0));
+        }];
     }
     else{
-        if(!btn_type_zero.isHidden){
-            [btn_type_zero mas_updateConstraints:^(MASConstraintMaker *make) {
-                make.bottom.mas_equalTo(lbl_bind_tip.mas_top).offset(0);
-                make.left.mas_equalTo(btn_type_freeze.mas_right).offset(5);
-                make.size.mas_equalTo(CGSizeMake(60, 32));
-            }];
-        }
+        [btn_type_freeze mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.size.mas_equalTo(CGSizeMake(65, 32));
+        }];
     }
     
     if(btn_type_zero.hidden){
-        if(btn_type_freeze.hidden){
-            if(!btn_type_box.isHidden){
-                [btn_type_box mas_updateConstraints:^(MASConstraintMaker *make) {
-                    make.bottom.mas_equalTo(lbl_bind_tip.mas_top).offset(0);
-                    make.left.mas_equalTo(lbl_order_goods_num.mas_left);
-                    make.width.mas_equalTo(CGSizeMake(60, 32));
-                }];
-            }
-        }
-        else{
-            if(!btn_type_box.isHidden){
-                [btn_type_box mas_updateConstraints:^(MASConstraintMaker *make) {
-                    make.bottom.mas_equalTo(lbl_bind_tip.mas_top).offset(0);
-                    make.left.mas_equalTo(btn_type_freeze.mas_right).offset(5);
-                    make.size.mas_equalTo(CGSizeMake(60, 32));
-                }];
-            }
-        }
+        [btn_type_zero mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.size.mas_equalTo(CGSizeMake(0, 0));
+        }];
     }
     else{
-        if(!btn_type_box.isHidden){
-            [btn_type_box mas_updateConstraints:^(MASConstraintMaker *make) {
-                make.bottom.mas_equalTo(lbl_bind_tip.mas_top).offset(0);
-                make.left.mas_equalTo(btn_type_freeze.mas_right).offset(5);
-                make.size.mas_equalTo(CGSizeMake(60, 32));
-            }];
-        }
+        [btn_type_zero mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.bottom.mas_equalTo(lbl_bind_tip.mas_top).offset(0);
+            make.left.mas_equalTo(btn_type_freeze.mas_right);
+            make.size.mas_equalTo(CGSizeMake(65, 32));
+        }];
     }
+
+    if(btn_type_box.hidden){
+        [btn_type_box mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.size.mas_equalTo(CGSizeMake(0, 0));
+        }];
+    }
+    else{
+        [btn_type_box mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.bottom.mas_equalTo(lbl_bind_tip.mas_top).offset(0);
+            make.left.mas_equalTo(btn_type_zero.mas_right);
+            make.size.mas_equalTo(CGSizeMake(65, 32));
+        }];
+    }
+//    if(btn_type_freeze.hidden){//冷冻没有
+//        if(!btn_type_zero.isHidden){//冷藏有
+//            [btn_type_zero mas_updateConstraints:^(MASConstraintMaker *make) {
+//                make.bottom.mas_equalTo(lbl_bind_tip.mas_top).offset(0);
+//                make.left.mas_equalTo(lbl_order_goods_num.mas_left);
+//                make.size.mas_equalTo(CGSizeMake(60, 32));
+//            }];
+//        }
+//    }
+//    else{
+//        if(!btn_type_zero.isHidden){
+//            [btn_type_zero mas_updateConstraints:^(MASConstraintMaker *make) {
+//                make.bottom.mas_equalTo(lbl_bind_tip.mas_top).offset(0);
+//                make.left.mas_equalTo(btn_type_freeze.mas_right).offset(5);
+//                make.size.mas_equalTo(CGSizeMake(60, 32));
+//            }];
+//        }
+//    }
+//
+//    if(btn_type_zero.hidden){//冷藏没有
+//        if(btn_type_freeze.hidden){//冷冻没有
+//            if(!btn_type_box.isHidden){
+//                [btn_type_box mas_updateConstraints:^(MASConstraintMaker *make) {
+//                    make.bottom.mas_equalTo(lbl_bind_tip.mas_top).offset(0);
+//                    make.left.mas_equalTo(lbl_order_goods_num.mas_left);
+//                    make.width.mas_equalTo(CGSizeMake(60, 32));
+//                }];
+//            }
+//        }
+//        else{//冷冻有
+//            if(!btn_type_box.isHidden){
+//                [btn_type_box mas_updateConstraints:^(MASConstraintMaker *make) {
+//                    make.bottom.mas_equalTo(lbl_bind_tip.mas_top).offset(0);
+//                    make.left.mas_equalTo(btn_type_freeze.mas_right).offset(5);
+//                    make.size.mas_equalTo(CGSizeMake(60, 32));
+//                }];
+//            }
+//        }
+//    }
+//    else{
+//        if(!btn_type_box.isHidden){
+//            [btn_type_box mas_updateConstraints:^(MASConstraintMaker *make) {
+//                make.bottom.mas_equalTo(lbl_bind_tip.mas_top).offset(0);
+//                make.left.mas_equalTo(btn_type_freeze.mas_right).offset(5);
+//                make.size.mas_equalTo(CGSizeMake(60, 32));
+//            }];
+//        }
+//    }
     
     btn_select.selected=self.entity.selected;
     
