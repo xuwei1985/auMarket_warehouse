@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "TransferViewController.h"
+#import "InventoryCheckViewController.h"
 
 @interface ToolsViewController : SPBaseViewController
 {

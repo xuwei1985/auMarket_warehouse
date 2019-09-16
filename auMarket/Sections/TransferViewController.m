@@ -47,7 +47,7 @@
 }
 
 -(void)setNavigation{
-    self.title=@"工具";
+    self.title=@"库存转移";
 }
 
 -(void)setUpTableView{

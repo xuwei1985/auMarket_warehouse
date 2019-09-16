@@ -36,6 +36,7 @@
     if([bt checkMenu:@"inventory_move"])
     {
         [itemArr addObject:item_childs_1];
+        [itemArr addObject:item_childs_2];
     }
     
 }
@@ -132,10 +133,18 @@
     if(indexPath.section==0){
         [self gotoTransferView];
     }
+    else if(indexPath.section==2){
+        [self gotoCheckInventoryView];
+    }
 }
 
 -(void)gotoTransferView{
     TransferViewController *tvc=[[TransferViewController alloc] init];
+    [self.navigationController pushViewController:tvc animated:YES];
+}
+
+-(void)gotoCheckInventoryView{
+    InventoryCheckViewController *tvc=[[InventoryCheckViewController alloc] init];
     [self.navigationController pushViewController:tvc animated:YES];
 }
 

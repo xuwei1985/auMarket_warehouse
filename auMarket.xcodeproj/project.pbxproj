@@ -52,6 +52,8 @@
 		A94A271220B0334E0025A438 /* stock_listnum@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A94A270B20B0334E0025A438 /* stock_listnum@2x.png */; };
 		A94A937520BA9816002EEE61 /* PickGoodsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A94A937320BA9815002EEE61 /* PickGoodsViewController.m */; };
 		A94A937820BA985A002EEE61 /* PickGoodsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A94A937720BA9859002EEE61 /* PickGoodsCell.m */; };
+		A953001B232BF1B300C18B0E /* InventoryCheckViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A953001A232BF1B300C18B0E /* InventoryCheckViewController.m */; };
+		A953001E232BF2D300C18B0E /* InventoryCheckCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A953001D232BF2D300C18B0E /* InventoryCheckCell.m */; };
 		A95E10911DF80ED000660E42 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A95E10901DF80ED000660E42 /* main.m */; };
 		A95E10941DF80ED000660E42 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A95E10931DF80ED000660E42 /* AppDelegate.m */; };
 		A95E109C1DF80ED000660E42 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A95E109B1DF80ED000660E42 /* Assets.xcassets */; };
@@ -295,6 +297,10 @@
 		A94A937420BA9815002EEE61 /* PickGoodsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickGoodsViewController.h; sourceTree = "<group>"; };
 		A94A937620BA9859002EEE61 /* PickGoodsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickGoodsCell.h; sourceTree = "<group>"; };
 		A94A937720BA9859002EEE61 /* PickGoodsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickGoodsCell.m; sourceTree = "<group>"; };
+		A9530019232BF1B200C18B0E /* InventoryCheckViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InventoryCheckViewController.h; sourceTree = "<group>"; };
+		A953001A232BF1B300C18B0E /* InventoryCheckViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InventoryCheckViewController.m; sourceTree = "<group>"; };
+		A953001C232BF2D200C18B0E /* InventoryCheckCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InventoryCheckCell.h; sourceTree = "<group>"; };
+		A953001D232BF2D300C18B0E /* InventoryCheckCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InventoryCheckCell.m; sourceTree = "<group>"; };
 		A95E108C1DF80ED000660E42 /* auMarket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = auMarket.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A95E10901DF80ED000660E42 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A95E10921DF80ED000660E42 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -1060,6 +1066,8 @@
 		A975688C20B70732003DC139 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A953001C232BF2D200C18B0E /* InventoryCheckCell.h */,
+				A953001D232BF2D300C18B0E /* InventoryCheckCell.m */,
 				A97EFE5020C005FE00DB2518 /* TransferGoodsCell.h */,
 				A97EFE5120C005FE00DB2518 /* TransferGoodsCell.m */,
 				A975688A20B7072E003DC139 /* GoodsShelfCell.h */,
@@ -1084,6 +1092,8 @@
 		A975688E20B70744003DC139 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				A9530019232BF1B200C18B0E /* InventoryCheckViewController.h */,
+				A953001A232BF1B300C18B0E /* InventoryCheckViewController.m */,
 				A975687F20B538C4003DC139 /* TransferViewController.h */,
 				A975687E20B538C4003DC139 /* TransferViewController.m */,
 				A97EFE4E20C0009400DB2518 /* TransferGoodsViewController.h */,
@@ -1599,6 +1609,7 @@
 				A968118420497E80008604AC /* QRCodeViewController.m in Sources */,
 				A91EBD4C1FFE115E00DA9D68 /* InformationViewController.m in Sources */,
 				A95E11571DF84E1A00660E42 /* UIView+Toast.m in Sources */,
+				A953001B232BF1B300C18B0E /* InventoryCheckViewController.m in Sources */,
 				A97F6C7320BEBBB600F98EA4 /* ShelfEntity.m in Sources */,
 				A91EBD711FFE2CB200DA9D68 /* BatchCell.m in Sources */,
 				A95E11431DF8491600660E42 /* NSString+YP.m in Sources */,
@@ -1613,6 +1624,7 @@
 				A95E10FB1DF8104800660E42 /* SPEntityResponseSerialization.m in Sources */,
 				A95E10F91DF8104800660E42 /* SPClassHelper.m in Sources */,
 				A9FBC1EE1DF96A38005ECDDE /* SPBaseViewController.m in Sources */,
+				A953001E232BF2D300C18B0E /* InventoryCheckCell.m in Sources */,
 				A9D7E26620B26D9900E02AAA /* PickOrderCell.m in Sources */,
 				A9187C111DF9ABB200A3E902 /* UserCenterViewController.m in Sources */,
 				A97EFE5520C1165600DB2518 /* TransferGoodsEntity.m in Sources */,
