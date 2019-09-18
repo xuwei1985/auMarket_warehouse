@@ -7,21 +7,23 @@
 //
 
 #import "SPBaseViewController.h"
-#import "GoodsShelfCell.h"
+#import "InventoryCheckCell.h"
 #import "GoodsEntity.h"
 #import "TransferModel.h"
 #import "TransferGoodsViewController.h"
 
 
-@interface InventoryCheckViewController : SPBaseViewController<UITextFieldDelegate>
+@interface InventoryCheckViewController : SPBaseViewController<UITextFieldDelegate,PassValueDelegate>
 {
     UIAlertView *_inputAlertView;
     UILabel *lbl_transfer_num;
     BOOL hasHideTransferNum;
+    UIImageView *scanGoodsImg;
 }
 
 @property(nonatomic,retain) GoodsEntity *goods_entity;
 @property(nonatomic,retain) TransferModel *model;
-@property(nonatomic,assign) SHELF_LIST_MODEL shelf_list_model;
+@property(nonatomic,retain) GoodsListModel *goods_model;
 @property(nonatomic,retain) NSIndexPath *inputPath;
+@property(nonatomic,retain) NSString *goods_code;
 @end

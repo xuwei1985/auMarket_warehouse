@@ -133,8 +133,8 @@
     if(indexPath.section==0){
         [self gotoTransferView];
     }
-    else if(indexPath.section==2){
-        [self gotoCheckInventoryView];
+    else if(indexPath.section==1){
+        [self gotoInventoryCheckView];
     }
 }
 
@@ -143,9 +143,9 @@
     [self.navigationController pushViewController:tvc animated:YES];
 }
 
--(void)gotoCheckInventoryView{
-    InventoryCheckViewController *tvc=[[InventoryCheckViewController alloc] init];
-    [self.navigationController pushViewController:tvc animated:YES];
+-(void)gotoInventoryCheckView{
+    InventoryCheckViewController *svc=[[InventoryCheckViewController alloc] init];
+    [self.navigationController pushViewController:svc animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
