@@ -19,7 +19,6 @@
     
     [self initUI];
     [self initData];
-    [self addNotification];
 }
 
 -(void)initData{
@@ -33,26 +32,23 @@
 
 -(void)setNavigation{
     self.title=@"盘点库存";
-    
-    if(self.shelf_list_model!=SHELF_LIST_MODEL_VIEW){//非货架的浏览模式
-        UIBarButtonItem *right_Item = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"transfer_cart"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(gotoTransferGoodsView)];
-        self.navigationItem.rightBarButtonItem=right_Item;
-        
-        lbl_transfer_num=[[UILabel alloc] initWithFrame:CGRectMake(WIDTH_SCREEN-25, 20, 14, 14)];
-        lbl_transfer_num.text=@"0";
-        lbl_transfer_num.font=DEFAULT_FONT(11);
-        lbl_transfer_num.textColor=COLOR_MAIN;
-        lbl_transfer_num.textAlignment=NSTextAlignmentCenter;
-        lbl_transfer_num.backgroundColor=COLOR_BG_WHITE;
-        [lbl_transfer_num.layer setCornerRadius:7];
-        lbl_transfer_num.clipsToBounds=YES;
-        lbl_transfer_num.hidden=YES;
-        [self.navigationController.view addSubview:lbl_transfer_num];
-    }
 }
 
--(void)addNotification{
-    //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onTaskUpdate:) name:TASK_UPDATE_NOTIFICATION object:nil];
+-(void)createScanGoodsView{
+    scanGoodsImg=[[UIImageView alloc] init];
+    scanGoodsImg.image=[UIImage imageNamed:@"scan_goods.jpg"];
+    scanGoodsImg.clipsToBounds=YES;
+    scanGoodsImg.layer.cornerRadius = 14;
+    scanGoodsImg.userInteractionEnabled=YES;
+    [self.view addSubview:scanGoodsImg];
+    
+    [scanGoodsImg mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.mas_equalTo(self.view.mas_centerY).offset(-30);
+        make.centerX.mas_equalTo(self.view.mas_centerX);
+        make.size.mas_equalTo(CGSizeMake(120, 120));
+    }];
+    
+    [scanGoodsImg addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gotoScanQRView)]];
 }
 
 -(void)setUpTableView{
@@ -128,10 +124,10 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *identifier=@"shelfCellIdentifier";
-    GoodsShelfCell *cell = [tv dequeueReusableCellWithIdentifier:identifier];
+    NSString *identifier=@"checkCellIdentifier";
+    InventoryCheckCell *cell = [tv dequeueReusableCellWithIdentifier:identifier];
     if (cell == nil) {
-        cell = [[GoodsShelfCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
+        cell = [[InventoryCheckCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
         cell.showsReorderControl = NO;
         cell.accessoryType=UITableViewCellAccessoryNone;
         cell.backgroundColor=COLOR_BG_TABLEVIEWCELL;
@@ -139,36 +135,12 @@
     }
     ShelfItemEntity *entity=[self.model.entity.list objectAtIndex:indexPath.row];
     cell.entity=entity;
-    cell.shelf_list_model=self.shelf_list_model;
-    
-    if(![self.goods_entity.shelves_no isEqualToString:entity.shelves_code]){
-        [cell addStack:^(ShelfItemEntity *entity){
-            if([entity.id length]>0&&[entity.transfer_number intValue]>0){
-                [self addTransferToStack:entity];
-            }
-            else{
-                [self showToastWithText:@"请先侧滑输入转移数量"];
-            }
-        }];
-        cell.contentView.backgroundColor=RGBCOLOR(255, 255, 255);
-    }
-    else{
-        [cell addStack:^(ShelfItemEntity *entity){
-            [self showToastWithText:@"商品当前所在的货架禁止操作"];
-        }];
-        cell.contentView.backgroundColor=RGBCOLOR(225, 225, 225);
-    }
     
     return cell;
 }
 
 -(CGFloat)tableView:(UITableView *)tv heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if(self.shelf_list_model!=SHELF_LIST_MODEL_VIEW){
-        return 148;
-    }
-    else{
-        return 128;
-    }
+    return 128;
 }
 
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -179,10 +151,7 @@
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     ShelfItemEntity *entity=[self.model.entity.list objectAtIndex:indexPath.row];
-    if(self.shelf_list_model!=SHELF_LIST_MODEL_VIEW&&![self.goods_entity.shelves_no isEqualToString:entity.shelves_code]){
-        return YES;
-    }
-    return NO;
+    return YES;
 }
 
 - (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -199,77 +168,53 @@
 
 
 -(void)loadGoodsShelves{
-    if(self.tableView.isFirstLoad){
-        [self startLoadingActivityIndicator];
-    }
-    
     [self.model goodsShelfList:self.goods_entity.goods_id andGoodsCode:self.goods_entity.goods_code andShelf:self.goods_entity.shelves_no];
 }
 
-//请求需要转移的商品列表
--(void)loadTransferGoodsList{
-    [self.model goodsTransferList:0 andTargetShelf:(self.shelf_list_model==SHELF_LIST_MODEL_PICK)?self.goods_entity.shelves_no:@""];
-}
-
--(void)addTransferToStack:(ShelfItemEntity *)entity{
-    if(entity.shelves_code&&[entity.shelves_code length]>0){
+-(void)searchGoodsWithCode:(NSString *)goods_code{
+    if(self.goods_code&&self.goods_code.length>0){
         [self startLoadingActivityIndicator];
-        
-        NSString *new_shelf_code=@"";
-        if(self.shelf_list_model==SHELF_LIST_MODEL_PICK){//从拣货商品流程中来
-            new_shelf_code=self.goods_entity.shelves_no;
-        }
-        [self.model addTransferToStack:entity.id andNumber:entity.transfer_number andNewShelf:new_shelf_code];
-    }
-    else{
-        [self showToastWithText:@"缺少源货架数据"];
+        [self.goods_model loadGoodsList:self.goods_code orGoodsName:nil];
     }
 }
 
 -(void)onResponse:(SPBaseModel *)model isSuccess:(BOOL)isSuccess{
-    [self stopLoadingActivityIndicator];
-    
     if(model==self.model){
+        [self stopLoadingActivityIndicator];
         if(model.requestTag==1001){//获取货架列表
             if(isSuccess){
                 if(self.model.entity.list!=nil&&self.model.entity.list.count>0){
-                    self.tableView.isFirstLoad=NO;
+                    [self showGoodsShelfData:YES];
                     [self.tableView reloadData];
-                    [self hideNoContentView];
                 }
                 else{
-                    [self showNoContentView];
+                    [self showGoodsShelfData:NO];
                 }
-                [self loadTransferGoodsList];
             }
         }
-        else if(model.requestTag==1002){//添加到待转移区域
-            if(isSuccess){
-                [self showSuccesWithText:@"添加成功"];
+    }
+    else if(model==self.goods_model){
+        if(model.requestTag==1001){
+            if(self.goods_model.entity.list!=nil&&self.goods_model.entity.list.count>0){
+                self.goods_entity=[self.goods_model.entity.list objectAtIndex:0];
                 [self loadGoodsShelves];
             }
-        }
-        else if(model.requestTag==1003){//获取带转移商品列表
-            if(isSuccess){
-                if(self.model.transfer_entity.list!=nil&&self.model.transfer_entity.list.count>0){
-                    if(!hasHideTransferNum){
-                        lbl_transfer_num.hidden=NO;
-                    }
-                    
-
-                    lbl_transfer_num.text=[NSString stringWithFormat:@"%lu",(unsigned long)self.model.transfer_entity.list.count];
-                    if([lbl_transfer_num.text intValue]<99){
-                        lbl_transfer_num.frame=CGRectMake(WIDTH_SCREEN-25, 20, 14, 14);
-                    }
-                    else{
-                        lbl_transfer_num.frame=CGRectMake(WIDTH_SCREEN-25, 20, 22, 14);
-                    }
-                }
-                else{
-                    lbl_transfer_num.hidden=YES;
-                }
+            else{
+                [self stopLoadingActivityIndicator];
+                [self showFailWithText:@"未匹配到已有商品"];
             }
         }
+    }
+}
+
+-(void)showGoodsShelfData:(BOOL)show{
+    if(show){
+        self.tableView.hidden=NO;
+        [scanGoodsImg removeFromSuperview];
+    }
+    else{
+        self.tableView.hidden=YES;
+        [self createScanGoodsView];
     }
 }
 
@@ -326,65 +271,22 @@
     return YES;
 }
 
-//检查是否还有未加入带转移区域的商品数量
--(BOOL)hasUnConfirmNum{
-    for (ShelfItemEntity *entity in self.model.entity.list) {
-        if([entity.transfer_number intValue]>0){
-            return YES;
+-(void)gotoScanQRView{
+    QRCodeViewController *qvc=[[QRCodeViewController alloc] init];
+    qvc.scan_model=SCAN_GOODS;
+    qvc.pass_delegate=self;
+    [self.navigationController pushViewController:qvc animated:YES];
+}
+
+
+-(void)passObject:(id)obj{
+     if(obj){
+        if([[obj objectForKey:@"scan_model"] intValue]==SCAN_GOODS){//商品条形码
+            self.goods_code=@"4710174007458";//[obj objectForKey:@"code"];
+            [self searchGoodsWithCode:self.goods_code];
         }
-    }
-    return NO;
-}
-
--(void)gotoTransferGoodsView{
-    
-    if([self hasUnConfirmNum]){
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"有未加入待转移区域的商品，确认离开吗？" preferredStyle:UIAlertControllerStyleAlert];
-        // 确定
-        UIAlertAction *_okAction= [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *_Nonnull action) {
-            TransferGoodsViewController *tvc=[[TransferGoodsViewController alloc] init];
-            tvc.list_type=0;
-            tvc.target_shelf=self.goods_entity.shelves_no;
-            [self.navigationController pushViewController:tvc animated:YES];
-        }];
-        UIAlertAction *_cancelAction =[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
-        
-        [alert addAction:_okAction];
-        [alert addAction:_cancelAction];
-        // 弹出对话框
-        [self presentViewController:alert animated:true completion:nil];
-    }
-    else{
-        TransferGoodsViewController *tvc=[[TransferGoodsViewController alloc] init];
-        tvc.list_type=0;
-        tvc.target_shelf=self.goods_entity.shelves_no;
-        [self.navigationController pushViewController:tvc animated:YES];
-    }
-}
-
-- (void)willMoveToParentViewController:(UIViewController*)parent{
-    [super willMoveToParentViewController:parent];
-    lbl_transfer_num.hidden=YES;
-    hasHideTransferNum=YES;
-}
-
--(void)onBack
-{
-    if([self hasUnConfirmNum]){
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"有未加入待转移区域的商品，确认离开吗？" preferredStyle:UIAlertControllerStyleAlert];
-        // 确定
-        UIAlertAction *_okAction= [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *_Nonnull action) {
-            [self.navigationController popViewControllerAnimated:YES];
-        }];
-        UIAlertAction *_cancelAction =[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
-
-        [alert addAction:_okAction];
-        [alert addAction:_cancelAction];
-        // 弹出对话框
-        [self presentViewController:alert animated:true completion:nil];
-    }
-    else{
-        [self.navigationController popViewControllerAnimated:YES];
+        [self showGoodsShelfData:YES];
+        [self.tableView reloadData];
     }
 }
 
@@ -396,33 +298,31 @@
     return _model;
 }
 
+-(GoodsListModel *)goods_model{
+    if(!_goods_model){
+        _goods_model=[[GoodsListModel alloc] init];
+        _goods_model.delegate=self;
+    }
+    return _goods_model;
+}
+
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    hasHideTransferNum=NO;
+    if(self.goods_entity==nil){
+        [self showGoodsShelfData:NO];
+    }
+    else{
+        [self showGoodsShelfData:YES];
+    }
     
-//    if(self.shelf_list_model==SHELF_LIST_MODEL_PICK){
-//        [self loadGoodsShelves];
-//    }
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self passObject:[NSDictionary dictionaryWithObjectsAndKeys:@"0",@"scan_model", nil]];
+    });
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
-    [self loadGoodsShelves];
-    if([lbl_transfer_num.text intValue]>0){
-        lbl_transfer_num.hidden=NO;
-    }
-}
-
--(void)viewWillDisappear:(BOOL)animated{
-    lbl_transfer_num.hidden=YES;
-    hasHideTransferNum=YES;
-}
-
--(void)viewDidDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
-    [super viewDidDisappear:animated];
 }
 
 
