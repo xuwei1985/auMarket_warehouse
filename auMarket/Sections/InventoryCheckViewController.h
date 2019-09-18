@@ -19,6 +19,9 @@
     UILabel *lbl_transfer_num;
     BOOL hasHideTransferNum;
     UIImageView *scanGoodsImg;
+    UIImageView *goods_img;
+    UILabel *goodsNameLbl;
+    UILabel *goodsPriceLbl;
 }
 
 @property(nonatomic,retain) GoodsEntity *goods_entity;

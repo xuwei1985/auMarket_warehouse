@@ -61,7 +61,7 @@
     UIView *view = [UIView new];
     view.backgroundColor = COLOR_CLEAR;
     
-    [self.tableView setTableHeaderView:[self getGoodsView]];
+    [self.tableView setTableHeaderView:view];
     [self.tableView setTableFooterView:view];
     [self.view addSubview:self.tableView];
 }
@@ -75,12 +75,13 @@
     layer.backgroundColor = RGBCOLOR(235, 235, 235).CGColor;
     [goods_view.layer addSublayer:layer];
     
-    UIImageView *goods_img=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"default_head.jpg"]];
+    NSURL *img_url=[NSURL URLWithString:self.goods_entity.goods_thumb];
+    goods_img=[[UIImageView alloc] init];
     goods_img.frame=CGRectMake(12, 14, 74, 74);
-    [goods_img sd_setImageWithURL:[NSURL URLWithString:self.goods_entity.goods_thumb] placeholderImage:[UIImage imageNamed:@"defaut_list"]];
+    [goods_img sd_setImageWithURL:img_url placeholderImage:[UIImage imageNamed:@"defaut_list"] options:SDWebImageLowPriority | SDWebImageRetryFailed];
     [goods_view addSubview:goods_img];
     
-    UILabel *goodsNameLbl=[[UILabel alloc] initWithFrame:CGRectMake(98, 14, WIDTH_SCREEN-105 , 24)];
+    goodsNameLbl=[[UILabel alloc] initWithFrame:CGRectMake(98, 14, WIDTH_SCREEN-105 , 24)];
     goodsNameLbl.textAlignment=NSTextAlignmentLeft;
     goodsNameLbl.textColor=COLOR_DARKGRAY;
     goodsNameLbl.font=DEFAULT_FONT(14.0);
@@ -90,7 +91,7 @@
     [goodsNameLbl sizeToFit];
     [goods_view addSubview:goodsNameLbl];
     
-    UILabel *goodsPriceLbl=[[UILabel alloc] initWithFrame:CGRectMake(98, 58, 100, 24)];
+    goodsPriceLbl=[[UILabel alloc] initWithFrame:CGRectMake(98, 58, 100, 24)];
     goodsPriceLbl.textAlignment=NSTextAlignmentLeft;
     goodsPriceLbl.textColor=COLOR_MAIN;
     goodsPriceLbl.font=DEFAULT_FONT(14.0);
@@ -100,6 +101,46 @@
     return goods_view;
 }
 
+-(UIView *)getGoodsFooterView{
+    UIView *goods_footer_view=[[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, 38)];
+    goods_footer_view.backgroundColor=COLOR_WHITE;
+    
+    UIButton *btn_adjustInventory=[UIButton buttonWithType:UIButtonTypeCustom];
+    [btn_adjustInventory setTitle:@"调整库存" forState:UIControlStateNormal];//正常状态
+    btn_adjustInventory.backgroundColor = [UIColor colorWithString:@"#E94132"];
+    [btn_adjustInventory setTitleColor:COLOR_WHITE forState:UIControlStateNormal];
+    [btn_adjustInventory setTintColor:[UIColor whiteColor]];
+    btn_adjustInventory.titleLabel.font = [UIFont systemFontOfSize:15];
+    [goods_footer_view addSubview:btn_adjustInventory];
+    
+    [btn_adjustInventory mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(0);
+        make.size.mas_equalTo(CGSizeMake(0.5*WIDTH_SCREEN, 38));
+    }];
+    
+    UIButton *btn_next=[UIButton buttonWithType:UIButtonTypeCustom];
+    [btn_next setTitle:@"继续扫描" forState:UIControlStateNormal];//正常状态
+    btn_next.backgroundColor = [UIColor colorWithString:@"#57BE6A"];
+    [btn_next setTitleColor:COLOR_WHITE forState:UIControlStateNormal];
+    [btn_next setTintColor:[UIColor whiteColor]];
+    btn_next.titleLabel.font = [UIFont systemFontOfSize:15];
+    [goods_footer_view addSubview:btn_next];
+    
+    [btn_next mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(0.5*WIDTH_SCREEN);
+        make.size.mas_equalTo(CGSizeMake(0.5*WIDTH_SCREEN, 38));
+    }];
+    return goods_footer_view;
+}
+
+
+-(void)updateGoodsBasicInfo{
+    [goods_img sd_setImageWithURL:[NSURL URLWithString:self.goods_entity.goods_thumb] placeholderImage:[UIImage imageNamed:@"defaut_list"]];
+    goodsNameLbl.text=self.goods_entity.goods_name;
+    goodsPriceLbl.text=[NSString stringWithFormat:@"$%@",self.goods_entity.shop_price];
+    [goodsNameLbl sizeToFit];
+    [self.tableView reloadData];
+}
 
 #pragma mark - Table view delegate
 
@@ -197,6 +238,10 @@
         if(model.requestTag==1001){
             if(self.goods_model.entity.list!=nil&&self.goods_model.entity.list.count>0){
                 self.goods_entity=[self.goods_model.entity.list objectAtIndex:0];
+                
+                [self.tableView setTableFooterView:[self getGoodsFooterView]];
+                [self.tableView setTableHeaderView:[self getGoodsView]];
+                [self showGoodsShelfData:YES];
                 [self loadGoodsShelves];
             }
             else{
@@ -285,8 +330,6 @@
             self.goods_code=@"4710174007458";//[obj objectForKey:@"code"];
             [self searchGoodsWithCode:self.goods_code];
         }
-        [self showGoodsShelfData:YES];
-        [self.tableView reloadData];
     }
 }
 
