@@ -184,12 +184,11 @@
         if(model.requestTag==1001){//获取货架列表
             if(isSuccess){
                 if(self.model.entity.list!=nil&&self.model.entity.list.count>0){
-                    self.tableView.isFirstLoad=NO;
+                    [self showGoodsShelfData:YES];
                     [self.tableView reloadData];
-                    [self showGoodsShelfData:NO];
                 }
                 else{
-                    [self showGoodsShelfData:YES];
+                    [self showGoodsShelfData:NO];
                 }
             }
         }
