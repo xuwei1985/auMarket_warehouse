@@ -57,7 +57,6 @@
 		A95E10911DF80ED000660E42 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A95E10901DF80ED000660E42 /* main.m */; };
 		A95E10941DF80ED000660E42 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A95E10931DF80ED000660E42 /* AppDelegate.m */; };
 		A95E109C1DF80ED000660E42 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A95E109B1DF80ED000660E42 /* Assets.xcassets */; };
-		A95E109F1DF80ED000660E42 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A95E109D1DF80ED000660E42 /* LaunchScreen.storyboard */; };
 		A95E10F01DF8104800660E42 /* KMActivityIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = A95E10CA1DF8104800660E42 /* KMActivityIndicator.m */; };
 		A95E10F21DF8104800660E42 /* SPUploadFileEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = A95E10CE1DF8104800660E42 /* SPUploadFileEntity.m */; };
 		A95E10F31DF8104800660E42 /* SPUploadFileModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A95E10D01DF8104800660E42 /* SPUploadFileModel.m */; };
@@ -307,7 +306,6 @@
 		A95E10921DF80ED000660E42 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		A95E10931DF80ED000660E42 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		A95E109B1DF80ED000660E42 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		A95E109E1DF80ED000660E42 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A95E10A01DF80ED000660E42 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A95E10A71DF8104800660E42 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		A95E10C91DF8104800660E42 /* KMActivityIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KMActivityIndicator.h; path = ../Base/KMActivityIndicator.h; sourceTree = "<group>"; };
@@ -816,7 +814,6 @@
 				A95E10921DF80ED000660E42 /* AppDelegate.h */,
 				A95E10931DF80ED000660E42 /* AppDelegate.m */,
 				A95E109B1DF80ED000660E42 /* Assets.xcassets */,
-				A95E109D1DF80ED000660E42 /* LaunchScreen.storyboard */,
 				A95E10A01DF80ED000660E42 /* Info.plist */,
 				A95E108F1DF80ED000660E42 /* Supporting Files */,
 			);
@@ -1395,7 +1392,6 @@
 				A9F4DA881F658AFE00D71774 /* 1_12.png in Resources */,
 				A9D7E27020B2B5BC00E02AAA /* s_f@2x.png in Resources */,
 				A9FBC1CE1DF93871005ECDDE /* btn_back_white@2x.png in Resources */,
-				A95E109F1DF80ED000660E42 /* LaunchScreen.storyboard in Resources */,
 				A975688620B5425D003DC139 /* zy_3@2x.png in Resources */,
 				A96474171E11083A00A5A39B /* account_icon_black@2x.png in Resources */,
 				A9FBC2011DF973CC005ECDDE /* app_guide_pass@3x.png in Resources */,
@@ -1653,17 +1649,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		A95E109D1DF80ED000660E42 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				A95E109E1DF80ED000660E42 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		A95E10A11DF80ED000660E42 /* Debug */ = {
