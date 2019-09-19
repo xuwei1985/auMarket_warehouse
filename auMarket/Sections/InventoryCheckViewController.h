@@ -22,6 +22,11 @@
     UIImageView *goods_img;
     UILabel *goodsNameLbl;
     UILabel *goodsPriceLbl;
+    UITextField *_txt_goods_num;
+    UIView *_view_toolBar;
+    UIButton *btnSaveInventory;
+    int _adjustNum;//调整的库存数量
+    int _adjustmModel;//调整库存的模式：增加|减少
 }
 
 @property(nonatomic,retain) GoodsEntity *goods_entity;

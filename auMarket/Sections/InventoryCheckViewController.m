@@ -5,7 +5,7 @@
 //  Created by 吴绪伟 on 2018/1/4.
 //  Copyright © 2018年 daao. All rights reserved.
 //
-
+#define TOOLBAR_HEIGHT (IS_IPhoneX?123.0f:84.0f)
 #import "InventoryCheckViewController.h"
 
 @interface InventoryCheckViewController ()
@@ -112,6 +112,7 @@
     [btn_adjustInventory setTintColor:[UIColor whiteColor]];
     btn_adjustInventory.titleLabel.font = [UIFont systemFontOfSize:15];
     [goods_footer_view addSubview:btn_adjustInventory];
+    [btn_adjustInventory addTarget:self action:@selector(showInputBox) forControlEvents:UIControlEventTouchUpInside];
     
     [btn_adjustInventory mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(0);
@@ -125,6 +126,7 @@
     [btn_next setTintColor:[UIColor whiteColor]];
     btn_next.titleLabel.font = [UIFont systemFontOfSize:15];
     [goods_footer_view addSubview:btn_next];
+    [btn_next addTarget:self action:@selector(gotoScanQRView) forControlEvents:UIControlEventTouchUpInside];
     
     [btn_next mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(0.5*WIDTH_SCREEN);
@@ -264,40 +266,63 @@
 }
 
 -(void)showInputBox{
-    NSString *tip_title=@"";
-    tip_title=@"转移数量";
+    _view_toolBar=[[UIView alloc] initWithFrame:CGRectMake(0, HEIGHT_SCREEN-TOOLBAR_HEIGHT-HEIGHT_STATUS_AND_NAVIGATION_BAR, WIDTH_SCREEN, TOOLBAR_HEIGHT)];
+    _view_toolBar.backgroundColor=COLOR_BG_WHITE;
+    [self.view addSubview:_view_toolBar];
     
-    if (_inputAlertView==nil) {
-        _inputAlertView = [[UIAlertView alloc] initWithTitle:tip_title message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-    }
-    _inputAlertView.title=tip_title;
-    [_inputAlertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
+    UILabel *tipLbl=[[UILabel alloc] init];
+    tipLbl.text=@"调整库存数量";
+    [_view_toolBar addSubview:tipLbl];
     
-    UITextField *nameField = [_inputAlertView textFieldAtIndex:0];
-    nameField.delegate=self;
-    nameField.placeholder =[NSString stringWithFormat:@"请输入%@",tip_title];
-    nameField.keyboardType=UIKeyboardTypeNumberPad;
-    [_inputAlertView show];
+    [tipLbl mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.mas_equalTo(_view_toolBar.mas_centerX);
+        make.top.mas_equalTo(25);
+        make.size.mas_equalTo(CGSizeMake(100, 30));
+    }];
+    
+    btnSaveInventory=[UIButton buttonWithType:UIButtonTypeCustom];
+    btnSaveInventory.frame=CGRectMake(170, 0,WIDTH_SCREEN-170, 44);
+    [btnSaveInventory setTitle:@"保存数量" forState:UIControlStateNormal];
+    btnSaveInventory.titleLabel.textAlignment=NSTextAlignmentCenter;
+    btnSaveInventory.backgroundColor=COLOR_MAIN;
+    btnSaveInventory.titleLabel.font=DEFAULT_BOLD_FONT(18);
+    [btnSaveInventory setTitleColor:COLOR_WHITE forState:UIControlStateNormal];
+    [btnSaveInventory addTarget:self action:@selector(addGoodsToCart:) forControlEvents:UIControlEventTouchUpInside];
+    [_view_toolBar addSubview:btnSaveInventory];
+    
+    _txt_goods_num=[[UITextField alloc] initWithFrame:CGRectMake(68, 9, 34, 29)];
+    _txt_goods_num.delegate=self;
+    _txt_goods_num.text=[NSString stringWithFormat:@"%d",_goodNum];
+    _txt_goods_num.textColor=COLOR_BLACK;
+    _txt_goods_num.font=FONT_SIZE_MIDDLE;
+    _txt_goods_num.textAlignment=NSTextAlignmentCenter;
+    _txt_goods_num.keyboardType= UIKeyboardTypeNumberPad;
+    [_txt_goods_num.layer setBorderColor:COLOR_LIGHTGRAY.CGColor];
+    [_txt_goods_num.layer setBorderWidth:1];
+    [_view_toolBar addSubview:_txt_goods_num];
+    
+    UIButton *minusBtn=[UIButton buttonWithType:UIButtonTypeCustom];
+    minusBtn.frame=CGRectMake(0, 0, 60, 44);
+    [minusBtn setTitleColor:COLOR_MAIN forState:UIControlStateNormal];
+    minusBtn.titleLabel.font=DEFAULT_BOLD_FONT(15);
+    [minusBtn setTitle:@"—" forState:UIControlStateNormal];
+    [minusBtn addTarget:self action:@selector(minusNum) forControlEvents:UIControlEventTouchUpInside];
+    [_view_toolBar addSubview:minusBtn];
+    
+    UIButton *addBtn=[UIButton buttonWithType:UIButtonTypeCustom];
+    addBtn.frame=CGRectMake(105, 0, 60, 44);
+    addBtn.titleLabel.font=DEFAULT_FONT(24);
+    [addBtn setTitleColor:COLOR_MAIN forState:UIControlStateNormal];
+    [addBtn setTitle:@"+" forState:UIControlStateNormal];
+    [addBtn addTarget:self action:@selector(addNum) forControlEvents:UIControlEventTouchUpInside];
+    [_view_toolBar addSubview:addBtn];
+    
+    UIView *line=[[UIView alloc] initWithFrame:CGRectMake(0, 44, WIDTH_SCREEN, 0.5)];
+    line.backgroundColor=COLOR_BG_LINE;
+    [_view_toolBar addSubview:line];
+    
 }
 
--(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    
-    if (buttonIndex == alertView.firstOtherButtonIndex) {
-        UITextField *nameField = [alertView textFieldAtIndex:0];
-        NSString *txt_value=[nameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-        
-        if([txt_value intValue]<=0){
-            [self showToastWithText:@"转移数量应大于0"];
-        }
-        else if([txt_value intValue]>[[self.model.entity.list objectAtIndex:self.inputPath.row].inventory intValue]){
-            [self showToastWithText:@"超过了该货架的商品库存"];
-        }
-        else{
-            [self.model.entity.list objectAtIndex:self.inputPath.row].transfer_number=[NSString stringWithFormat:@"%d",[txt_value intValue]];
-            [self.tableView reloadData];
-        }
-    }
-}
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
