@@ -220,6 +220,13 @@
     }
 }
 
+-(void)adjustInventory{
+    if(_adjustmModel>0){
+        [self startLoadingActivityIndicator];
+        [self.goods_model adjustInventory:self.goods_entity.goods_id andNum:_adjustNum andAction:_adjustmModel];
+    }
+}
+
 -(void)onResponse:(SPBaseModel *)model isSuccess:(BOOL)isSuccess{
     if(model==self.model){
         [self stopLoadingActivityIndicator];
@@ -250,6 +257,15 @@
                 [self showFailWithText:@"未匹配到已有商品"];
             }
         }
+        else if(model.requestTag==1002){
+            if([self.goods_model.i_entity.code intValue]==0){
+                [self loadGoodsShelves];
+            }
+            else{
+                [self stopLoadingActivityIndicator];
+                [self showFailWithText:self.goods_model.i_entity.msg];
+            }
+        }
     }
 }
 
@@ -271,8 +287,9 @@
     UIAlertAction *sureAction = [UIAlertAction actionWithTitle:@"增加库存" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         UITextField *inv_num = alertController.textFields.firstObject;
         _adjustNum=[inv_num.text intValue];
+        _adjustmModel=2;
         if(_adjustNum>0){
-            
+            [self adjustInventory];
         }
         else{
             [self showToastWithText:@"无效的库存数"];
@@ -282,8 +299,9 @@
     UIAlertAction *structAction = [UIAlertAction actionWithTitle:@"减少库存" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
         UITextField *inv_num = alertController.textFields.firstObject;
         _adjustNum=[inv_num.text intValue];
+        _adjustmModel=1;
         if(_adjustNum>0){
-            
+            [self adjustInventory];
         }
         else{
             [self showToastWithText:@"无效的库存数"];
@@ -342,7 +360,7 @@
 -(void)passObject:(id)obj{
      if(obj){
         if([[obj objectForKey:@"scan_model"] intValue]==SCAN_GOODS){//商品条形码
-            self.goods_code=@"2017010102";//[obj objectForKey:@"code"];
+            self.goods_code=[obj objectForKey:@"code"];
             [self searchGoodsWithCode:self.goods_code];
         }
     }
@@ -369,13 +387,6 @@
     if(self.goods_entity==nil){
         [self showGoodsShelfData:NO];
     }
-    else{
-        [self showGoodsShelfData:YES];
-    }
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self passObject:[NSDictionary dictionaryWithObjectsAndKeys:@"0",@"scan_model", nil]];
-    });
 }
 
 -(void)viewDidAppear:(BOOL)animated
