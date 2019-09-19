@@ -11,6 +11,7 @@
 
 @interface GoodsListModel : SPBaseModel
 @property(nonatomic,retain) GoodsListEntity *entity;
+@property(nonatomic,retain) SPBaseEntity *i_entity;
 @property(nonatomic,retain) NSString *tid;
 @property(nonatomic,assign) BOOL hasmore;
 @property(nonatomic,retain) NSString *keyword;
@@ -18,6 +19,6 @@
 @property(nonatomic,retain) NSString *catid;
 
 -(void)loadGoodsList:(NSString *)goods_code orGoodsName:(NSString *)goods_name;
-
+-(void)adjustInventory:(NSString *)goods_id andNum:(int)num andAction:(int)action;
 
 @end

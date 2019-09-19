@@ -112,7 +112,7 @@
     [btn_adjustInventory setTintColor:[UIColor whiteColor]];
     btn_adjustInventory.titleLabel.font = [UIFont systemFontOfSize:15];
     [goods_footer_view addSubview:btn_adjustInventory];
-    [btn_adjustInventory addTarget:self action:@selector(showInputBox) forControlEvents:UIControlEventTouchUpInside];
+    [btn_adjustInventory addTarget:self action:@selector(showInventoryView) forControlEvents:UIControlEventTouchUpInside];
     
     [btn_adjustInventory mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(0);
@@ -193,16 +193,15 @@
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ShelfItemEntity *entity=[self.model.entity.list objectAtIndex:indexPath.row];
-    return YES;
+    return NO;
 }
 
 - (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath{
-    UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"输入数量" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
-        self.inputPath=indexPath;
-        [self showInputBox];
-    }];
-    return @[deleteAction];
+//    UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"输入数量" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+//        self.inputPath=indexPath;
+//    }];
+//    return @[deleteAction];
+    return nil;
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -218,6 +217,13 @@
     if(self.goods_code&&self.goods_code.length>0){
         [self startLoadingActivityIndicator];
         [self.goods_model loadGoodsList:self.goods_code orGoodsName:nil];
+    }
+}
+
+-(void)adjustInventory{
+    if(_adjustmModel>0){
+        [self startLoadingActivityIndicator];
+        [self.goods_model adjustInventory:self.goods_entity.goods_id andNum:_adjustNum andAction:_adjustmModel];
     }
 }
 
@@ -251,6 +257,15 @@
                 [self showFailWithText:@"未匹配到已有商品"];
             }
         }
+        else if(model.requestTag==1002){
+            if([self.goods_model.i_entity.code intValue]==0){
+                [self loadGoodsShelves];
+            }
+            else{
+                [self stopLoadingActivityIndicator];
+                [self showFailWithText:self.goods_model.i_entity.msg];
+            }
+        }
     }
 }
 
@@ -265,62 +280,55 @@
     }
 }
 
--(void)showInputBox{
-    _view_toolBar=[[UIView alloc] initWithFrame:CGRectMake(0, HEIGHT_SCREEN-TOOLBAR_HEIGHT-HEIGHT_STATUS_AND_NAVIGATION_BAR, WIDTH_SCREEN, TOOLBAR_HEIGHT)];
-    _view_toolBar.backgroundColor=COLOR_BG_WHITE;
-    [self.view addSubview:_view_toolBar];
+-(void)showInventoryView{
+    //初始化
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"调整库存数量" message:@"" preferredStyle:UIAlertControllerStyleAlert];
     
-    UILabel *tipLbl=[[UILabel alloc] init];
-    tipLbl.text=@"调整库存数量";
-    [_view_toolBar addSubview:tipLbl];
-    
-    [tipLbl mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.mas_equalTo(_view_toolBar.mas_centerX);
-        make.top.mas_equalTo(25);
-        make.size.mas_equalTo(CGSizeMake(100, 30));
+    UIAlertAction *sureAction = [UIAlertAction actionWithTitle:@"增加库存" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UITextField *inv_num = alertController.textFields.firstObject;
+        _adjustNum=[inv_num.text intValue];
+        _adjustmModel=2;
+        if(_adjustNum>0){
+            [self adjustInventory];
+        }
+        else{
+            [self showToastWithText:@"无效的库存数"];
+        }
     }];
     
-    btnSaveInventory=[UIButton buttonWithType:UIButtonTypeCustom];
-    btnSaveInventory.frame=CGRectMake(170, 0,WIDTH_SCREEN-170, 44);
-    [btnSaveInventory setTitle:@"保存数量" forState:UIControlStateNormal];
-    btnSaveInventory.titleLabel.textAlignment=NSTextAlignmentCenter;
-    btnSaveInventory.backgroundColor=COLOR_MAIN;
-    btnSaveInventory.titleLabel.font=DEFAULT_BOLD_FONT(18);
-    [btnSaveInventory setTitleColor:COLOR_WHITE forState:UIControlStateNormal];
-    [btnSaveInventory addTarget:self action:@selector(addGoodsToCart:) forControlEvents:UIControlEventTouchUpInside];
-    [_view_toolBar addSubview:btnSaveInventory];
+    UIAlertAction *structAction = [UIAlertAction actionWithTitle:@"减少库存" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        UITextField *inv_num = alertController.textFields.firstObject;
+        _adjustNum=[inv_num.text intValue];
+        _adjustmModel=1;
+        if(_adjustNum>0){
+            [self adjustInventory];
+        }
+        else{
+            [self showToastWithText:@"无效的库存数"];
+        }
+    }];
     
-    _txt_goods_num=[[UITextField alloc] initWithFrame:CGRectMake(68, 9, 34, 29)];
-    _txt_goods_num.delegate=self;
-    _txt_goods_num.text=[NSString stringWithFormat:@"%d",_goodNum];
-    _txt_goods_num.textColor=COLOR_BLACK;
-    _txt_goods_num.font=FONT_SIZE_MIDDLE;
-    _txt_goods_num.textAlignment=NSTextAlignmentCenter;
-    _txt_goods_num.keyboardType= UIKeyboardTypeNumberPad;
-    [_txt_goods_num.layer setBorderColor:COLOR_LIGHTGRAY.CGColor];
-    [_txt_goods_num.layer setBorderWidth:1];
-    [_view_toolBar addSubview:_txt_goods_num];
+    //取消按钮（只能创建一个）
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        
+    }];
     
-    UIButton *minusBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-    minusBtn.frame=CGRectMake(0, 0, 60, 44);
-    [minusBtn setTitleColor:COLOR_MAIN forState:UIControlStateNormal];
-    minusBtn.titleLabel.font=DEFAULT_BOLD_FONT(15);
-    [minusBtn setTitle:@"—" forState:UIControlStateNormal];
-    [minusBtn addTarget:self action:@selector(minusNum) forControlEvents:UIControlEventTouchUpInside];
-    [_view_toolBar addSubview:minusBtn];
+    //将按钮添加到UIAlertController对象上
+    [alertController addAction:sureAction];
+    [alertController addAction:cancelAction];
+    [alertController addAction:structAction];
     
-    UIButton *addBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-    addBtn.frame=CGRectMake(105, 0, 60, 44);
-    addBtn.titleLabel.font=DEFAULT_FONT(24);
-    [addBtn setTitleColor:COLOR_MAIN forState:UIControlStateNormal];
-    [addBtn setTitle:@"+" forState:UIControlStateNormal];
-    [addBtn addTarget:self action:@selector(addNum) forControlEvents:UIControlEventTouchUpInside];
-    [_view_toolBar addSubview:addBtn];
-    
-    UIView *line=[[UIView alloc] initWithFrame:CGRectMake(0, 44, WIDTH_SCREEN, 0.5)];
-    line.backgroundColor=COLOR_BG_LINE;
-    [_view_toolBar addSubview:line];
-    
+    //添加文本框（只能在UIAlertController的UIAlertControllerStyleAlert样式下添加）
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.placeholder = @"填写变动的库存数量";
+        textField.font=FONT_SIZE_MIDDLE;
+        textField.textAlignment=NSTextAlignmentCenter;
+        textField.delegate=self;
+        textField.keyboardType = UIKeyboardTypeNumberPad;
+    }];
+
+    //显示弹窗视图控制器
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 
@@ -333,8 +341,8 @@
         return YES;
     }
     //长度限制
-    if([textField.text length] > 5){
-        textField.text = [textField.text substringToIndex:5];
+    if([textField.text length] >= 4){
+        textField.text = [textField.text substringToIndex:4];
         return NO;
     }
     
@@ -352,7 +360,7 @@
 -(void)passObject:(id)obj{
      if(obj){
         if([[obj objectForKey:@"scan_model"] intValue]==SCAN_GOODS){//商品条形码
-            self.goods_code=@"4710174007458";//[obj objectForKey:@"code"];
+            self.goods_code=[obj objectForKey:@"code"];
             [self searchGoodsWithCode:self.goods_code];
         }
     }
@@ -379,13 +387,6 @@
     if(self.goods_entity==nil){
         [self showGoodsShelfData:NO];
     }
-    else{
-        [self showGoodsShelfData:YES];
-    }
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self passObject:[NSDictionary dictionaryWithObjectsAndKeys:@"0",@"scan_model", nil]];
-    });
 }
 
 -(void)viewDidAppear:(BOOL)animated
