@@ -230,6 +230,7 @@
 
 -(void)adjustInventory{
     if(_adjustmModel>0){
+        [self showMaskView];
         [self startLoadingActivityIndicator];
         [self.goods_model adjustInventory:self.goods_entity.goods_id andNum:_adjustNum andAction:_adjustmModel];
     }
@@ -237,6 +238,7 @@
 
 -(void)onResponse:(SPBaseModel *)model isSuccess:(BOOL)isSuccess{
     if(model==self.model){
+        [self hideMaskView];
         [self stopLoadingActivityIndicator];
         if(model.requestTag==1001){//获取货架列表
             if(isSuccess){
@@ -271,6 +273,7 @@
                 [self loadGoodsShelves];
             }
             else{
+                [self hideMaskView];
                 [self stopLoadingActivityIndicator];
                 [self showFailWithText:self.goods_model.i_entity.msg];
             }
