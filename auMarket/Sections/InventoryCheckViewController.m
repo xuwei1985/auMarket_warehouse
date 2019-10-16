@@ -27,6 +27,7 @@
 
 -(void)initUI{
     [self setNavigation];
+    [self createScanGoodsView];
     [self setUpTableView];
 }
 
@@ -72,40 +73,47 @@
     
     CALayer *layer = [CALayer layer];
     layer.frame = CGRectMake(0, 99.5, WIDTH_SCREEN, 0.5);
-    layer.backgroundColor = RGBCOLOR(235, 235, 235).CGColor;
+    layer.backgroundColor = RGBCOLOR(230, 230, 230).CGColor;
     [goods_view.layer addSublayer:layer];
     
     NSURL *img_url=[NSURL URLWithString:self.goods_entity.goods_thumb];
     goods_img=[[UIImageView alloc] init];
-    goods_img.frame=CGRectMake(12, 14, 74, 74);
+    goods_img.frame=CGRectMake(10, 12, 78, 78);
     [goods_img sd_setImageWithURL:img_url placeholderImage:[UIImage imageNamed:@"defaut_list"] options:SDWebImageLowPriority | SDWebImageRetryFailed];
     [goods_view addSubview:goods_img];
     
     goodsNameLbl=[[UILabel alloc] initWithFrame:CGRectMake(98, 14, WIDTH_SCREEN-105 , 24)];
     goodsNameLbl.textAlignment=NSTextAlignmentLeft;
     goodsNameLbl.textColor=COLOR_DARKGRAY;
-    goodsNameLbl.font=DEFAULT_FONT(14.0);
+    goodsNameLbl.font=DEFAULT_FONT(15.0);
     goodsNameLbl.numberOfLines=0;
     goodsNameLbl.lineBreakMode=NSLineBreakByWordWrapping;
     goodsNameLbl.text=self.goods_entity.goods_name;
     [goodsNameLbl sizeToFit];
     [goods_view addSubview:goodsNameLbl];
     
-    goodsPriceLbl=[[UILabel alloc] initWithFrame:CGRectMake(98, 58, 100, 24)];
+    goodsPriceLbl=[[UILabel alloc] initWithFrame:CGRectMake(98, 62, 100, 24)];
     goodsPriceLbl.textAlignment=NSTextAlignmentLeft;
     goodsPriceLbl.textColor=COLOR_MAIN;
     goodsPriceLbl.font=DEFAULT_FONT(14.0);
     goodsPriceLbl.text=[NSString stringWithFormat:@"$%@",self.goods_entity.shop_price];
     [goods_view addSubview:goodsPriceLbl];
     
+    goodsNumLbl=[[UILabel alloc] initWithFrame:CGRectMake(WIDTH_SCREEN-100, 62, 90, 24)];
+    goodsNumLbl.textAlignment=NSTextAlignmentRight;
+    goodsNumLbl.textColor=COLOR_DARKGRAY;
+    goodsNumLbl.font=DEFAULT_BOLD_FONT(13);
+    goodsNumLbl.text=[NSString stringWithFormat:@"库存:%@",self.goods_entity.number];
+    [goods_view addSubview:goodsNumLbl];
+    
     return goods_view;
 }
 
 -(UIView *)getGoodsFooterView{
-    UIView *goods_footer_view=[[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, 38)];
+    UIView *goods_footer_view=[[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, 40)];
     goods_footer_view.backgroundColor=COLOR_WHITE;
     
-    UIButton *btn_adjustInventory=[UIButton buttonWithType:UIButtonTypeCustom];
+    btn_adjustInventory=[UIButton buttonWithType:UIButtonTypeCustom];
     [btn_adjustInventory setTitle:@"调整库存" forState:UIControlStateNormal];//正常状态
     btn_adjustInventory.backgroundColor = [UIColor colorWithString:@"#E94132"];
     [btn_adjustInventory setTitleColor:COLOR_WHITE forState:UIControlStateNormal];
@@ -116,7 +124,7 @@
     
     [btn_adjustInventory mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(0);
-        make.size.mas_equalTo(CGSizeMake(0.5*WIDTH_SCREEN, 38));
+        make.size.mas_equalTo(CGSizeMake(0.5*WIDTH_SCREEN, 40));
     }];
     
     UIButton *btn_next=[UIButton buttonWithType:UIButtonTypeCustom];
@@ -130,7 +138,7 @@
     
     [btn_next mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(0.5*WIDTH_SCREEN);
-        make.size.mas_equalTo(CGSizeMake(0.5*WIDTH_SCREEN, 38));
+        make.size.mas_equalTo(CGSizeMake(0.5*WIDTH_SCREEN, 40));
     }];
     return goods_footer_view;
 }
@@ -222,6 +230,7 @@
 
 -(void)adjustInventory{
     if(_adjustmModel>0){
+        [self showMaskView];
         [self startLoadingActivityIndicator];
         [self.goods_model adjustInventory:self.goods_entity.goods_id andNum:_adjustNum andAction:_adjustmModel];
     }
@@ -229,26 +238,27 @@
 
 -(void)onResponse:(SPBaseModel *)model isSuccess:(BOOL)isSuccess{
     if(model==self.model){
+        [self hideMaskView];
         [self stopLoadingActivityIndicator];
         if(model.requestTag==1001){//获取货架列表
             if(isSuccess){
                 if(self.model.entity.list!=nil&&self.model.entity.list.count>0){
-                    [self showGoodsShelfData:YES];
                     [self.tableView reloadData];
                 }
                 else{
-                    [self showGoodsShelfData:NO];
+                    [self.tableView reloadData];
                 }
             }
         }
     }
     else if(model==self.goods_model){
-        if(model.requestTag==1001){
+        if(model.requestTag==1001){//获取到商品信息
             if(self.goods_model.entity.list!=nil&&self.goods_model.entity.list.count>0){
                 self.goods_entity=[self.goods_model.entity.list objectAtIndex:0];
-                
+
                 [self.tableView setTableFooterView:[self getGoodsFooterView]];
                 [self.tableView setTableHeaderView:[self getGoodsView]];
+                [self.tableView reloadData];
                 [self showGoodsShelfData:YES];
                 [self loadGoodsShelves];
             }
@@ -259,9 +269,11 @@
         }
         else if(model.requestTag==1002){
             if([self.goods_model.i_entity.code intValue]==0){
+                [self searchGoodsWithCode:self.goods_code];
                 [self loadGoodsShelves];
             }
             else{
+                [self hideMaskView];
                 [self stopLoadingActivityIndicator];
                 [self showFailWithText:self.goods_model.i_entity.msg];
             }
@@ -272,11 +284,11 @@
 -(void)showGoodsShelfData:(BOOL)show{
     if(show){
         self.tableView.hidden=NO;
-        [scanGoodsImg removeFromSuperview];
+        scanGoodsImg.hidden=YES;
     }
     else{
         self.tableView.hidden=YES;
-        [self createScanGoodsView];
+        scanGoodsImg.hidden=NO;
     }
 }
 
@@ -360,6 +372,8 @@
 -(void)passObject:(id)obj{
      if(obj){
         if([[obj objectForKey:@"scan_model"] intValue]==SCAN_GOODS){//商品条形码
+            self.model.entity.list=nil;
+            [self.tableView reloadData];
             self.goods_code=[obj objectForKey:@"code"];
             [self searchGoodsWithCode:self.goods_code];
         }
