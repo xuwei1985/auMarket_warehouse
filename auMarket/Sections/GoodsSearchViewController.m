@@ -83,12 +83,24 @@
         [[_searchBar.heightAnchor constraintEqualToConstant:44] setActive:YES];
     }
     
-    UITextField *searchField = [_searchBar valueForKey:@"_searchField"];
-    // 输入文本颜色
+    UITextField *searchField;
+    
+    if (@available(iOS 13.0, *)) {
+        searchField=_searchBar.searchTextField;
+        searchField.backgroundColor=COLOR_WHITE;
+        searchField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"搜索关键词，以空格分开" attributes:@{NSForegroundColorAttributeName: [UIColor darkGrayColor]}];
+        searchField.leftView.tintColor=COLOR_LIGHTGRAY;
+        searchField.textColor = COLOR_FONT_BLACK;
+    }
+    else{
+        searchField = [_searchBar valueForKey:@"_searchField"];
+        // 默认文本颜色
+        [searchField setValue:COLOR_WHITE forKeyPath:@"_placeholderLabel.textColor"];
+    }
+
     searchField.textColor = COLOR_WHITE;
     searchField.font=FONT_SIZE_MIDDLE;
-    // 默认文本颜色
-    [searchField setValue:COLOR_WHITE forKeyPath:@"_placeholderLabel.textColor"];
+    
     
     //设置searchbar的背景颜色
     float version = [[[ UIDevice currentDevice ] systemVersion ] floatValue ];
