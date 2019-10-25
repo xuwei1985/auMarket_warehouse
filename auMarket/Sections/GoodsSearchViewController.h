@@ -14,6 +14,7 @@
 {
     UISearchBar *_searchBar;
     NSString *keyword;
+    UIView *titleView;
 }
 @property(nonatomic,assign) NSObject<PassValueDelegate> *pass_delegate;
 @property(nonatomic,retain) GoodsListModel *model;

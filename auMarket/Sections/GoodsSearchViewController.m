@@ -52,15 +52,23 @@
 }
 
 -(void)setNavigation{
-    self.navigationItem.titleView=_searchBar;
+    if(@available(iOS 13.0, *)) {
+        self.navigationItem.titleView=titleView;
+        _searchBar.searchTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"搜索关键词，以空格分开" attributes:@{NSForegroundColorAttributeName: COLOR_WHITE}];
+    }
+    else{
+        [_searchBar.heightAnchor constraintEqualToConstant:44].active = YES;
+        self.navigationItem.titleView=_searchBar;
+    }
     
-    cancelBtn=[[UIButton alloc] initWithFrame:CGRectMake(WIDTH_SCREEN-40, 4, 40, 32)];
+    cancelBtn=[[UIButton alloc] initWithFrame:CGRectMake(WIDTH_SCREEN-38, 0, 40, 38)];
     [cancelBtn addTarget:self action:@selector(disMissSearch) forControlEvents:UIControlEventTouchUpInside];
-    [cancelBtn setTitle:@"关闭" forState:UIControlStateNormal];
+    [cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
     [cancelBtn setTitleColor:COLOR_WHITE forState:UIControlStateNormal];
     [cancelBtn setTitleColor:COLOR_WHITE forState:UIControlStateHighlighted];
     cancelBtn.titleLabel.font=FONT_SIZE_MIDDLE;
-    cancelBtn.titleLabel.textAlignment=NSTextAlignmentCenter;
+    cancelBtn.titleLabel.textAlignment=NSTextAlignmentRight;
+    [cancelBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, 4, 3, 0)];
 
     UIBarButtonItem *right_Item_cart = [[UIBarButtonItem alloc] initWithCustomView:cancelBtn];
     self.navigationItem.leftBarButtonItem =  [[UIBarButtonItem alloc] initWithCustomView:[[UIView alloc] initWithFrame:CGRectZero]];
@@ -70,38 +78,39 @@
 
 - (void)createSearchBar
 {
-    _searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN-54, 40)];
-    _searchBar.placeholder = @"搜索商品关键词，以空格分开";
-    _searchBar.delegate = self;
-    _searchBar.tintColor = COLOR_WHITE;
-    _searchBar.autocorrectionType=UITextAutocorrectionTypeNo;
-    _searchBar.autocapitalizationType=UITextAutocapitalizationTypeNone;
-    _searchBar.keyboardType=UIKeyboardTypeDefault;
-    _searchBar.hidden=NO;
-    _searchBar.backgroundColor=RGBCOLOR(246, 246, 246);
-    if(@available(iOS 11.0, *)) {
-        [[_searchBar.heightAnchor constraintEqualToConstant:44] setActive:YES];
-    }
-    
-    UITextField *searchField;
+   titleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN-80, 40)];
+   titleView.backgroundColor=UIColor.clearColor;
+   
+   _searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(3, 0, WIDTH_SCREEN-80, 36)];
+   _searchBar.placeholder = @"搜索关键词，以空格分开";
+   _searchBar.delegate = self;
+   _searchBar.tintColor = COLOR_WHITE;
+   _searchBar.autocorrectionType=UITextAutocorrectionTypeNo;
+   _searchBar.autocapitalizationType=UITextAutocapitalizationTypeNone;
+   _searchBar.keyboardType=UIKeyboardTypeDefault;
+   _searchBar.backgroundColor=RGBCOLOR(246, 246, 246);
+   
+   UITextField *searchField;
+//    if(@available(iOS 11.0, *)) {
+//      [[_searchBar.heightAnchor constraintEqualToConstant:44] setActive:YES];
+//    }
     
     if (@available(iOS 13.0, *)) {
         searchField=_searchBar.searchTextField;
-        searchField.backgroundColor=COLOR_WHITE;
-        searchField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"搜索关键词，以空格分开" attributes:@{NSForegroundColorAttributeName: [UIColor darkGrayColor]}];
+        searchField.backgroundColor=RGBACOLOR(40, 40, 40,0.1);
+        searchField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"搜索关键词，以空格分开" attributes:@{NSForegroundColorAttributeName: COLOR_WHITE}];
         searchField.leftView.tintColor=COLOR_LIGHTGRAY;
-        searchField.textColor = COLOR_FONT_BLACK;
     }
     else{
         searchField = [_searchBar valueForKey:@"_searchField"];
-        // 默认文本颜色
         [searchField setValue:COLOR_WHITE forKeyPath:@"_placeholderLabel.textColor"];
+        //[_searchBar setImage:[UIImage imageNamed:@"search"] forSearchBarIcon:UISearchBarIconSearch state:UIControlStateNormal];
     }
-
+    
+    // 输入文本颜色
     searchField.textColor = COLOR_WHITE;
     searchField.font=FONT_SIZE_MIDDLE;
-    
-    
+
     //设置searchbar的背景颜色
     float version = [[[ UIDevice currentDevice ] systemVersion ] floatValue ];
     if ([_searchBar respondsToSelector : @selector (barTintColor)]) {
@@ -111,6 +120,7 @@
             //iOS7.1
             [[[[_searchBar.subviews objectAtIndex:0 ] subviews ] objectAtIndex:0 ] removeFromSuperview ];
             [_searchBar setBackgroundColor:COLOR_CLEAR];
+            _searchBar.layer.contents = nil;
         }
         else
         {
@@ -133,13 +143,17 @@
         }
         if ([view isKindOfClass:NSClassFromString(@"UIView")]) {
             for (UIView *subView in view.subviews) {
-                subView.backgroundColor = RGBACOLOR(40, 40, 40,0.1);
+                if (@available(iOS 13.0, *)) {
+                    break;
+                }
+                else {
+                    subView.backgroundColor = RGBACOLOR(40, 40, 40,0.1);
+                }
                 break;
             }
         }
     }
-    [_searchBar setImage:[UIImage imageNamed:@"search"] forSearchBarIcon:UISearchBarIconSearch state:UIControlStateNormal];
-    
+    [titleView addSubview:_searchBar];
 }
 
 
