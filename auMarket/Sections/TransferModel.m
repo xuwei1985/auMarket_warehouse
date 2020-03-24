@@ -93,6 +93,17 @@
     [self loadInner];
 }
 
+//重新绑定商品的所以入库记录到目标货架
+-(void)rebindGoods:(NSString *)goods_id andShelf:(NSString *)shelf_code{
+    self.parseDataClassType = [SPBaseEntity class];
+    SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
+    self.shortRequestAddress= [NSString stringWithFormat:@"v1/move/re-bind?goods_id=%@&shelves_code=%@&token=%@",goods_id,shelf_code,user.user_token];
+    self.params = @{};
+    self.requestTag=1008;
+    [self loadInner];
+}
+
+
 
 -(void)handleParsedData:(SPBaseEntity*)parsedData{
     if ([parsedData isKindOfClass:[ShelfEntity class]]) {

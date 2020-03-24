@@ -40,6 +40,7 @@
     scanGoodsImg.image=[UIImage imageNamed:@"scan_goods.jpg"];
     scanGoodsImg.clipsToBounds=YES;
     scanGoodsImg.layer.cornerRadius = 14;
+    scanGoodsImg.tag=1000;
     scanGoodsImg.userInteractionEnabled=YES;
     [self.view addSubview:scanGoodsImg];
     
@@ -49,11 +50,11 @@
         make.size.mas_equalTo(CGSizeMake(120, 120));
     }];
     
-    [scanGoodsImg addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gotoScanQRView)]];
+    [scanGoodsImg addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gotoScanQRView:)]];
 }
 
 -(void)setUpTableView{
-    float table_height=HEIGHT_SCREEN-64;
+    float table_height=HEIGHT_SCREEN-64-44;
     self.tableView=[[SPBaseTableView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN,table_height) style:UITableViewStylePlain];
     self.tableView.separatorStyle=UITableViewCellSeparatorStyleSingleLine;
     self.tableView.separatorColor=COLOR_BG_TABLESEPARATE;
@@ -109,9 +110,10 @@
     return goods_view;
 }
 
--(UIView *)getGoodsFooterView{
-    UIView *goods_footer_view=[[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, 40)];
+-(void)getGoodsFooterView{
+    UIView *goods_footer_view=[[UIView alloc] initWithFrame:CGRectMake(0, HEIGHT_SCREEN-64-HEIGHT_NAVIGATION, WIDTH_SCREEN, 48)];
     goods_footer_view.backgroundColor=COLOR_WHITE;
+    [self.view addSubview:goods_footer_view];
     
     btn_adjustInventory=[UIButton buttonWithType:UIButtonTypeCustom];
     [btn_adjustInventory setTitle:@"调整库存" forState:UIControlStateNormal];//正常状态
@@ -124,7 +126,24 @@
     
     [btn_adjustInventory mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(0);
-        make.size.mas_equalTo(CGSizeMake(0.5*WIDTH_SCREEN, 40));
+        make.top.mas_equalTo(0);
+        make.size.mas_equalTo(CGSizeMake(0.33*WIDTH_SCREEN, 48));
+    }];
+    
+    btn_transfer=[UIButton buttonWithType:UIButtonTypeCustom];
+    [btn_transfer setTitle:@"转移货架" forState:UIControlStateNormal];//正常状态
+    btn_transfer.backgroundColor = [UIColor colorWithString:@"#5BA2EE"];
+    [btn_transfer setTitleColor:COLOR_WHITE forState:UIControlStateNormal];
+    [btn_transfer setTintColor:[UIColor whiteColor]];
+    btn_transfer.titleLabel.font = [UIFont systemFontOfSize:15];
+    btn_transfer.tag=1001;
+    [goods_footer_view addSubview:btn_transfer];
+    [btn_transfer addTarget:self action:@selector(gotoScanQRView:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [btn_transfer mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(0.33*WIDTH_SCREEN);
+        make.top.mas_equalTo(0);
+        make.size.mas_equalTo(CGSizeMake(0.33*WIDTH_SCREEN, 48));
     }];
     
     UIButton *btn_next=[UIButton buttonWithType:UIButtonTypeCustom];
@@ -133,14 +152,15 @@
     [btn_next setTitleColor:COLOR_WHITE forState:UIControlStateNormal];
     [btn_next setTintColor:[UIColor whiteColor]];
     btn_next.titleLabel.font = [UIFont systemFontOfSize:15];
+    btn_next.tag=1002;
     [goods_footer_view addSubview:btn_next];
-    [btn_next addTarget:self action:@selector(gotoScanQRView) forControlEvents:UIControlEventTouchUpInside];
+    [btn_next addTarget:self action:@selector(gotoScanQRView:) forControlEvents:UIControlEventTouchUpInside];
     
     [btn_next mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(0.5*WIDTH_SCREEN);
-        make.size.mas_equalTo(CGSizeMake(0.5*WIDTH_SCREEN, 40));
+        make.left.mas_equalTo(0.66*WIDTH_SCREEN);
+        make.top.mas_equalTo(0);
+        make.size.mas_equalTo(CGSizeMake((1-0.66)*WIDTH_SCREEN, 48));
     }];
-    return goods_footer_view;
 }
 
 
@@ -221,6 +241,11 @@
     [self.model goodsShelfList:self.goods_entity.goods_id andGoodsCode:self.goods_entity.goods_code andShelf:self.goods_entity.shelves_no];
 }
 
+-(void)reBindGoodsToShelf:(NSString *)shelf_code{
+    [self.model rebindGoods:self.goods_entity.goods_id andShelf:shelf_code];
+}
+
+
 -(void)searchGoodsWithCode:(NSString *)goods_code{
     if(self.goods_code&&self.goods_code.length>0){
         [self startLoadingActivityIndicator];
@@ -250,13 +275,20 @@
                 }
             }
         }
+        else if(model.requestTag==1008){//重新绑定货架
+            if(isSuccess){
+                [SVProgressHUD showSuccessWithStatus:@"绑定成功"];
+                [self startLoadingActivityIndicator];
+                
+                [self loadGoodsShelves];
+            }
+        }
     }
     else if(model==self.goods_model){
         if(model.requestTag==1001){//获取到商品信息
             if(self.goods_model.entity.list!=nil&&self.goods_model.entity.list.count>0){
                 self.goods_entity=[self.goods_model.entity.list objectAtIndex:0];
-
-                [self.tableView setTableFooterView:[self getGoodsFooterView]];
+                [self getGoodsFooterView];
                 [self.tableView setTableHeaderView:[self getGoodsView]];
                 [self.tableView reloadData];
                 [self showGoodsShelfData:YES];
@@ -361,9 +393,21 @@
     return YES;
 }
 
--(void)gotoScanQRView{
+-(void)gotoScanQRView:(id)sender{
+    long view_tag=0;
+    if([[sender class] isEqual:[UIButton class]]){
+        view_tag=((UIButton *)sender).tag;
+    }else{
+        view_tag=((UITapGestureRecognizer *)sender).view.tag;
+    }
+    
     QRCodeViewController *qvc=[[QRCodeViewController alloc] init];
-    qvc.scan_model=SCAN_GOODS;
+    if(view_tag==1001){
+        qvc.scan_model=SCAN_SHELF;
+    }
+    else{
+        qvc.scan_model=SCAN_GOODS;
+    }
     qvc.pass_delegate=self;
     [self.navigationController pushViewController:qvc animated:YES];
 }
@@ -376,6 +420,11 @@
             [self.tableView reloadData];
             self.goods_code=[obj objectForKey:@"code"];
             [self searchGoodsWithCode:self.goods_code];
+        }else{
+            //调用转移商品货架的接口
+            NSString *shelf_code=[obj objectForKey:@"code"];
+            [self startLoadingActivityIndicatorWithText:@"请求中..."];
+            [self reBindGoodsToShelf:shelf_code];
         }
     }
 }

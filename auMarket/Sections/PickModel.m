@@ -78,12 +78,74 @@
     [self loadInner];
 }
 
+
+/*加载总单拣货的任务列表
+ list_type 0：未拣货 1：已拣货
+ */
+-(void)loadBatchPickWithListType:(int)list_type{
+    self.parseDataClassType = [BatchPickEntity class];
+    SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
+    self.shortRequestAddress= [NSString stringWithFormat:@"v1/pick/batch-pick-list?model=%d&page=%@&token=%@",list_type,(self.entity.next==nil?@"1":self.entity.next),user.user_token];
+    self.params = @{};
+    self.requestTag=1010;
+    [self loadInner];
+}
+
+/*加载总单拣货的任务里商品的分类
+ */
+-(void)loadBatchPickCategory:(NSString *)bid{
+    self.parseDataClassType = [BatchPickCategoryEntity class];
+    SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
+    self.shortRequestAddress= [NSString stringWithFormat:@"v1/pick/batch-pick-category-list?bid=%@&token=%@",bid,user.user_token];
+    self.params = @{};
+    self.requestTag=1011;
+    [self loadInner];
+}
+
+
+/*总单拣货完成
+ */
+-(void)batchPickDone:(NSString *)bid{
+    self.parseDataClassType = [SPBaseEntity class];
+    SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
+    self.shortRequestAddress= [NSString stringWithFormat:@"v1/pick/batch-pick-done?bid=%@&token=%@",bid,user.user_token];
+    self.params = @{};
+    self.requestTag=1012;
+    [self loadInner];
+}
+
+
+/*加载总单拣货的任务里商品
+ */
+-(void)loadBatchPickCategory:(NSString *)bid AndCatId:(NSString *)cat_id AndPage:(NSString *)page{
+    page=(page==nil?@"1":page);
+    self.parseDataClassType = [PickGoodsListEntity class];
+    SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
+    self.shortRequestAddress= [NSString stringWithFormat:@"v1/pick/batch-pick-goods-list?bid=%@&cat_id=%@&page=%@&token=%@",bid,cat_id,page,user.user_token];
+    self.params = @{};
+    self.requestTag=1013;
+    [self loadInner];
+}
+
+
 -(void)handleParsedData:(SPBaseEntity*)parsedData{
     if ([parsedData isKindOfClass:[OrderEntity class]]) {
         self.entity = (OrderEntity*)parsedData;
     }
-    else if ([parsedData isKindOfClass:[PickGoodsListEntity class]]) {
+    else if (self.requestTag==1002&& [parsedData isKindOfClass:[PickGoodsListEntity class]]) {
         self.pickGoodsListEntity = (PickGoodsListEntity*)parsedData;
+    }
+    else if ([parsedData isKindOfClass:[BatchPickEntity class]]) {
+        self.batchPickEntity = (BatchPickEntity*)parsedData;
+    }
+    else if ([parsedData isKindOfClass:[BatchPickCategoryEntity class]]) {
+        self.batchPickCategoryEntity = (BatchPickCategoryEntity*)parsedData;
+    }
+    else if (self.requestTag==1012) {
+       self.pickDoneEntity = (SPBaseEntity*)parsedData;
+    }
+    else if (self.requestTag==1013) {
+       self.pickGoodsEntity = (PickGoodsListEntity*)parsedData;
     }
 }
 
@@ -102,6 +164,23 @@
     return _pickGoodsListEntity;
 }
 
+
+-(BatchPickEntity *)batchPickEntity{
+    if(!_batchPickEntity){
+        _batchPickEntity=[[BatchPickEntity alloc] init];
+    }
+    
+    return _batchPickEntity;
+}
+
+
+-(BatchPickCategoryEntity *)batchPickCategoryEntity{
+    if(!_batchPickCategoryEntity){
+        _batchPickCategoryEntity=[[BatchPickCategoryEntity alloc] init];
+    }
+    
+    return _batchPickCategoryEntity;
+}
 
 
 @end
