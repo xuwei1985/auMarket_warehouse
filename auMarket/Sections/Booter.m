@@ -58,7 +58,7 @@
     batchPickViewController=[[BatchPickViewController alloc] init];
     batchPickViewController.hidesBottomBarWhenPushed = NO;
     batchPickViewController.listType=0;
-    batchPickViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"总单拣货" image:[UIImage imageNamed:@"stock"] selectedImage:[UIImage imageNamed:@"stock_on"]];
+    batchPickViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"总单拣货" image:[UIImage imageNamed:@"batchpick"] selectedImage:[UIImage imageNamed:@"batchpick_on"]];
     
     pickViewController = [[PickViewController alloc] init];
     pickViewController.hidesBottomBarWhenPushed = NO;

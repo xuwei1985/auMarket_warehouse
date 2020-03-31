@@ -61,20 +61,19 @@
 }
 
 -(void)loadBatchPickList{
-    if (!self.tableView.isLoading&&!self.tableView.isEmptyLoad&&self.tableView.hasMore)
-    {
-        if(self.tableView.isFirstLoad){
-            if(!self.tableView.mj_header.isRefreshing){
-                [self startLoadingActivityIndicator];
-            }
+   
+    if(self.tableView.isFirstLoad){
+        if(!self.tableView.mj_header.isRefreshing){
+            [self startLoadingActivityIndicator];
         }
-        else{
-            [self.tableView startLoadingActivityIndicatorView:nil];
-        }
-        [self.model loadBatchPickWithListType:self.listType];
-        
-        self.tableView.isLoading=YES;
     }
+    else{
+        [self.tableView startLoadingActivityIndicatorView:nil];
+    }
+    [self.model loadBatchPickWithListType:self.listType];
+    
+    self.tableView.isLoading=YES;
+    
 }
 
 -(void)reloadBatchPickList{
