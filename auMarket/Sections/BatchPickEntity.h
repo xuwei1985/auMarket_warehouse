@@ -16,6 +16,7 @@
 
 @interface PickTaskEntity : SPBaseEntity
 @property (nonatomic,retain) NSString *id;
+@property (nonatomic,retain) NSString *order_id;
 @property (nonatomic,retain) NSString *order_sn;
 @property (nonatomic,retain) NSString *goods_sku;
 @property (nonatomic,retain) NSString *create_time;
