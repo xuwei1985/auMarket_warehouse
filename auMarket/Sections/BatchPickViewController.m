@@ -61,18 +61,20 @@
 }
 
 -(void)loadBatchPickList{
-   
-    if(self.tableView.isFirstLoad){
-        if(!self.tableView.mj_header.isRefreshing){
-            [self startLoadingActivityIndicator];
+    if (!self.tableView.isLoading&&!self.tableView.isEmptyLoad&&self.tableView.hasMore)
+    {
+        if(self.tableView.isFirstLoad){
+            if(!self.tableView.mj_header.isRefreshing){
+                [self startLoadingActivityIndicator];
+            }
         }
+        else{
+            [self.tableView startLoadingActivityIndicatorView:nil];
+        }
+        [self.model loadBatchPickWithListType:self.listType];
+        
+        self.tableView.isLoading=YES;
     }
-    else{
-        [self.tableView startLoadingActivityIndicatorView:nil];
-    }
-    [self.model loadBatchPickWithListType:self.listType];
-    
-    self.tableView.isLoading=YES;
     
 }
 
@@ -82,6 +84,7 @@
         self.model.batchPickEntity.next=0;
         self.tableView.isFirstLoad=YES;
         self.tableView.hasMore=YES;
+        self.tableView.isEmptyLoad=NO;
         [self.tableView reloadData];
         [self loadBatchPickList];
     }
@@ -150,7 +153,7 @@
 
 
 -(void)setUpTableView{
-    self.tableView=[[SPBaseTableView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, HEIGHT_SCREEN-64-54) style:UITableViewStylePlain];
+    self.tableView=[[SPBaseTableView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, HEIGHT_SCREEN-64-(self.listType==1?0:54)) style:UITableViewStylePlain];
     self.tableView.separatorStyle=UITableViewCellSeparatorStyleSingleLine;
     self.tableView.separatorColor=COLOR_BG_LINE;
     self.tableView.backgroundColor=COLOR_BG_VIEW;
