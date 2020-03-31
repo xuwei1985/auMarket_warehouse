@@ -21,4 +21,6 @@
 -(void)unBind:(NSString *)move_id;
 -(void)transferGoods:(NSString *)move_ids;
 -(void)transferGoodsDirectly:(NSString *)ruku_id andShelves:(NSString *)shelves_code;
+//重新绑定商品的所以入库记录到目标货架
+-(void)rebindGoods:(NSString *)goods_id andShelf:(NSString *)shelf_code;
 @end

@@ -8,6 +8,7 @@
 
 #import "Booter.h"
 #import "BatchViewController.h"
+#import "BatchPickViewController.h"
 #import "UserCenterViewController.h"
 #import "PickViewController.h"
 #import "InformationViewController.h"
@@ -17,6 +18,7 @@
 @interface Booter() 
 {
     BatchViewController* batchViewController;
+    BatchPickViewController *batchPickViewController;
     PickViewController* pickViewController;
     InformationViewController* informationViewController;
     UserCenterViewController* userCenterViewController;
@@ -53,6 +55,11 @@
     batchViewController.hidesBottomBarWhenPushed = NO;
     batchViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"入库" image:[UIImage imageNamed:@"stock"] selectedImage:[UIImage imageNamed:@"stock_on"]];
     
+    batchPickViewController=[[BatchPickViewController alloc] init];
+    batchPickViewController.hidesBottomBarWhenPushed = NO;
+    batchPickViewController.listType=0;
+    batchPickViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"总单拣货" image:[UIImage imageNamed:@"stock"] selectedImage:[UIImage imageNamed:@"stock_on"]];
+    
     pickViewController = [[PickViewController alloc] init];
     pickViewController.hidesBottomBarWhenPushed = NO;
     pickViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"拣货" image:[UIImage imageNamed:@"pick"] selectedImage:[UIImage imageNamed:@"pick_on"]];
@@ -67,6 +74,7 @@
     userCenterViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"我的" image:[UIImage imageNamed:@"member"] selectedImage:[UIImage imageNamed:@"member_on"]];
     
     SPNavigationController *nav_batch = [[SPNavigationController alloc] initWithRootViewController:batchViewController];
+    SPNavigationController *nav_batchPick = [[SPNavigationController alloc] initWithRootViewController:batchPickViewController];
     SPNavigationController *nav_pick = [[SPNavigationController alloc] initWithRootViewController:pickViewController];
     SPNavigationController *nav_tools = [[SPNavigationController alloc] initWithRootViewController:toolsViewController];
     SPNavigationController *nav_member = [[SPNavigationController alloc] initWithRootViewController:userCenterViewController];
@@ -79,9 +87,13 @@
     if([self checkMenu:@"picking"]){
         [tabbar addObject:nav_pick];
     }
+    
+    [tabbar addObject:nav_batchPick];
+    
     if([self checkMenu:@"warehousing"]){
         [tabbar addObject:nav_batch];
     }
+    
     [tabbar addObject:nav_tools];
     [tabbar addObject:nav_member];
     [self.tabBarController setViewControllers:tabbar];

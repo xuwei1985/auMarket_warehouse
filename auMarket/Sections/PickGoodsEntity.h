@@ -11,7 +11,8 @@
 
 @interface PickGoodsListEntity : SPBaseEntity
 @property (nonatomic,retain) NSMutableArray<PickGoodsEntity*> *list;
-@property (nonatomic,retain) NSString *tid;//下一页
+@property (nonatomic,retain) NSString *tid;//最后的主键id
+@property (nonatomic,retain) NSString *next;//下一页
 @end
 
 @interface PickGoodsEntity : SPBaseEntity
@@ -24,6 +25,7 @@
 @property (nonatomic,retain) NSString *goods_thumb;
 @property (nonatomic,retain) NSString *shelves_code;
 @property (nonatomic,retain) NSString *goods_number;
+@property (nonatomic,retain) NSString *inventory;
 @property (nonatomic,retain) NSString *box;
 @property (nonatomic,retain) NSString *goods_price;
 @property (nonatomic,retain) NSString *need_care;
