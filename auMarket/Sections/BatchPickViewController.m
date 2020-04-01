@@ -75,6 +75,7 @@
         
         self.tableView.isLoading=YES;
     }
+    
 }
 
 -(void)reloadBatchPickList{
@@ -83,6 +84,7 @@
         self.model.batchPickEntity.next=0;
         self.tableView.isFirstLoad=YES;
         self.tableView.hasMore=YES;
+        self.tableView.isEmptyLoad=NO;
         [self.tableView reloadData];
         [self loadBatchPickList];
     }
@@ -151,7 +153,7 @@
 
 
 -(void)setUpTableView{
-    self.tableView=[[SPBaseTableView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, HEIGHT_SCREEN-64-54) style:UITableViewStylePlain];
+    self.tableView=[[SPBaseTableView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, HEIGHT_SCREEN-64-(self.listType==1?0:54)) style:UITableViewStylePlain];
     self.tableView.separatorStyle=UITableViewCellSeparatorStyleSingleLine;
     self.tableView.separatorColor=COLOR_BG_LINE;
     self.tableView.backgroundColor=COLOR_BG_VIEW;
@@ -210,6 +212,24 @@
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
 //    [tableView setSeparatorInset:UIEdgeInsetsZero];
     [tableView setLayoutMargins:UIEdgeInsetsZero];
+}
+
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
+}
+
+- (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath{
+    UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"查看订单" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+        PickTaskEntity *entity=(PickTaskEntity *)[self.tableView.itemArray objectAtIndex:indexPath.row];
+        
+    }];
+    return @[deleteAction];
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+    editingStyle = UITableViewCellEditingStyleNone;
 }
 
 -(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
