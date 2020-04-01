@@ -166,7 +166,7 @@
         cell=[[BatchPickGoodsCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdetify];
         cell.opaque=YES;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.accessoryType = UITableViewCellAccessoryNone;
         
     }
     cell.backgroundColor=COLOR_BG_WHITE;

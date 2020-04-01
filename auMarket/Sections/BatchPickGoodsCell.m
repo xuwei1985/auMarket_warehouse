@@ -45,7 +45,7 @@
             [self.contentView addSubview:_priceLbl];
             
             [_priceLbl mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.top.mas_equalTo(_itemLbl.mas_bottom).offset(6);
+                make.top.mas_equalTo(_itemLbl.mas_bottom).offset(5);
                 make.left.mas_equalTo(_iconImageView.mas_right).offset(10);
                 make.size.mas_equalTo(CGSizeMake(100, 20));
             }];
@@ -55,7 +55,7 @@
             _totalPriceLbl=[[UILabel alloc] init];
             _totalPriceLbl.textAlignment=NSTextAlignmentLeft;
             _totalPriceLbl.textColor=COLOR_MAIN;
-            _totalPriceLbl.font=FONT_SIZE_MIDDLE;
+            _totalPriceLbl.font=[UIFont boldSystemFontOfSize:13];
             [self.contentView addSubview:_totalPriceLbl];
             
             [_totalPriceLbl mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -70,8 +70,8 @@
             _shelf_no=[[UILabel alloc] init];
             _shelf_no.textAlignment=NSTextAlignmentCenter;
             _shelf_no.textColor=COLOR_WHITE;
-            _shelf_no.font=FONT_SIZE_SMALL;
-            _shelf_no.backgroundColor=COLOR_MAIN;
+            _shelf_no.font=[UIFont systemFontOfSize:13];
+            _shelf_no.backgroundColor=[UIColor colorWithString:@"#5BA2EE"];
             _shelf_no.layer.cornerRadius=10;
             _shelf_no.clipsToBounds=YES;
             [self.contentView addSubview:_shelf_no];
@@ -79,7 +79,7 @@
             [_shelf_no mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.bottom.mas_equalTo(-12);
                 make.right.mas_equalTo(-8);
-                make.size.mas_equalTo(CGSizeMake(76, 20));
+                make.size.mas_equalTo(CGSizeMake(70, 20));
             }];
         }
     }
