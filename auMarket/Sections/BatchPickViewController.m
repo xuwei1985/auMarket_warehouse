@@ -223,7 +223,7 @@
 - (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"查看订单" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
         PickTaskEntity *entity=(PickTaskEntity *)[self.tableView.itemArray objectAtIndex:indexPath.row];
-        
+        [self gotoBatchPickOrderList:entity.id];
     }];
     return @[deleteAction];
 }
@@ -245,6 +245,12 @@
     [self.navigationController pushViewController:bvc animated:YES];
 }
 
+
+-(void)gotoBatchPickOrderList:(NSString *)batch_id{
+    PickOrderListViewController *bvc=[[PickOrderListViewController alloc] init];
+    bvc.bid=batch_id;
+    [self.navigationController pushViewController:bvc animated:YES];
+}
 
 -(PickModel *)model{
     if(!_model){

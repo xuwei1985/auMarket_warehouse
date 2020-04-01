@@ -40,12 +40,12 @@
     
     UIImageView *lineView;
     
-    UIView *loginView=[[UIView alloc] initWithFrame:CGRectMake(0, 20+offset, WIDTH_SCREEN, 102)];
+    UIView *loginView=[[UIView alloc] initWithFrame:CGRectMake(0, 20+offset, WIDTH_SCREEN, 112)];
     loginView.backgroundColor=COLOR_BG_WHITE;
     [self.view addSubview:loginView];
     
     //第一输入区View
-    UIImageView *inputView1=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, 50)];
+    UIImageView *inputView1=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, 55)];
     inputView1.backgroundColor=COLOR_BG_WHITE;
     inputView1.userInteractionEnabled=YES;
     inputView1.opaque=YES;
@@ -57,7 +57,7 @@
     [inputView1 addSubview:lineView];
     
     //第二输入区View
-    UIImageView *inputView2=[[UIImageView alloc] initWithFrame:CGRectMake(0, 52, WIDTH_SCREEN, 50)];
+    UIImageView *inputView2=[[UIImageView alloc] initWithFrame:CGRectMake(0, 58, WIDTH_SCREEN, 55)];
     inputView2.backgroundColor=COLOR_BG_WHITE;
     inputView2.userInteractionEnabled=YES;
     inputView2.opaque=YES;
@@ -68,22 +68,22 @@
     lineView.opaque=YES;
     [inputView2 addSubview:lineView];
     
-    UIImageView *accountIcon=[[UIImageView alloc] initWithFrame:CGRectMake(10, 14, 24, 22)];
+    UIImageView *accountIcon=[[UIImageView alloc] initWithFrame:CGRectMake(10, 16, 26, 23)];
     accountIcon.image=[UIImage imageNamed:@"account_icon_black"];
     [inputView1 addSubview:accountIcon];
     
-    UIImageView *pwdIcon=[[UIImageView alloc] initWithFrame:CGRectMake(10, 12, 25, 25)];
+    UIImageView *pwdIcon=[[UIImageView alloc] initWithFrame:CGRectMake(10, 14, 26, 26)];
     pwdIcon.image=[UIImage imageNamed:@"pwd_icon_black"];
     [inputView2 addSubview:pwdIcon];
     
     //创建输入框
-    _accountText = [[UITextField alloc] initWithFrame:CGRectMake(40, 6, WIDTH_SCREEN-60, 39)];
+    _accountText = [[UITextField alloc] initWithFrame:CGRectMake(44, 7, WIDTH_SCREEN-60, 44)];
     _accountText.delegate=self;
-    _accountText.font=DEFAULT_FONT(15);;
+    _accountText.font=DEFAULT_FONT(20);;
     //_accountText.clearButtonMode = UITextFieldViewModeWhileEditing;
     _accountText.placeholder = @"请输入账号";
     _accountText.text=@"";
-    _accountText.textColor=RGBCOLOR(45, 45, 45);
+    _accountText.textColor=RGBCOLOR(75, 75, 75);
     _accountText.backgroundColor=[UIColor clearColor];
     _accountText.returnKeyType =UIReturnKeyDone;
     _accountText.keyboardType= UIKeyboardTypeDefault;
@@ -91,12 +91,12 @@
     _accountText.autocapitalizationType=UITextAutocapitalizationTypeNone;
     [inputView1 addSubview:_accountText];
     
-    _passwordText = [[UITextField alloc] initWithFrame:CGRectMake(40, 6, WIDTH_SCREEN-60, 39)];
+    _passwordText = [[UITextField alloc] initWithFrame:CGRectMake(44, 7, WIDTH_SCREEN-60, 44)];
     _passwordText.delegate=self;
     _passwordText.text=@"";
-    _passwordText.font=DEFAULT_FONT(15);
+    _passwordText.font=DEFAULT_FONT(20);
     _passwordText.placeholder = @"输入密码";
-    _passwordText.textColor=RGBCOLOR(45, 45, 45);
+    _passwordText.textColor=RGBCOLOR(75, 75, 75);
     _passwordText.backgroundColor=[UIColor clearColor];
     _passwordText.returnKeyType =UIReturnKeyDone;
     _passwordText.keyboardType= UIKeyboardTypeDefault;
@@ -107,7 +107,7 @@
     
     
     UIButton *login_btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    login_btn.frame = CGRectMake(20, (IOS7?160:140)+offset, (WIDTH_SCREEN-40), 44);
+    login_btn.frame = CGRectMake(20, (IOS7?170:150)+offset, (WIDTH_SCREEN-40), 44);
     login_btn.titleLabel.font=DEFAULT_FONT(14);;
     [login_btn setTitle:@"立即登录" forState:UIControlStateNormal];
     login_btn.backgroundColor=COLOR_MAIN;

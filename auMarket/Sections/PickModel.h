@@ -18,6 +18,7 @@
 @property (nonatomic,retain) BatchPickCategoryEntity *batchPickCategoryEntity;
 @property (nonatomic,retain) SPBaseEntity *pickDoneEntity;
 @property (nonatomic,retain) PickGoodsListEntity *pickGoodsEntity;
+@property (nonatomic,retain) OrderEntity *pickOrderListEntity;
 
 -(void)loadOrdersWithListType:(int)list_type andRegionBlock:(int)region_block_id;
 -(void)loadGoodsListWithListType:(int)type;
@@ -29,4 +30,5 @@
 -(void)loadBatchPickCategory:(NSString *)bid;
 -(void)batchPickDone:(NSString *)bid;
 -(void)loadBatchPickCategory:(NSString *)bid AndCatId:(NSString *)cat_id AndPage:(NSString *)page;
+-(void)loadBatchPickOrderList:(NSString *)bid;
 @end

@@ -128,8 +128,19 @@
 }
 
 
+/*加载总单拣货的任务里的订单
+ */
+-(void)loadBatchPickOrderList:(NSString *)bid{
+    self.parseDataClassType = [OrderEntity class];
+    SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
+    self.shortRequestAddress= [NSString stringWithFormat:@"v1/pick/batch-pick-order-list?bid=%@&token=%@",bid,user.user_token];
+    self.params = @{};
+    self.requestTag=1014;
+    [self loadInner];
+}
+
 -(void)handleParsedData:(SPBaseEntity*)parsedData{
-    if ([parsedData isKindOfClass:[OrderEntity class]]) {
+    if ([parsedData isKindOfClass:[OrderEntity class]]&&self.requestTag==1001) {
         self.entity = (OrderEntity*)parsedData;
     }
     else if (self.requestTag==1002&& [parsedData isKindOfClass:[PickGoodsListEntity class]]) {
@@ -146,6 +157,9 @@
     }
     else if (self.requestTag==1013) {
        self.pickGoodsEntity = (PickGoodsListEntity*)parsedData;
+    }
+    else if (self.requestTag==1014) {
+       self.pickOrderListEntity = (OrderEntity*)parsedData;
     }
 }
 
