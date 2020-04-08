@@ -11,6 +11,7 @@
 #import "BatchPickCell.h"
 #import <MJRefresh.h>
 #import "BatchPickCategoryViewController.h"
+#import "PickOrderListViewController.h"
 
 @interface BatchPickViewController : SPBaseViewController
 {
