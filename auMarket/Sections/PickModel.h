@@ -31,4 +31,5 @@
 -(void)batchPickDone:(NSString *)bid;
 -(void)loadBatchPickCategory:(NSString *)bid AndCatId:(NSString *)cat_id AndPage:(NSString *)page;
 -(void)loadBatchPickOrderList:(NSString *)bid;
+-(void)pickDispatch:(NSString *)cart_num andOrderId:(NSString *)order_id;
 @end

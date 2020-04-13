@@ -69,6 +69,17 @@
     [self loadInner];
 }
 
+//拣货分派
+-(void)pickDispatch:(NSString *)cart_num andOrderId:(NSString *)order_id{
+    self.parseDataClassType = [SPBaseEntity class];
+    SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
+    self.shortRequestAddress= [NSString stringWithFormat:@"v1/pick/dispatch?cart_num=%@&order_id=%@&token=%@",cart_num,order_id,user.user_token];
+    self.params = @{};
+    self.requestTag=1007;
+    [self loadInner];
+}
+
+
 -(void)finishAllGoodsPick{
     self.parseDataClassType = [SPBaseEntity class];
     SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];

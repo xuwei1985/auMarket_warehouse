@@ -22,12 +22,13 @@
     UIButton *_sumBtn;
     UIButton *_selectAllBtn;
     NSString *order_ids;
-    Boolean isPushToPickGoodsView;
+    Boolean isPushToPickCartView;
     SPBaseTableView *regionsView;
     UIButton *btn_region;
     NSMutableArray<RegionBlockEntity *> *region_data;
     int region_block_id;
     Boolean isCreating;
+    NSString *cart_num;
 }
 
 

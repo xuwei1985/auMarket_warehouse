@@ -78,7 +78,7 @@
     }];
     
     _sumBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-    _sumBtn.frame=CGRectMake(WIDTH_SCREEN-110, 0,110, 44);
+    _sumBtn.frame=CGRectMake(WIDTH_SCREEN-120, 0,120, 44);
     [_sumBtn setTitle:@"绑定拣货车" forState:UIControlStateNormal];
     _sumBtn.titleLabel.textAlignment=NSTextAlignmentCenter;
     _sumBtn.backgroundColor=COLOR_MAIN;
@@ -189,10 +189,10 @@
     }
     
     if(sender.selected){
-        [_sumBtn setTitle:[NSString stringWithFormat:@"生成清单(%d)",n] forState:UIControlStateNormal];
+        [_sumBtn setTitle:[NSString stringWithFormat:@"绑定拣货车(%d)",n] forState:UIControlStateNormal];
     }
     else{
-         [_sumBtn setTitle:[NSString stringWithFormat:@"生成清单"] forState:UIControlStateNormal];
+         [_sumBtn setTitle:[NSString stringWithFormat:@"绑定拣货车"] forState:UIControlStateNormal];
     }
     [self.tableView reloadData];
 }
@@ -213,10 +213,10 @@
     }
     
     if(sel_num>0){
-        [_sumBtn setTitle:[NSString stringWithFormat:@"生成清单(%d)",sel_num] forState:UIControlStateNormal];
+        [_sumBtn setTitle:[NSString stringWithFormat:@"绑定拣货车(%d)",sel_num] forState:UIControlStateNormal];
     }
     else{
-        [_sumBtn setTitle:[NSString stringWithFormat:@"生成清单"] forState:UIControlStateNormal];
+        [_sumBtn setTitle:[NSString stringWithFormat:@"绑定拣货车"] forState:UIControlStateNormal];
     }
     [self.tableView reloadData];
 }
@@ -402,14 +402,18 @@
 }
 
 
--(void)beginOrders:(NSString *)order_ids{
-    if(order_ids.length>0){
-        [self startLoadingActivityIndicatorWithText:@"生成中"];
-        [self.model beginOrders:order_ids];
-    }
-    else{
-        isCreating=NO;
-        [self showToastWithText:@"未选择任何订单"];
+-(void)dispatchOrdersWithCart:(NSString *)cart_num{
+    if(isCreating==NO){
+        order_ids= [self getSelectedOrdersId];
+        if(order_ids.length>0){
+            [self startLoadingActivityIndicatorWithText:@"提交中..."];
+            [self.model pickDispatch:cart_num andOrderId:order_ids];
+            isCreating=YES;
+        }
+        else{
+            isCreating=NO;
+            [self showToastWithText:@"未选择任何订单"];
+        }
     }
 }
 
@@ -424,7 +428,7 @@
                 if([self.model.entity.list count]<=0){
                     _summaryView_bottom.hidden=YES;
                     _selectAllBtn.selected=NO;
-                    [_sumBtn setTitle:[NSString stringWithFormat:@"生成清单"] forState:UIControlStateNormal];
+                    [_sumBtn setTitle:[NSString stringWithFormat:@"绑定拣货车"] forState:UIControlStateNormal];
                     [self showNoContentView];
                 }else{
                     _summaryView_bottom.hidden=NO;
@@ -440,11 +444,11 @@
                 [self loadOrders];
             }
         }
-        else if(model.requestTag==1004){
+        else if(model.requestTag==1007){//拣货分派完成，去拣货分派任务列表
             isCreating=NO;
             if(isSuccess){
                 PickGoodsViewController *pvc=[[PickGoodsViewController alloc] init];
-                isPushToPickGoodsView=YES;
+                isPushToPickCartView=YES;
                 [self.navigationController pushViewController:pvc animated:YES];
             }
         }
@@ -474,9 +478,9 @@
         }
     }
     else if([[obj objectForKey:@"scan_model"] intValue]==SCAN_PICK_CART){//拣货车条形码
-        NSRange range = [[obj objectForKey:@"code"] rangeOfString:@"-"];
+        NSRange range = [[obj objectForKey:@"code"] rangeOfString:@"PC-"];
         if([[obj objectForKey:@"code"] length]>0&&range.location != NSNotFound){
-            [self bindBoxToOrder:self.bind_order_entity.order_id andBoxCode:[obj objectForKey:@"code"]];
+            [self dispatchOrdersWithCart:[[obj objectForKey:@"code"] stringByReplacingOccurrencesOfString:@"PC-" withString:@""]];
         }
         else{
             [self showToastWithText:@"无法识别的拣货车条形码"];
@@ -494,20 +498,6 @@
     [self.navigationController pushViewController:qvc animated:YES];
 }
 
--(void)gotoPickList{
-    if(isCreating==NO){
-        isCreating=YES;
-        order_ids= [self getSelectedOrdersId];
-        if(order_ids.length>0){
-            [self beginOrders:order_ids];
-        }
-        else{
-            isCreating=NO;
-            [self showToastWithText:@"未选择任何订单"];
-        }
-    }
-    
-}
 
 -(void)gotoPickingGoodsView{
     PickGoodsViewController *pvc=[[PickGoodsViewController alloc] init];
@@ -521,9 +511,17 @@
 }
 
 -(void)gotoPickCartBind{
-    QRCodeViewController *qvc=[[QRCodeViewController alloc] init];
-    qvc.scan_model=SCAN_PICK_CART;
-    [self.navigationController pushViewController:qvc animated:YES];
+    order_ids= [self getSelectedOrdersId];
+    if(order_ids.length>0){
+        QRCodeViewController *qvc=[[QRCodeViewController alloc] init];
+        qvc.scan_model=SCAN_PICK_CART;
+        qvc.pass_delegate=self;
+        [self.navigationController pushViewController:qvc animated:YES];
+    }
+    else{
+        isCreating=NO;
+        [self showToastWithText:@"未选择任何订单"];
+    }
 }
 
 
@@ -545,8 +543,8 @@
 
 
 -(void)viewWillAppear:(BOOL)animated{
-    if(isPushToPickGoodsView){
-        isPushToPickGoodsView=NO;
+    if(isPushToPickCartView){
+        isPushToPickCartView=NO;
         [self loadOrders];
     }
     [super viewWillAppear:animated];
