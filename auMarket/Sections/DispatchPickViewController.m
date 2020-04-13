@@ -447,9 +447,12 @@
         else if(model.requestTag==1007){//拣货分派完成，去拣货分派任务列表
             isCreating=NO;
             if(isSuccess){
-                PickGoodsViewController *pvc=[[PickGoodsViewController alloc] init];
-                isPushToPickCartView=YES;
-                [self.navigationController pushViewController:pvc animated:YES];
+                dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC));
+                dispatch_after(delayTime, dispatch_get_main_queue(), ^{
+                   PickGoodsViewController *pvc=[[PickGoodsViewController alloc] init];
+                    isPushToPickCartView=YES;
+                    [self.navigationController pushViewController:pvc animated:YES];
+                });
             }
         }
     }
