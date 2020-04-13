@@ -34,12 +34,13 @@
 }
 
 -(void)initData{
-    NSDictionary *dic1,*dic2,*dic3;
+    NSDictionary *dic0,*dic1,*dic2;
     _itemArr=[[NSMutableArray alloc] init];
     
+    dic0=[[NSDictionary alloc] initWithObjectsAndKeys:@"工具",@"item_name", nil];
     dic1=[[NSDictionary alloc] initWithObjectsAndKeys:@"角色名称",@"item_name", nil];
     dic2=[[NSDictionary alloc] initWithObjectsAndKeys:@"系统版本",@"item_name", nil];
-    [_itemArr addObject:[NSArray arrayWithObjects:dic1,dic2, nil]];
+    [_itemArr addObject:[NSArray arrayWithObjects:dic0,dic1,dic2, nil]];
 }
 
 
@@ -187,12 +188,16 @@
     }
     
     cell.itemName =[[[_itemArr objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] objectForKey:@"item_name"];
-
     if(indexPath.row==0){
+        cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
+    }
+    else if(indexPath.row==1){
+        cell.accessoryType=UITableViewCellAccessoryNone;
         SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
         cell.itemPrice=user.role_name;
     }
-    else if(indexPath.row==1){
+    else if(indexPath.row==2){
+        cell.accessoryType=UITableViewCellAccessoryNone;
         cell.itemPrice=SYSTEM_VERSION_STRING;
     }
     
@@ -206,9 +211,16 @@
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tv deselectRowAtIndexPath:[tv indexPathForSelectedRow] animated:NO];
+    if(indexPath.row==0){
+        [self gotoToolViewController];
+    }
 }
 
-
+-(void)gotoToolViewController{
+    ToolsViewController *toolsViewController = [[ToolsViewController alloc] init];
+    toolsViewController.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:toolsViewController animated:YES];
+}
 
 
 - (void)onAccountUpdate:(NSNotification*)aNotitification{

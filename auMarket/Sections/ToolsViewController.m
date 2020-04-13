@@ -22,23 +22,27 @@
 }
 
 -(void)initData{
-    NSMutableDictionary *dic1,*dic2;
-    NSArray *item_childs_1,*item_childs_2;
+    NSMutableDictionary *dic1,*dic2,*dic3;
+    NSArray *item_childs_1,*item_childs_2,*item_childs_3;
     itemArr=[[NSMutableArray alloc] init];
     
-    dic1=[[NSMutableDictionary alloc] initWithObjectsAndKeys:@"库存转移",@"item_name",@"goods_tansfer",@"item_icon",@"",@"item_value", nil];
-    dic2=[[NSMutableDictionary alloc] initWithObjectsAndKeys:@"盘点库存",@"item_name",@"goods_tansfer",@"item_icon",@"",@"item_value", nil];
+    dic1=[[NSMutableDictionary alloc] initWithObjectsAndKeys:@"库存转移",@"item_name",@"goods_tansfer",@"item_icon",@"0",@"item_value", nil];
+    dic2=[[NSMutableDictionary alloc] initWithObjectsAndKeys:@"盘点库存",@"item_name",@"goods_tansfer",@"item_icon",@"1",@"item_value", nil];
+    dic3=[[NSMutableDictionary alloc] initWithObjectsAndKeys:@"入库",@"item_name",@"goods_tansfer",@"item_icon",@"2",@"item_value", nil];
     
     item_childs_1=[NSArray arrayWithObjects:dic1, nil];
     item_childs_2=[NSArray arrayWithObjects:dic2, nil];
+    item_childs_3=[NSArray arrayWithObjects:dic3, nil];
     
     Booter *bt=[[Booter alloc] init];
     if([bt checkMenu:@"inventory_move"])
     {
         [itemArr addObject:item_childs_1];
         [itemArr addObject:item_childs_2];
+        [itemArr addObject:item_childs_3];
+        
     }
-    
+
 }
 
 -(void)initUI{
@@ -136,6 +140,9 @@
     else if(indexPath.section==1){
         [self gotoInventoryCheckView];
     }
+    else if(indexPath.section==2){
+        [self gotoBatchView];
+    }
 }
 
 -(void)gotoTransferView{
@@ -146,6 +153,12 @@
 -(void)gotoInventoryCheckView{
     InventoryCheckViewController *svc=[[InventoryCheckViewController alloc] init];
     [self.navigationController pushViewController:svc animated:YES];
+}
+
+-(void)gotoBatchView{
+    BatchViewController *batchViewController = [[BatchViewController alloc] init];
+    batchViewController.hidesBottomBarWhenPushed = NO;
+    [self.navigationController pushViewController:batchViewController animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

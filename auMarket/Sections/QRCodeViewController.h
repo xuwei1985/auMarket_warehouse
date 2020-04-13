@@ -10,7 +10,9 @@
 typedef enum : NSUInteger {
     SCAN_GOODS=0,//商品条形码
     SCAN_SHELF=1,//货架条形码
-    SCAN_BOX=2//货箱条形码
+    SCAN_BOX=2,//货箱条形码
+    SCAN_PICK_CART=3,//拣货车条形码
+    SCAN_SHELF_BLOCK=4//货架区块条形码
 } SCAN_MODEL;
 
 #import <UIKit/UIKit.h>

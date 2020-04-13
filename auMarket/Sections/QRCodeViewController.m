@@ -90,6 +90,12 @@
     else if(self.scan_model==SCAN_BOX){
         label.text = @"将货箱条形码放入框内，即可自动扫描";
     }
+    else if(self.scan_model==SCAN_PICK_CART){
+        label.text = @"将拣货车条形码放入框内，即可自动扫描";
+    }
+    else if(self.scan_model==SCAN_SHELF){
+        label.text = @"将拣货区条形码放入框内，即可自动扫描";
+    }
     else{
         label.text = @"将二维码/条形码放入框内，即可自动扫描";
     }

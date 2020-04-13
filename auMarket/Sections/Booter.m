@@ -14,6 +14,7 @@
 #import "InformationViewController.h"
 #import "ToolsViewController.h"
 #import "AdPageViewController.h"
+#import "DispatchPickViewController.h"
 
 @interface Booter() 
 {
@@ -23,6 +24,7 @@
     InformationViewController* informationViewController;
     UserCenterViewController* userCenterViewController;
     ToolsViewController *toolsViewController;
+    DispatchPickViewController *dispatchPickViewController;
 }
 @end
 
@@ -51,9 +53,9 @@
 //主视图控制器
 -(UIViewController*)bootUIViewController
 {
-    batchViewController = [[BatchViewController alloc] init];
-    batchViewController.hidesBottomBarWhenPushed = NO;
-    batchViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"入库" image:[UIImage imageNamed:@"stock"] selectedImage:[UIImage imageNamed:@"stock_on"]];
+    dispatchPickViewController = [[DispatchPickViewController alloc] init];
+    dispatchPickViewController.hidesBottomBarWhenPushed = NO;
+    dispatchPickViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"拣货分派" image:[UIImage imageNamed:@"stock"] selectedImage:[UIImage imageNamed:@"stock_on"]];
     
     batchPickViewController=[[BatchPickViewController alloc] init];
     batchPickViewController.hidesBottomBarWhenPushed = NO;
@@ -68,12 +70,11 @@
     toolsViewController.hidesBottomBarWhenPushed = NO;
     toolsViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"工具" image:[UIImage imageNamed:@"tools"] selectedImage:[UIImage imageNamed:@"tools_on"]];
     
-    
     userCenterViewController = [[UserCenterViewController alloc] init];
     userCenterViewController.hidesBottomBarWhenPushed = NO;
     userCenterViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"我的" image:[UIImage imageNamed:@"member"] selectedImage:[UIImage imageNamed:@"member_on"]];
     
-    SPNavigationController *nav_batch = [[SPNavigationController alloc] initWithRootViewController:batchViewController];
+    SPNavigationController *nav_batch = [[SPNavigationController alloc] initWithRootViewController:dispatchPickViewController];
     SPNavigationController *nav_batchPick = [[SPNavigationController alloc] initWithRootViewController:batchPickViewController];
     SPNavigationController *nav_pick = [[SPNavigationController alloc] initWithRootViewController:pickViewController];
     SPNavigationController *nav_tools = [[SPNavigationController alloc] initWithRootViewController:toolsViewController];

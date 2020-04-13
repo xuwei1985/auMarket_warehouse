@@ -18,7 +18,7 @@
 //            [self.contentView addSubview:_iconImageView];
 //        }
         if (_itemLbl==nil) {
-            _itemLbl=[[UILabel alloc] initWithFrame:CGRectMake(WIDTH_SCREEN-100, 12, 90, 22)];
+            _itemLbl=[[UILabel alloc] initWithFrame:CGRectMake(WIDTH_SCREEN-130, 12, 120, 22)];
             _itemLbl.textAlignment=NSTextAlignmentRight;
             _itemLbl.textColor=COLOR_DARKGRAY;
             _itemLbl.font=FONT_SIZE_MIDDLE;
@@ -26,14 +26,14 @@
             [self.contentView addSubview:_itemLbl];
         }
         
-        if (_mySwitch==nil) {
-            _mySwitch=[[ UISwitch alloc]initWithFrame:CGRectMake(WIDTH_SCREEN-58,6.0,80.0,22.0)];
-            [_mySwitch setOn:NO animated:YES];
-            _mySwitch.hidden=YES;
-            _mySwitch.onTintColor=COLOR_MAIN;
-            [_mySwitch addTarget: self action:@selector(switchValueChanged:) forControlEvents:UIControlEventValueChanged];
-            [self.contentView addSubview:_mySwitch];
-        }
+//        if (_mySwitch==nil) {
+//            _mySwitch=[[ UISwitch alloc]initWithFrame:CGRectMake(WIDTH_SCREEN-58,6.0,80.0,22.0)];
+//            [_mySwitch setOn:NO animated:YES];
+//            _mySwitch.hidden=YES;
+//            _mySwitch.onTintColor=COLOR_MAIN;
+//            [_mySwitch addTarget: self action:@selector(switchValueChanged:) forControlEvents:UIControlEventValueChanged];
+//            [self.contentView addSubview:_mySwitch];
+//        }
     }
     return self;
 }

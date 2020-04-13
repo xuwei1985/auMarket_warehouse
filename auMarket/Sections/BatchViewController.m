@@ -129,7 +129,7 @@
 
 
 -(void)setUpTableView{
-    self.tableView=[[SPBaseTableView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, HEIGHT_SCREEN-64-54) style:UITableViewStylePlain];
+    self.tableView=[[SPBaseTableView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SCREEN, HEIGHT_SCREEN-64-50) style:UITableViewStylePlain];
     self.tableView.separatorStyle=UITableViewCellSeparatorStyleSingleLine;
     self.tableView.separatorColor=COLOR_BG_LINE;
     self.tableView.backgroundColor=COLOR_BG_VIEW;

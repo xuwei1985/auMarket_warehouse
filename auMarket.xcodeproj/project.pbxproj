@@ -168,6 +168,7 @@
 		A9B2D8B31F63A0C700D1AE2D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9B2D8B21F63A0C700D1AE2D /* SystemConfiguration.framework */; };
 		A9B2D8B51F63A0D100D1AE2D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9B2D8B41F63A0D100D1AE2D /* UIKit.framework */; };
 		A9C9D25223320996001D0A73 /* scan_goods@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A9C9D25123320996001D0A73 /* scan_goods@2x.jpg */; };
+		A9D10F1C2443515000D8D5B6 /* DispatchPickViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9D10F1A2443515000D8D5B6 /* DispatchPickViewController.m */; };
 		A9D3539B2433008A00A89E2B /* batchpick@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9D353992433008A00A89E2B /* batchpick@2x.png */; };
 		A9D3539C2433008A00A89E2B /* batchpaick@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9D3539A2433008A00A89E2B /* batchpaick@3x.png */; };
 		A9D3539F243304DA00A89E2B /* batchpick_on@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9D3539D243304D900A89E2B /* batchpick_on@3x.png */; };
@@ -512,6 +513,8 @@
 		A9B2D8B21F63A0C700D1AE2D /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		A9B2D8B41F63A0D100D1AE2D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		A9C9D25123320996001D0A73 /* scan_goods@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "scan_goods@2x.jpg"; sourceTree = "<group>"; };
+		A9D10F1A2443515000D8D5B6 /* DispatchPickViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DispatchPickViewController.m; sourceTree = "<group>"; };
+		A9D10F1B2443515000D8D5B6 /* DispatchPickViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DispatchPickViewController.h; sourceTree = "<group>"; };
 		A9D353992433008A00A89E2B /* batchpick@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "batchpick@2x.png"; sourceTree = "<group>"; };
 		A9D3539A2433008A00A89E2B /* batchpaick@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "batchpaick@3x.png"; sourceTree = "<group>"; };
 		A9D3539D243304D900A89E2B /* batchpick_on@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "batchpick_on@3x.png"; sourceTree = "<group>"; };
@@ -749,6 +752,8 @@
 		A9187C051DF9AB4D00A3E902 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				A9D10F1B2443515000D8D5B6 /* DispatchPickViewController.h */,
+				A9D10F1A2443515000D8D5B6 /* DispatchPickViewController.m */,
 				A94080B7243476FC00629387 /* PickOrderListViewController.h */,
 				A94080B8243476FC00629387 /* PickOrderListViewController.m */,
 				A9A341B32429B90400814178 /* BatchGoodsPickViewController.h */,
@@ -1713,6 +1718,7 @@
 				A968117F20497B18008604AC /* QRCodeScanView.m in Sources */,
 				A95E11451DF8491600660E42 /* UIDevice+Resolutions.m in Sources */,
 				A95E10941DF80ED000660E42 /* AppDelegate.m in Sources */,
+				A9D10F1C2443515000D8D5B6 /* DispatchPickViewController.m in Sources */,
 				A9D7E29120B3C02C00E02AAA /* b64.m in Sources */,
 				A95E11511DF84DA700660E42 /* SyncManager.m in Sources */,
 				A95E10F31DF8104800660E42 /* SPUploadFileModel.m in Sources */,
