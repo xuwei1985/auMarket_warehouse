@@ -247,8 +247,8 @@
             [self showSuccesWithText:@"任务生成成功，请开始捡货"];
             scan_block_id=@"";
             scan_cart_num=@"";
-            lblBlockName=@"--";
-            lblCartNum=@"--";
+            lblBlockName.text=@"--";
+            lblCartNum.text=@"--";
             [self gotoBlockPickGoodsView];
         }
     }
