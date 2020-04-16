@@ -39,10 +39,7 @@
 -(void)setNavigation{
     self.title=@"拣货分派";
     
-    UIBarButtonItem *left_Item = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"hs"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(gotoPickedGoodsView)];
-    self.navigationItem.leftBarButtonItem=left_Item;
-    
-    UIBarButtonItem *right_Item = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"jhz"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(gotoPickingGoodsView)];
+    UIBarButtonItem *right_Item = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"hs"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(gotoPickCartView)];
     self.navigationItem.rightBarButtonItem=right_Item;
 }
 
@@ -447,9 +444,9 @@
         else if(model.requestTag==1007){//拣货分派完成，去拣货分派任务列表
             isCreating=NO;
             if(isSuccess){
-                dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC));
+                dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.2 * NSEC_PER_SEC));
                 dispatch_after(delayTime, dispatch_get_main_queue(), ^{
-                   PickGoodsViewController *pvc=[[PickGoodsViewController alloc] init];
+                    PickCartViewController *pvc=[[PickCartViewController alloc] init];
                     isPushToPickCartView=YES;
                     [self.navigationController pushViewController:pvc animated:YES];
                 });
@@ -508,8 +505,8 @@
     [self.navigationController pushViewController:pvc animated:YES];
 }
 
--(void)gotoPickedGoodsView{
-    PickedOrdersViewController *pvc=[[PickedOrdersViewController alloc] init];
+-(void)gotoPickCartView{
+    PickCartViewController *pvc=[[PickCartViewController alloc] init];
     [self.navigationController pushViewController:pvc animated:YES];
 }
 

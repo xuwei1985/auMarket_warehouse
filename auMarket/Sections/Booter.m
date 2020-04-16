@@ -15,6 +15,7 @@
 #import "ToolsViewController.h"
 #import "AdPageViewController.h"
 #import "DispatchPickViewController.h"
+#import "BlockPickStartViewController.h"
 
 @interface Booter() 
 {
@@ -25,6 +26,7 @@
     UserCenterViewController* userCenterViewController;
     ToolsViewController *toolsViewController;
     DispatchPickViewController *dispatchPickViewController;
+    BlockPickStartViewController *blockPickStartViewController;
 }
 @end
 
@@ -55,20 +57,20 @@
 {
     dispatchPickViewController = [[DispatchPickViewController alloc] init];
     dispatchPickViewController.hidesBottomBarWhenPushed = NO;
-    dispatchPickViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"拣货分派" image:[UIImage imageNamed:@"stock"] selectedImage:[UIImage imageNamed:@"stock_on"]];
+    dispatchPickViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"拣货分派" image:[UIImage imageNamed:@"dispatch"] selectedImage:[UIImage imageNamed:@"dispatch_on"]];
     
     batchPickViewController=[[BatchPickViewController alloc] init];
     batchPickViewController.hidesBottomBarWhenPushed = NO;
     batchPickViewController.listType=0;
-    batchPickViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"总单拣货" image:[UIImage imageNamed:@"batchpick"] selectedImage:[UIImage imageNamed:@"batchpick_on"]];
+    batchPickViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"生鲜拣货" image:[UIImage imageNamed:@"batchpick"] selectedImage:[UIImage imageNamed:@"batchpick_on"]];
     
     pickViewController = [[PickViewController alloc] init];
     pickViewController.hidesBottomBarWhenPushed = NO;
-    pickViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"拣货" image:[UIImage imageNamed:@"pick"] selectedImage:[UIImage imageNamed:@"pick_on"]];
+    pickViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"普通拣货" image:[UIImage imageNamed:@"pick"] selectedImage:[UIImage imageNamed:@"pick_on"]];
     
-    toolsViewController = [[ToolsViewController alloc] init];
-    toolsViewController.hidesBottomBarWhenPushed = NO;
-    toolsViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"工具" image:[UIImage imageNamed:@"tools"] selectedImage:[UIImage imageNamed:@"tools_on"]];
+    blockPickStartViewController = [[BlockPickStartViewController alloc] init];
+    blockPickStartViewController.hidesBottomBarWhenPushed = NO;
+    blockPickStartViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"分区拣货" image:[UIImage imageNamed:@"block"] selectedImage:[UIImage imageNamed:@"block_on"]];
     
     userCenterViewController = [[UserCenterViewController alloc] init];
     userCenterViewController.hidesBottomBarWhenPushed = NO;
@@ -77,7 +79,7 @@
     SPNavigationController *nav_batch = [[SPNavigationController alloc] initWithRootViewController:dispatchPickViewController];
     SPNavigationController *nav_batchPick = [[SPNavigationController alloc] initWithRootViewController:batchPickViewController];
     SPNavigationController *nav_pick = [[SPNavigationController alloc] initWithRootViewController:pickViewController];
-    SPNavigationController *nav_tools = [[SPNavigationController alloc] initWithRootViewController:toolsViewController];
+    SPNavigationController *nav_tools = [[SPNavigationController alloc] initWithRootViewController:blockPickStartViewController];
     SPNavigationController *nav_member = [[SPNavigationController alloc] initWithRootViewController:userCenterViewController];
 
     NSMutableArray *tabbar=[[NSMutableArray alloc] init];
@@ -85,17 +87,15 @@
     self.tabBarController.tabBar.translucent = NO;
     self.tabBarController.tabBar.tintColor = COLOR_FONT_MAIN;
 
+    [tabbar addObject:nav_tools];
     if([self checkMenu:@"picking"]){
         [tabbar addObject:nav_pick];
     }
-    
-    [tabbar addObject:nav_batchPick];
-    
     if([self checkMenu:@"warehousing"]){
         [tabbar addObject:nav_batch];
     }
     
-    [tabbar addObject:nav_tools];
+    [tabbar addObject:nav_batchPick];
     [tabbar addObject:nav_member];
     [self.tabBarController setViewControllers:tabbar];
     self.tabBarController.selectedIndex = 0;

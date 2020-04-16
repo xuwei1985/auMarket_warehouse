@@ -150,6 +150,45 @@
     [self loadInner];
 }
 
+
+//加载拣货车任务列表
+-(void)loadPickCartListWithType:(int)type{
+    self.parseDataClassType = [PickCartListEntity class];
+    SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
+    self.shortRequestAddress= [NSString stringWithFormat:@"v1/pick/pick-cart-list?done=%d&token=%@",type,user.user_token];
+    self.params = @{};
+    self.requestTag=1015;
+    [self loadInner];
+}
+
+-(void)startBlockPick:(NSString *)block_id andCart:(NSString *)cart{
+    self.parseDataClassType = [PickGoodsListEntity class];
+    SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
+    self.shortRequestAddress= [NSString stringWithFormat:@"v1/pick/start-block-pick?block_id=%@&cart=%@&token=%@",block_id,cart,user.user_token];
+    self.params = @{};
+    self.requestTag=1016;
+    [self loadInner];
+}
+
+-(void)loadBlockPickListWithType:(int)type{
+    self.parseDataClassType = [PickGoodsListEntity class];
+    SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
+    self.shortRequestAddress= [NSString stringWithFormat:@"v1/pick/block-pick-goods-list?done=%d&token=%@",type,user.user_token];
+    self.params = @{};
+    self.requestTag=1017;
+    [self loadInner];
+}
+
+-(void)finishBlockGoodsPickWithPickId:(NSString *)pick_id{
+    self.parseDataClassType = [SPBaseEntity class];
+    SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
+    self.shortRequestAddress= [NSString stringWithFormat:@"v1/pick/picking-block-all?pick_id=%@&token=%@",pick_id,user.user_token];
+    self.params = @{};
+    self.requestTag=1018;
+    [self loadInner];
+}
+
+
 -(void)handleParsedData:(SPBaseEntity*)parsedData{
     if ([parsedData isKindOfClass:[OrderEntity class]]&&self.requestTag==1001) {
         self.entity = (OrderEntity*)parsedData;
@@ -171,6 +210,12 @@
     }
     else if (self.requestTag==1014) {
        self.pickOrderListEntity = (OrderEntity*)parsedData;
+    }
+    else if (self.requestTag==1015) {
+       self.pickCartListEntity = (PickCartListEntity*)parsedData;
+    }
+    else if (self.requestTag==1017) {
+       self.pickGoodsListEntity = (PickGoodsListEntity*)parsedData;
     }
 }
 

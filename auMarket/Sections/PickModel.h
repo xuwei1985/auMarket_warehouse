@@ -10,6 +10,7 @@
 #import "PickGoodsEntity.h"
 #import "BatchPickEntity.h"
 #import "BatchPickCategoryEntity.h"
+#import "PickCartEntity.h"
 
 @interface PickModel : SPBaseModel
 @property (nonatomic,retain) OrderEntity *entity;
@@ -19,6 +20,7 @@
 @property (nonatomic,retain) SPBaseEntity *pickDoneEntity;
 @property (nonatomic,retain) PickGoodsListEntity *pickGoodsEntity;
 @property (nonatomic,retain) OrderEntity *pickOrderListEntity;
+@property (nonatomic,retain) PickCartListEntity *pickCartListEntity;
 
 -(void)loadOrdersWithListType:(int)list_type andRegionBlock:(int)region_block_id;
 -(void)loadGoodsListWithListType:(int)type;
@@ -32,4 +34,8 @@
 -(void)loadBatchPickCategory:(NSString *)bid AndCatId:(NSString *)cat_id AndPage:(NSString *)page;
 -(void)loadBatchPickOrderList:(NSString *)bid;
 -(void)pickDispatch:(NSString *)cart_num andOrderId:(NSString *)order_id;
+-(void)loadPickCartListWithType:(int)type;
+-(void)startBlockPick:(NSString *)block_id andCart:(NSString *)cart;
+-(void)loadBlockPickListWithType:(int)type;
+-(void)finishBlockGoodsPickWithPickId:(NSString *)pick_id;
 @end
