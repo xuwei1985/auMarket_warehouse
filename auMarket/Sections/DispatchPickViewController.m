@@ -422,6 +422,7 @@
             [self.tableView.mj_header endRefreshing];
             if(self.model.entity.list!=nil){
                 [self.tableView reloadData];
+                _selectAllBtn.selected=NO;
                 if([self.model.entity.list count]<=0){
                     _summaryView_bottom.hidden=YES;
                     _selectAllBtn.selected=NO;
@@ -444,7 +445,10 @@
         else if(model.requestTag==1007){//拣货分派完成，去拣货分派任务列表
             isCreating=NO;
             if(isSuccess){
-                dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.2 * NSEC_PER_SEC));
+                PickCartViewController *pvc=[[PickCartViewController alloc] init];
+                isPushToPickCartView=YES;
+                [self.navigationController pushViewController:pvc animated:YES];
+                dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC));
                 dispatch_after(delayTime, dispatch_get_main_queue(), ^{
                     PickCartViewController *pvc=[[PickCartViewController alloc] init];
                     isPushToPickCartView=YES;
@@ -462,6 +466,7 @@
             
             region_data=self.region_model.regionBlockList.list;
             [regionsView reloadData];
+            
         }
     }
 }

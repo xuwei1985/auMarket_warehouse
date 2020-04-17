@@ -431,6 +431,7 @@
             [self.tableView.mj_header endRefreshing];
             if(self.model.entity.list!=nil){
                 [self.tableView reloadData];
+                _selectAllBtn.selected=NO;
                 if([self.model.entity.list count]<=0){
                     _summaryView_bottom.hidden=YES;
                     _selectAllBtn.selected=NO;

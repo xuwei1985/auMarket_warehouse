@@ -143,7 +143,7 @@
     }else{
         lbl_dispatch_time.text=[NSString stringWithFormat:@"--"];
     }
-    if(![self.entity.current_block isEqualToString:@""]){
+    if(![self.entity.current_block isEqualToString:@""]&&self.entity.current_block!=nil){
         lbl_block.text=[NSString stringWithFormat:@"%@区",self.entity.current_block];
     }else{
         lbl_block.text=[NSString stringWithFormat:@"--"];

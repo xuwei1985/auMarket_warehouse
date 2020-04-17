@@ -179,8 +179,8 @@
 }
 
 -(void)startPick:(id)sender{
-    scan_cart_num=@"3";
-    scan_block_id=@"1";
+//    scan_cart_num=@"3";
+//    scan_block_id=@"1";
     if([scan_cart_num length]>0&&[scan_block_id length]>0){
         [self loadBlockPickGoodsList];
     }else{
