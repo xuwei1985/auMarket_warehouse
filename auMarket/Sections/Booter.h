@@ -25,6 +25,7 @@
 #import "PassValueDelegate.h"
 #import "Common.h"
 
+
 @interface Booter : NSObject<UIGestureRecognizerDelegate,UITabBarControllerDelegate,SPBaseModelProtocol>
 
 @property (nonatomic,strong) UINavigationController* navigationController;
