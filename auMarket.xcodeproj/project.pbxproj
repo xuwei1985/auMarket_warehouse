@@ -215,6 +215,7 @@
 		A9D7E28720B31E3D00E02AAA /* GoodsInfoEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = A9D7E28620B31E3C00E02AAA /* GoodsInfoEntity.m */; };
 		A9D7E29120B3C02C00E02AAA /* b64.m in Sources */ = {isa = PBXBuildFile; fileRef = A9D7E29020B3C02C00E02AAA /* b64.m */; };
 		A9D7E29420B3C83F00E02AAA /* GoodsEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = A9D7E29220B3C83F00E02AAA /* GoodsEntity.m */; };
+		A9D8114D244DAA2A00CC4C66 /* VerifyMobileEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = A9D8114B244DAA2A00CC4C66 /* VerifyMobileEntity.m */; };
 		A9E40EBD20B7DD7B00024C79 /* add_transfer_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9E40EBB20B7DD7A00024C79 /* add_transfer_on@2x.png */; };
 		A9E40EBE20B7DD7B00024C79 /* add_transfer_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9E40EBC20B7DD7A00024C79 /* add_transfer_off@2x.png */; };
 		A9E40EC020B7F25700024C79 /* transfer_cart@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9E40EBF20B7F25600024C79 /* transfer_cart@2x.png */; };
@@ -585,6 +586,8 @@
 		A9D7E29020B3C02C00E02AAA /* b64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = b64.m; sourceTree = "<group>"; };
 		A9D7E29220B3C83F00E02AAA /* GoodsEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoodsEntity.m; sourceTree = "<group>"; };
 		A9D7E29320B3C83F00E02AAA /* GoodsEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoodsEntity.h; sourceTree = "<group>"; };
+		A9D8114B244DAA2A00CC4C66 /* VerifyMobileEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerifyMobileEntity.m; sourceTree = "<group>"; };
+		A9D8114C244DAA2A00CC4C66 /* VerifyMobileEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerifyMobileEntity.h; sourceTree = "<group>"; };
 		A9E40EBB20B7DD7A00024C79 /* add_transfer_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add_transfer_on@2x.png"; sourceTree = "<group>"; };
 		A9E40EBC20B7DD7A00024C79 /* add_transfer_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add_transfer_off@2x.png"; sourceTree = "<group>"; };
 		A9E40EBF20B7F25600024C79 /* transfer_cart@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "transfer_cart@2x.png"; sourceTree = "<group>"; };
@@ -834,6 +837,8 @@
 		A9187C0E1DF9AB7F00A3E902 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				A9D8114C244DAA2A00CC4C66 /* VerifyMobileEntity.h */,
+				A9D8114B244DAA2A00CC4C66 /* VerifyMobileEntity.m */,
 				A94299981F72BB840078A9AE /* MemberChargeEntity.h */,
 				A94299991F72BB840078A9AE /* MemberChargeEntity.m */,
 				A96474201E1111E500A5A39B /* MemberLoginModel.h */,
@@ -1711,6 +1716,7 @@
 				A95E11421DF8491600660E42 /* NSDictionary+IDPExtension.m in Sources */,
 				A95E11711DF8520A00660E42 /* SPTabBarController.m in Sources */,
 				A975688020B538C5003DC139 /* TransferViewController.m in Sources */,
+				A9D8114D244DAA2A00CC4C66 /* VerifyMobileEntity.m in Sources */,
 				A9F4DAD11F68390F00D71774 /* MJPhotoLoadingView.m in Sources */,
 				A9FBC1F71DF97192005ECDDE /* BatchViewController.m in Sources */,
 				A96474221E1111E500A5A39B /* MemberLoginModel.m in Sources */,

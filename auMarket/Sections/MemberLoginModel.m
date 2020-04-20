@@ -14,16 +14,35 @@
 -(instancetype)init{
     self = [super init];
     if (self) {
-        self.parseDataClassType = [MemberLoginEntity class];
+        
     }
     return self;
 }
 
 //普通登录
--(void)loginWithUsername:(NSString *)uname andPassword:(NSString *)upass{
-    self.shortRequestAddress=[NSString stringWithFormat:@"v1/auth/login?uname=%@&upass=%@",uname,upass];
+-(void)loginWithUsername:(NSString *)uname andPassword:(NSString *)upass andMobile:(NSString *)mobile andCode:(NSString *)code{
+    self.shortRequestAddress=[NSString stringWithFormat:@"v1/auth/login?uname=%@&upass=%@&mobile=%@&code=%@",uname,upass,mobile,code];
+    self.parseDataClassType = [MemberLoginEntity class];
     self.params = @{};
     self.requestTag=1001;
+    [self loadInner];
+}
+
+
+-(void)getVerifyMobiles{
+    self.shortRequestAddress=[NSString stringWithFormat:@"v1/auth/login_verify_account"];
+    self.parseDataClassType = [VerifyMobileListEntity class];
+    self.params = @{
+    };
+    self.requestTag=1004;
+    [self loadInner];
+}
+
+//校验短信验证码
+-(void)getSmsCode:(NSString *)mobile{
+    self.parseDataClassType = [OrderVerifyEntity class];
+    self.shortRequestAddress=[NSString stringWithFormat:@"v1/auth/getSmsCodeForClient&mobile=%@",mobile];
+    self.requestTag=1005;
     [self loadInner];
 }
 
@@ -31,6 +50,11 @@
 -(void)handleParsedData:(SPBaseEntity*)parsedData{
     if ([parsedData isKindOfClass:[MemberLoginEntity class]]) {
         self.entity = (MemberLoginEntity*)parsedData;
+    }else if ([parsedData isKindOfClass:[VerifyMobileListEntity class]]) {
+        self.verify_entity = (VerifyMobileListEntity*)parsedData;
+    }
+    else if ([parsedData isKindOfClass:[OrderVerifyEntity class]]) {
+        self.sEntity = (OrderVerifyEntity*)parsedData;
     }
 }
 
