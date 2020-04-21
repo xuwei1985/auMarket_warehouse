@@ -34,13 +34,15 @@
 }
 
 -(void)initData{
-    NSDictionary *dic0,*dic1,*dic2;
+    NSDictionary *dic1,*dic2,*dic3,*dic4,*dic5;
     _itemArr=[[NSMutableArray alloc] init];
     
-    dic0=[[NSDictionary alloc] initWithObjectsAndKeys:@"工具",@"item_name", nil];
-    dic1=[[NSDictionary alloc] initWithObjectsAndKeys:@"角色名称",@"item_name", nil];
-    dic2=[[NSDictionary alloc] initWithObjectsAndKeys:@"系统版本",@"item_name", nil];
-    [_itemArr addObject:[NSArray arrayWithObjects:dic0,dic1,dic2, nil]];
+    dic1=[[NSMutableDictionary alloc] initWithObjectsAndKeys:@"库存转移",@"item_name",@"6",@"item_icon",@"0",@"item_value", nil];
+    dic2=[[NSMutableDictionary alloc] initWithObjectsAndKeys:@"盘点库存",@"item_name",@"5",@"item_icon",@"1",@"item_value", nil];
+    dic3=[[NSMutableDictionary alloc] initWithObjectsAndKeys:@"入库",@"item_name",@"8",@"item_icon",@"2",@"item_value", nil];
+    dic4=[[NSDictionary alloc] initWithObjectsAndKeys:@"角色名称",@"item_name",@"7", @"item_icon",nil];
+    dic5=[[NSDictionary alloc] initWithObjectsAndKeys:@"系统版本",@"item_name",@"icon_infomation", @"item_icon",nil];
+    [_itemArr addObject:[NSArray arrayWithObjects:dic1,dic2,dic3,dic4,dic5, nil]];
 }
 
 
@@ -120,10 +122,10 @@
     [_btn_exit setTitle:@"退出登录" forState:UIControlStateNormal];
     [_btn_exit setBackgroundColor:COLOR_MAIN];
     [_btn_exit setTitleColor:COLOR_WHITE forState:UIControlStateNormal];
-    _btn_exit.frame=CGRectMake(15, IPHONE6PLUS?60:64, WIDTH_SCREEN-30, 44);
+    _btn_exit.frame=CGRectMake(15, IPHONE6PLUS?40:44, WIDTH_SCREEN-30, 46);
     _btn_exit.titleLabel.font=FONT_SIZE_MIDDLE;
     [_btn_exit addTarget:self action:@selector(exitLogin:) forControlEvents:UIControlEventTouchUpInside];
-    [_btn_exit.layer setCornerRadius:4];
+    [_btn_exit.layer setCornerRadius:23];
     _btn_exit.hidden=isLogin;
     [exitView addSubview:_btn_exit];
     [self.tableView setTableFooterView:exitView];
@@ -186,17 +188,17 @@
         cell.textLabel.font=DEFAULT_FONT(16.0);
         cell.textLabel.textColor=COLOR_DARKGRAY;
     }
-    
+    cell.iconImage=[UIImage imageNamed:[[[_itemArr objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] objectForKey:@"item_icon"]];
     cell.itemName =[[[_itemArr objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] objectForKey:@"item_name"];
-    if(indexPath.row==0){
+    if(indexPath.row<3){
         cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     }
-    else if(indexPath.row==1){
+    else if(indexPath.row==3){
         cell.accessoryType=UITableViewCellAccessoryNone;
         SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
         cell.itemPrice=user.role_name;
     }
-    else if(indexPath.row==2){
+    else if(indexPath.row==4){
         cell.accessoryType=UITableViewCellAccessoryNone;
         cell.itemPrice=SYSTEM_VERSION_STRING;
     }
@@ -212,14 +214,31 @@
 {
     [tv deselectRowAtIndexPath:[tv indexPathForSelectedRow] animated:NO];
     if(indexPath.row==0){
-        [self gotoToolViewController];
+        [self gotoTransferView];
+    }
+    else if(indexPath.row==1){
+        [self gotoInventoryCheckView];
+    }
+    else if(indexPath.row==2){
+        [self gotoBatchView];
     }
 }
 
--(void)gotoToolViewController{
-    ToolsViewController *toolsViewController = [[ToolsViewController alloc] init];
-    toolsViewController.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:toolsViewController animated:YES];
+
+-(void)gotoTransferView{
+    TransferViewController *tvc=[[TransferViewController alloc] init];
+    [self.navigationController pushViewController:tvc animated:YES];
+}
+
+-(void)gotoInventoryCheckView{
+    InventoryCheckViewController *svc=[[InventoryCheckViewController alloc] init];
+    [self.navigationController pushViewController:svc animated:YES];
+}
+
+-(void)gotoBatchView{
+    BatchViewController *batchViewController = [[BatchViewController alloc] init];
+    batchViewController.hidesBottomBarWhenPushed = NO;
+    [self.navigationController pushViewController:batchViewController animated:YES];
 }
 
 

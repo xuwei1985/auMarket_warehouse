@@ -31,7 +31,7 @@
 }
 
 -(void)setNavigation{
-    self.title=@"总单拣货分类";
+    self.title=@"生鲜拣货分类";
     
     doneBtn=[[UIButton alloc] initWithFrame:CGRectMake(WIDTH_SCREEN-40, 4, 40, 32)];
     [doneBtn addTarget:self action:@selector(pickDone:) forControlEvents:UIControlEventTouchUpInside];
