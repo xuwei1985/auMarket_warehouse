@@ -216,6 +216,11 @@
 		A9D7E29120B3C02C00E02AAA /* b64.m in Sources */ = {isa = PBXBuildFile; fileRef = A9D7E29020B3C02C00E02AAA /* b64.m */; };
 		A9D7E29420B3C83F00E02AAA /* GoodsEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = A9D7E29220B3C83F00E02AAA /* GoodsEntity.m */; };
 		A9D8114D244DAA2A00CC4C66 /* VerifyMobileEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = A9D8114B244DAA2A00CC4C66 /* VerifyMobileEntity.m */; };
+		A9D81152244EC94900CC4C66 /* 6.png in Resources */ = {isa = PBXBuildFile; fileRef = A9D8114E244EC94800CC4C66 /* 6.png */; };
+		A9D81153244EC94900CC4C66 /* 7.png in Resources */ = {isa = PBXBuildFile; fileRef = A9D8114F244EC94900CC4C66 /* 7.png */; };
+		A9D81154244EC94900CC4C66 /* 4.png in Resources */ = {isa = PBXBuildFile; fileRef = A9D81150244EC94900CC4C66 /* 4.png */; };
+		A9D81155244EC94900CC4C66 /* 5.png in Resources */ = {isa = PBXBuildFile; fileRef = A9D81151244EC94900CC4C66 /* 5.png */; };
+		A9D81157244EC98500CC4C66 /* 8.png in Resources */ = {isa = PBXBuildFile; fileRef = A9D81156244EC98500CC4C66 /* 8.png */; };
 		A9E40EBD20B7DD7B00024C79 /* add_transfer_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9E40EBB20B7DD7A00024C79 /* add_transfer_on@2x.png */; };
 		A9E40EBE20B7DD7B00024C79 /* add_transfer_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9E40EBC20B7DD7A00024C79 /* add_transfer_off@2x.png */; };
 		A9E40EC020B7F25700024C79 /* transfer_cart@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9E40EBF20B7F25600024C79 /* transfer_cart@2x.png */; };
@@ -588,6 +593,11 @@
 		A9D7E29320B3C83F00E02AAA /* GoodsEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoodsEntity.h; sourceTree = "<group>"; };
 		A9D8114B244DAA2A00CC4C66 /* VerifyMobileEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerifyMobileEntity.m; sourceTree = "<group>"; };
 		A9D8114C244DAA2A00CC4C66 /* VerifyMobileEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerifyMobileEntity.h; sourceTree = "<group>"; };
+		A9D8114E244EC94800CC4C66 /* 6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 6.png; sourceTree = "<group>"; };
+		A9D8114F244EC94900CC4C66 /* 7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 7.png; sourceTree = "<group>"; };
+		A9D81150244EC94900CC4C66 /* 4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 4.png; sourceTree = "<group>"; };
+		A9D81151244EC94900CC4C66 /* 5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 5.png; sourceTree = "<group>"; };
+		A9D81156244EC98500CC4C66 /* 8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 8.png; sourceTree = "<group>"; };
 		A9E40EBB20B7DD7A00024C79 /* add_transfer_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add_transfer_on@2x.png"; sourceTree = "<group>"; };
 		A9E40EBC20B7DD7A00024C79 /* add_transfer_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add_transfer_off@2x.png"; sourceTree = "<group>"; };
 		A9E40EBF20B7F25600024C79 /* transfer_cart@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "transfer_cart@2x.png"; sourceTree = "<group>"; };
@@ -1287,6 +1297,11 @@
 		A9FBC1C61DF93838005ECDDE /* images */ = {
 			isa = PBXGroup;
 			children = (
+				A9D81156244EC98500CC4C66 /* 8.png */,
+				A9D81150244EC94900CC4C66 /* 4.png */,
+				A9D81151244EC94900CC4C66 /* 5.png */,
+				A9D8114E244EC94800CC4C66 /* 6.png */,
+				A9D8114F244EC94900CC4C66 /* 7.png */,
 				A97BAB7A24470FC900768C95 /* bs_1@2x.png */,
 				A97BAB7B24470FC900768C95 /* bs_2@2x.png */,
 				A97BAB7824470F4800768C95 /* blockpick_list@2x.png */,
@@ -1542,6 +1557,7 @@
 				A9FBC1E61DF94A91005ECDDE /* noContent@3x.png in Resources */,
 				A9D7E27720B2D92D00E02AAA /* AliRefundKit_select_checked@2x.png in Resources */,
 				A94A270D20B0334E0025A438 /* stock_mark@2x.png in Resources */,
+				A9D81153244EC94900CC4C66 /* 7.png in Resources */,
 				A9D353A0243304DA00A89E2B /* batchpick_on@2x.png in Resources */,
 				A9D354681E0976CB006D265D /* icon_comment@2x.png in Resources */,
 				A968117220497A9F008604AC /* ScanQR4@2x.png in Resources */,
@@ -1566,12 +1582,15 @@
 				A9F4DA951F658AFE00D71774 /* 1_69@2x.png in Resources */,
 				A9F4DA921F658AFE00D71774 /* 1_56@2x.png in Resources */,
 				A9D3546B1E0976CB006D265D /* icon_mail@2x.png in Resources */,
+				A9D81152244EC94900CC4C66 /* 6.png in Resources */,
 				A98AEF40244601A40067838B /* dispatch@2x.png in Resources */,
 				A938620D20C599A7009336A8 /* flashlight_close@2x.png in Resources */,
 				A91EBD611FFE1D5E00DA9D68 /* stock_on@3x.png in Resources */,
 				A91EBD6D1FFE255B00DA9D68 /* member_on@3x.png in Resources */,
 				A9F4DA8F1F658AFE00D71774 /* 1_45@2x.png in Resources */,
 				A91EBD5B1FFE182300DA9D68 /* pick_on@2x.png in Resources */,
+				A9D81155244EC94900CC4C66 /* 5.png in Resources */,
+				A9D81157244EC98500CC4C66 /* 8.png in Resources */,
 				A91EBD5C1FFE182300DA9D68 /* pick@2x.png in Resources */,
 				A938620E20C599A7009336A8 /* flashlight_open@2x.png in Resources */,
 				A9D7E26E20B2B5BC00E02AAA /* s_b@2x.png in Resources */,
@@ -1617,6 +1636,7 @@
 				A9F4DA901F658AFE00D71774 /* 1_49.png in Resources */,
 				A9F4DACF1F68390F00D71774 /* MJPhotoBrowser.bundle in Resources */,
 				A9E40EBE20B7DD7B00024C79 /* add_transfer_off@2x.png in Resources */,
+				A9D81154244EC94900CC4C66 /* 4.png in Resources */,
 				A9D3546F1E0976E6006D265D /* icon_infomation@2x.png in Resources */,
 				A91EBD661FFE213A00DA9D68 /* pick_on@3x.png in Resources */,
 				A91EBD561FFE182300DA9D68 /* member_on@2x.png in Resources */,
@@ -1899,7 +1919,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = K44WC33LW2;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1939,7 +1959,7 @@
 					"\"${PODS_ROOT}/ShareSDK3/ShareSDK/Support/PlatformSDK/WeChatSDK\"",
 					"\"$PODS_CONFIGURATION_BUILD_DIR/MJRefresh\"",
 				);
-				MARKETING_VERSION = 1.3.0;
+				MARKETING_VERSION = 1.4.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -2015,7 +2035,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = K44WC33LW2;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2055,7 +2075,7 @@
 					"\"${PODS_ROOT}/ShareSDK3/ShareSDK/Support/PlatformSDK/WeChatSDK\"",
 					"\"$PODS_CONFIGURATION_BUILD_DIR/MJRefresh\"",
 				);
-				MARKETING_VERSION = 1.3.0;
+				MARKETING_VERSION = 1.4.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

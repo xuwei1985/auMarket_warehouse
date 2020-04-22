@@ -66,7 +66,7 @@
     
     pickViewController = [[PickViewController alloc] init];
     pickViewController.hidesBottomBarWhenPushed = NO;
-    pickViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"普通拣货" image:[UIImage imageNamed:@"pick"] selectedImage:[UIImage imageNamed:@"pick_on"]];
+    pickViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"单人拣货" image:[UIImage imageNamed:@"pick"] selectedImage:[UIImage imageNamed:@"pick_on"]];
     
     blockPickStartViewController = [[BlockPickStartViewController alloc] init];
     blockPickStartViewController.hidesBottomBarWhenPushed = NO;
@@ -88,14 +88,14 @@
     self.tabBarController.tabBar.tintColor = COLOR_FONT_MAIN;
 
     [tabbar addObject:nav_tools];
-    if([self checkMenu:@"picking"]){
-        [tabbar addObject:nav_pick];
-    }
     if([self checkMenu:@"warehousing"]){
         [tabbar addObject:nav_batch];
     }
-    
+    if([self checkMenu:@"picking"]){
+        [tabbar addObject:nav_pick];
+    }
     [tabbar addObject:nav_batchPick];
+
     [tabbar addObject:nav_member];
     [self.tabBarController setViewControllers:tabbar];
     self.tabBarController.selectedIndex = 0;

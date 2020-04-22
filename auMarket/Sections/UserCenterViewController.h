@@ -10,7 +10,9 @@
 #import "UserLoginViewController.h"
 #import "MemberCell.h"
 #import "MemberLoginModel.h"
-#import "ToolsViewController.h"
+#import "TransferViewController.h"
+#import "InventoryCheckViewController.h"
+#import "BatchViewController.h"
 
 
 @interface UserCenterViewController : SPBaseViewController

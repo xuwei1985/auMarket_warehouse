@@ -33,10 +33,10 @@
 
 -(void)setNavigation{
     if(self.listType==1){
-        self.title=@"总单拣货历史";
+        self.title=@"生鲜拣货历史";
     }
     else{
-        self.title=@"总单拣货";
+        self.title=@"生鲜拣货";
         doneBtn=[[UIButton alloc] initWithFrame:CGRectMake(WIDTH_SCREEN-40, 4, 40, 32)];
         [doneBtn addTarget:self action:@selector(gotoHistory) forControlEvents:UIControlEventTouchUpInside];
         [doneBtn setTitle:@"历史记录" forState:UIControlStateNormal];
@@ -138,12 +138,12 @@
             }
 
             if(self.tableView.itemArray==nil||self.tableView.itemArray.count<=0){
-                [self showNoContentViewWithTitle:@"你还没有总单拣货任务" icon:@"SHJ_NoRequest" button:nil];
+                [self showNoContentViewWithTitle:@"你还没有生鲜拣货任务" icon:@"SHJ_NoRequest" button:nil];
             }
         }
         else{
             [self.tableView stopLoadingActivityIndicatorView:nil];
-            [self showToastWithText:@"获取总单拣货任务数据失败"];
+            [self showToastWithText:@"获取生鲜拣货任务数据失败"];
         }
         self.tableView.isFirstLoad=NO;
         self.tableView.isLoading=NO;

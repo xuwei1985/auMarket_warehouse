@@ -17,8 +17,8 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        [self initData];
         [self initUI];
+        [self initData];
     }
     return self;
 }
@@ -370,9 +370,10 @@
 
 -(void)regionPickerDone:(id)sender{
     NSInteger row=[_picker_mobile selectedRowInComponent:0];
-    NSString *valueStr=[NSString stringWithFormat:@"%@",((VerifyMobileEntity *)[_mobileArray objectAtIndex:row]).mobile];
+
     verify_mobile=((VerifyMobileEntity *)[_mobileArray objectAtIndex:row]).mobile;
-    _lbl_verify_mobile.text=valueStr;
+    NSString *numberString = [((VerifyMobileEntity *)[_mobileArray objectAtIndex:row]).mobile stringByReplacingCharactersInRange:NSMakeRange(4, 4) withString:@"****"];
+    _lbl_verify_mobile.text=numberString;
     _lbl_verify_mobile.textColor=RGBCOLOR(48, 48, 48);
 
     [_verifyText resignFirstResponder];
@@ -400,7 +401,8 @@
 -(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
     if(pickerView==_picker_mobile){
-        NSString *valueStr=[NSString stringWithFormat:@"%@ [%@]",((VerifyMobileEntity *)[_mobileArray objectAtIndex:row]).nickname,((VerifyMobileEntity *)[_mobileArray objectAtIndex:row]).mobile];
+        NSString *numberString = [((VerifyMobileEntity *)[_mobileArray objectAtIndex:row]).mobile stringByReplacingCharactersInRange:NSMakeRange(3, 4) withString:@"****"];
+        NSString *valueStr=[NSString stringWithFormat:@"%@ %@",((VerifyMobileEntity *)[_mobileArray objectAtIndex:row]).nickname,numberString];
         return valueStr;
     }
     return @"";
@@ -569,6 +571,8 @@
         self.model.entity.user.password=user.user_pwd;
         self.model.entity.user.id=user.user_id;
         self.model.entity.user.token=user.user_token;
+        self.model.entity.user.role_name=user.role_name;
+        self.model.entity.user.menu=user.menu;
         SPAccount *_account =[self.model convertToSpAccount:self.model.entity.user];
         [[AccountManager sharedInstance] registerLoginUser:_account];
         [self gotoHomeView];

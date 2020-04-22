@@ -30,7 +30,7 @@
 
 
 -(void)getVerifyMobiles{
-    self.shortRequestAddress=[NSString stringWithFormat:@"v1/auth/login_verify_account"];
+    self.shortRequestAddress=[NSString stringWithFormat:@"v1/auth/login-verify-account"];
     self.parseDataClassType = [VerifyMobileListEntity class];
     self.params = @{
     };
@@ -40,7 +40,10 @@
 
 //校验短信验证码
 -(void)getSmsCode:(NSString *)mobile{
-    
+    self.parseDataClassType = [OrderVerifyEntity class];
+    self.shortRequestAddress=[NSString stringWithFormat:@"v1/auth/send-verify-sms?mobile=%@",mobile];
+    self.requestTag=1005;
+    [self loadInner];
 }
 
 

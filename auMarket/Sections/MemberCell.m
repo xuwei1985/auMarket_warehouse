@@ -13,10 +13,10 @@
 -(id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-//        if (_iconImageView==nil) {
-//            _iconImageView=[[UIImageView alloc] initWithFrame:CGRectMake(18, 12, 22, 22)];
-//            [self.contentView addSubview:_iconImageView];
-//        }
+        if (_iconImageView==nil) {
+            _iconImageView=[[UIImageView alloc] initWithFrame:CGRectMake(18, 10, 28, 28)];
+            [self.contentView addSubview:_iconImageView];
+        }
         if (_itemLbl==nil) {
             _itemLbl=[[UILabel alloc] initWithFrame:CGRectMake(WIDTH_SCREEN-130, 12, 120, 22)];
             _itemLbl.textAlignment=NSTextAlignmentRight;
@@ -41,8 +41,9 @@
 -(void)layoutSubviews{
     [super layoutSubviews];
     
-    self.textLabel.frame=CGRectMake(12, 0, 100, 44);
+    self.textLabel.frame=CGRectMake(55, 3, 150, 44);
     self.textLabel.text=self.itemName;
+    _iconImageView.image=self.iconImage;
     if(self.itemPrice==nil||self.itemPrice.length<=0){
         _itemLbl.hidden=YES;
         _mySwitch.hidden=NO;
