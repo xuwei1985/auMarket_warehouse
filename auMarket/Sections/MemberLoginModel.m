@@ -40,10 +40,7 @@
 
 //校验短信验证码
 -(void)getSmsCode:(NSString *)mobile{
-    self.parseDataClassType = [OrderVerifyEntity class];
-    self.shortRequestAddress=[NSString stringWithFormat:@"v1/auth/getSmsCodeForClient&mobile=%@",mobile];
-    self.requestTag=1005;
-    [self loadInner];
+    
 }
 
 
