@@ -2018,7 +2018,7 @@
 					"\"UIKit\"",
 					"-l\"MJRefresh\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.wilson.warehouse;
+				PRODUCT_BUNDLE_IDENTIFIER = warehouse.market;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2134,7 +2134,7 @@
 					"\"UIKit\"",
 					"-l\"MJRefresh\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.wilson.warehouse;
+				PRODUCT_BUNDLE_IDENTIFIER = warehouse.market;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
