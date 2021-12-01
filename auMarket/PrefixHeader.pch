@@ -20,7 +20,6 @@
 #import "AFNetworkReachabilityManager.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <SDWebImage/UIButton+WebCache.h>
-#import "JPUSHService.h"
 #import "IDPLog.h"
 #import "UIDevice-Hardware.h"
 #import "UIView+Toast.h"
@@ -32,7 +31,6 @@
 #import "NSArray+IDPExtension.h"
 #import "NSDictionary+IDPExtension.h"
 #import "NSString+YP.h"
-#import "UMMobClick/MobClick.h"
 #import "SPBaseViewController.h"
 #import "SPBaseTableViewCell.h"
 #import "SPBaseTableView.h"

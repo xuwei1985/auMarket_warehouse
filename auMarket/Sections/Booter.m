@@ -182,52 +182,6 @@
     return nil;
 }
 
-//启动友盟
--(void)bootUMeng
-{
-    #ifdef DEBUG
-    [UMAnalyticsConfig sharedInstance].ePolicy=REALTIME;
-    #else
-    [UMAnalyticsConfig sharedInstance].ePolicy=BATCH;
-    //加密
-    //[[UMAnalyticsConfig sharedInstance] setEncryptEnabled:YES];
-    #endif
-    
-    [MobClick setCrashReportEnabled:YES];
-    UMConfigInstance.appKey = UMENG_KEY;
-    UMConfigInstance.channelId = UMENG_CHANNEL_ID;
-    [MobClick setAppVersion:SYSTEM_VERSION_STRING];
-    [MobClick startWithConfigure:UMConfigInstance];//配置以上参数后调用此方法初始化SDK！
-
-}
-
-//启动极光推送
--(void)bootJPush:(NSDictionary *)launchOptions{
-    // Required
-    #if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_7_1
-    if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
-        //可以添加自定义categories
-        [JPUSHService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
-                                                          UIUserNotificationTypeSound |
-                                                          UIUserNotificationTypeAlert)
-                                              categories:nil];
-    } else {
-        //categories 必须为nil
-        [JPUSHService registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
-                                                          UIRemoteNotificationTypeSound |
-                                                          UIRemoteNotificationTypeAlert)
-                                              categories:nil];
-    }
-    #else
-    //categories 必须为nil
-    [APService registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
-                                                   UIRemoteNotificationTypeSound |
-                                                   UIRemoteNotificationTypeAlert)
-                                       categories:nil];
-    #endif
-    // Required
-    [JPUSHService setupWithOption:launchOptions appKey:JPUSH_KEY channel:JPUSH_CHANNEL apsForProduction:0];//0:开发1:线上
-}
 
 
 

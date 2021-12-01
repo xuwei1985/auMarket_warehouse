@@ -1653,20 +1653,18 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-auMarket/Pods-auMarket-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-auMarket/Pods-auMarket-resources.sh",
 				"${PODS_ROOT}/MJRefresh/MJRefresh/MJRefresh.bundle",
 				"${PODS_ROOT}/SVProgressHUD/SVProgressHUD/SVProgressHUD.bundle",
-				"${PODS_ROOT}/ShareSDK3/ShareSDK/Support/Required/ShareSDK.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MJRefresh.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SVProgressHUD.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ShareSDK.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-auMarket/Pods-auMarket-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-auMarket/Pods-auMarket-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E5298E8B231C88A716052C28 /* [CP] Check Pods Manifest.lock */ = {
@@ -1969,9 +1967,7 @@
 					"-l\"SVProgressHUD\"",
 					"-l\"TMCache\"",
 					"-l\"UICKeyChainStore\"",
-					"-l\"WeChatSDK\"",
 					"-l\"icucore\"",
-					"-l\"jpush-ios-2.1.9\"",
 					"-l\"sqlite3\"",
 					"-l\"stdc++\"",
 					"-l\"z\"",
@@ -1991,30 +1987,16 @@
 					"-framework",
 					"\"JavaScriptCore\"",
 					"-framework",
-					"\"MOBFoundation\"",
-					"-framework",
-					"\"MOBFoundationEx\"",
-					"-framework",
 					"\"MobileCoreServices\"",
 					"-framework",
 					"\"QuartzCore\"",
 					"-framework",
 					"\"Security\"",
 					"-framework",
-					"\"ShareSDK\"",
-					"-framework",
-					"\"ShareSDKConnector\"",
-					"-framework",
-					"\"ShareSDKExtension\"",
-					"-framework",
 					"\"SystemConfiguration\"",
 					"-framework",
 					"\"UIKit\"",
 					"-framework",
-					"\"UMMobClick\"",
-					"-framework",
-					"\"WechatConnector\"",
-					"-weak_framework",
 					"\"UIKit\"",
 					"-l\"MJRefresh\"",
 				);
@@ -2085,9 +2067,7 @@
 					"-l\"SVProgressHUD\"",
 					"-l\"TMCache\"",
 					"-l\"UICKeyChainStore\"",
-					"-l\"WeChatSDK\"",
 					"-l\"icucore\"",
-					"-l\"jpush-ios-2.1.9\"",
 					"-l\"sqlite3\"",
 					"-l\"stdc++\"",
 					"-l\"z\"",
@@ -2107,30 +2087,16 @@
 					"-framework",
 					"\"JavaScriptCore\"",
 					"-framework",
-					"\"MOBFoundation\"",
-					"-framework",
-					"\"MOBFoundationEx\"",
-					"-framework",
 					"\"MobileCoreServices\"",
 					"-framework",
 					"\"QuartzCore\"",
 					"-framework",
 					"\"Security\"",
 					"-framework",
-					"\"ShareSDK\"",
-					"-framework",
-					"\"ShareSDKConnector\"",
-					"-framework",
-					"\"ShareSDKExtension\"",
-					"-framework",
 					"\"SystemConfiguration\"",
 					"-framework",
 					"\"UIKit\"",
 					"-framework",
-					"\"UMMobClick\"",
-					"-framework",
-					"\"WechatConnector\"",
-					"-weak_framework",
 					"\"UIKit\"",
 					"-l\"MJRefresh\"",
 				);
