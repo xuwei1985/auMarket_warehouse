@@ -14,7 +14,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         if (_iconImageView==nil) {
-            _iconImageView=[[UIImageView alloc] initWithFrame:CGRectMake(18, 10, 28, 28)];
+            _iconImageView=[[UIImageView alloc] initWithFrame:CGRectMake(18, 12, 24, 24)];
             [self.contentView addSubview:_iconImageView];
         }
         if (_itemLbl==nil) {
