@@ -31,7 +31,7 @@
 }
 
 -(void)setNavigation{
-    self.title=@"生鲜拣货商品";
+    self.title=@"拣货商品";
 
 }
 
@@ -111,12 +111,12 @@
             }
 
             if(self.tableView.itemArray==nil||self.tableView.itemArray.count<=0){
-                [self showNoContentViewWithTitle:@"没有生鲜拣货商品" icon:@"SHJ_NoRequest" button:nil];
+                [self showNoContentViewWithTitle:@"没有拣货商品" icon:@"SHJ_NoRequest" button:nil];
             }
         }
         else{
             [self.tableView stopLoadingActivityIndicatorView:nil];
-            [self showToastWithText:@"获取生鲜拣货商品数据失败"];
+            [self showToastWithText:@"获取拣货商品数据失败"];
         }
         self.tableView.isFirstLoad=NO;
         self.tableView.isLoading=NO;

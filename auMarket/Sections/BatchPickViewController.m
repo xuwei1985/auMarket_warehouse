@@ -33,10 +33,19 @@
 
 -(void)setNavigation{
     if(self.listType==1){
-        self.title=@"生鲜拣货历史";
+        if(self.dataModel==2){
+            self.title=@"冷冻拣货历史";
+        }else{
+            self.title=@"熟食拣货历史";
+        }
     }
     else{
-        self.title=@"生鲜拣货";
+        if(self.dataModel==2){
+            self.title=@"冷冻拣货";
+        }else{
+            self.title=@"熟食拣货";
+        }
+        
         doneBtn=[[UIButton alloc] initWithFrame:CGRectMake(WIDTH_SCREEN-40, 4, 40, 32)];
         [doneBtn addTarget:self action:@selector(gotoHistory) forControlEvents:UIControlEventTouchUpInside];
         [doneBtn setTitle:@"历史记录" forState:UIControlStateNormal];
@@ -57,6 +66,7 @@
 -(void)gotoHistory{
     BatchPickViewController *bvc=[[BatchPickViewController alloc] init];
     bvc.listType=1;
+    bvc.dataModel=self.dataModel;
     [self.navigationController pushViewController:bvc animated:YES];
 }
 
@@ -71,7 +81,7 @@
         else{
             [self.tableView startLoadingActivityIndicatorView:nil];
         }
-        [self.model loadBatchPickWithListType:self.listType];
+        [self.model loadBatchPickWithListType:self.listType andModel:self.dataModel];
         
         self.tableView.isLoading=YES;
     }
@@ -138,12 +148,12 @@
             }
 
             if(self.tableView.itemArray==nil||self.tableView.itemArray.count<=0){
-                [self showNoContentViewWithTitle:@"你还没有生鲜拣货任务" icon:@"SHJ_NoRequest" button:nil];
+                [self showNoContentViewWithTitle:@"你还没有拣货任务" icon:@"SHJ_NoRequest" button:nil];
             }
         }
         else{
             [self.tableView stopLoadingActivityIndicatorView:nil];
-            [self showToastWithText:@"获取生鲜拣货任务数据失败"];
+            [self showToastWithText:@"获取拣货任务数据失败"];
         }
         self.tableView.isFirstLoad=NO;
         self.tableView.isLoading=NO;
@@ -242,6 +252,7 @@
 -(void)gotoBatchPickCategoryController:(NSString *)batch_id{
     BatchPickCategoryViewController *bvc=[[BatchPickCategoryViewController alloc] init];
     bvc.bid=batch_id;
+    bvc.dataModel=self.dataModel;
     [self.navigationController pushViewController:bvc animated:YES];
 }
 

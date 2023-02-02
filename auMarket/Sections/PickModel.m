@@ -93,10 +93,10 @@
 /*加载总单拣货的任务列表
  list_type 0：未拣货 1：已拣货
  */
--(void)loadBatchPickWithListType:(int)list_type{
+-(void)loadBatchPickWithListType:(int)list_type andModel:(int)model{
     self.parseDataClassType = [BatchPickEntity class];
     SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
-    self.shortRequestAddress= [NSString stringWithFormat:@"v1/pick/batch-pick-list?model=%d&page=%@&token=%@",list_type,(self.entity.next==nil?@"1":self.entity.next),user.user_token];
+    self.shortRequestAddress= [NSString stringWithFormat:@"v1/pick/batch-pick-list?model=%d&type=%d&page=%@&token=%@",list_type,model,(self.entity.next==nil?@"1":self.entity.next),user.user_token];
     self.params = @{};
     self.requestTag=1010;
     [self loadInner];
@@ -104,10 +104,10 @@
 
 /*加载总单拣货的任务里商品的分类
  */
--(void)loadBatchPickCategory:(NSString *)bid{
+-(void)loadBatchPickCategory:(NSString *)bid andModel:(int)model{
     self.parseDataClassType = [BatchPickCategoryEntity class];
     SPAccount *user=[[AccountManager sharedInstance] getCurrentUser];
-    self.shortRequestAddress= [NSString stringWithFormat:@"v1/pick/batch-pick-category-list?bid=%@&token=%@",bid,user.user_token];
+    self.shortRequestAddress= [NSString stringWithFormat:@"v1/pick/batch-pick-category-list?bid=%@&type=%d&token=%@",bid,model,user.user_token];
     self.params = @{};
     self.requestTag=1011;
     [self loadInner];

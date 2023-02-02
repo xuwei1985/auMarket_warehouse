@@ -17,4 +17,5 @@
 }
 @property(nonatomic,retain) PickModel *model;
 @property(nonatomic,retain) NSString *bid;
+@property(nonatomic,assign) int dataModel;//2:冷冻冷藏模式 3:熟食模式
 @end

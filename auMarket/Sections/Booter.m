@@ -21,6 +21,7 @@
 {
     BatchViewController* batchViewController;
     BatchPickViewController *batchPickViewController;
+    BatchPickViewController *batchPickViewController2;
     PickViewController* pickViewController;
     InformationViewController* informationViewController;
     UserCenterViewController* userCenterViewController;
@@ -62,7 +63,14 @@
     batchPickViewController=[[BatchPickViewController alloc] init];
     batchPickViewController.hidesBottomBarWhenPushed = NO;
     batchPickViewController.listType=0;
-    batchPickViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"生鲜拣货" image:[UIImage imageNamed:@"batchpick"] selectedImage:[UIImage imageNamed:@"batchpick_on"]];
+    batchPickViewController.dataModel=2;
+    batchPickViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"冷冻拣货" image:[UIImage imageNamed:@"batchpick"] selectedImage:[UIImage imageNamed:@"batchpick_on"]];
+    
+    batchPickViewController2=[[BatchPickViewController alloc] init];
+    batchPickViewController2.hidesBottomBarWhenPushed = NO;
+    batchPickViewController2.listType=0;
+    batchPickViewController2.dataModel=3;
+    batchPickViewController2.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"熟食拣货" image:[UIImage imageNamed:@"batchpick"] selectedImage:[UIImage imageNamed:@"batchpick_on"]];
     
     pickViewController = [[PickViewController alloc] init];
     pickViewController.hidesBottomBarWhenPushed = NO;
@@ -78,6 +86,7 @@
     
     SPNavigationController *nav_batch = [[SPNavigationController alloc] initWithRootViewController:dispatchPickViewController];
     SPNavigationController *nav_batchPick = [[SPNavigationController alloc] initWithRootViewController:batchPickViewController];
+    SPNavigationController *nav_batchPick2 = [[SPNavigationController alloc] initWithRootViewController:batchPickViewController2];
     SPNavigationController *nav_pick = [[SPNavigationController alloc] initWithRootViewController:pickViewController];
     SPNavigationController *nav_tools = [[SPNavigationController alloc] initWithRootViewController:blockPickStartViewController];
     SPNavigationController *nav_member = [[SPNavigationController alloc] initWithRootViewController:userCenterViewController];
@@ -87,15 +96,15 @@
     self.tabBarController.tabBar.translucent = NO;
     self.tabBarController.tabBar.tintColor = COLOR_FONT_MAIN;
 
-    [tabbar addObject:nav_tools];
-    if([self checkMenu:@"warehousing"]){
-        [tabbar addObject:nav_batch];
-    }
+    //[tabbar addObject:nav_tools];
+//    if([self checkMenu:@"warehousing"]){
+//        [tabbar addObject:nav_batch];
+//    }
     if([self checkMenu:@"picking"]){
         [tabbar addObject:nav_pick];
     }
     [tabbar addObject:nav_batchPick];
-
+    [tabbar addObject:nav_batchPick2];
     [tabbar addObject:nav_member];
     [self.tabBarController setViewControllers:tabbar];
     self.tabBarController.selectedIndex = 0;

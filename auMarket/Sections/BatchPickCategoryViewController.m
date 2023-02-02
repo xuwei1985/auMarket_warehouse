@@ -31,7 +31,12 @@
 }
 
 -(void)setNavigation{
-    self.title=@"生鲜拣货分类";
+    if(self.dataModel==2){
+        self.title=@"冷冻拣货分类";
+    }else {
+        self.title=@"熟食拣货分类";
+    }
+    
     
     doneBtn=[[UIButton alloc] initWithFrame:CGRectMake(WIDTH_SCREEN-40, 4, 40, 32)];
     [doneBtn addTarget:self action:@selector(pickDone:) forControlEvents:UIControlEventTouchUpInside];
@@ -120,7 +125,7 @@
 -(void)loadOrders{
     if(!self.tableView.isLoading){
         [self startLoadingActivityIndicator];
-        [self.model loadBatchPickCategory:self.bid];
+        [self.model loadBatchPickCategory:self.bid andModel:self.dataModel];
     }
 }
 

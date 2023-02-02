@@ -19,4 +19,5 @@
 }
 @property(nonatomic,retain) PickModel *model;
 @property(nonatomic,assign) int listType;//0:未拣货任务 1:已拣货任务
+@property(nonatomic,assign) int dataModel;//2:冷冻冷藏模式 3:熟食模式
 @end

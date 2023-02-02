@@ -28,8 +28,8 @@
 -(void)beginOrders:(NSString *)order_ids;
 -(void)finishGoodsPick:(NSString *)rec_id andOrderId:(NSString *)order_id;
 -(void)finishAllGoodsPick;
--(void)loadBatchPickWithListType:(int)list_type;
--(void)loadBatchPickCategory:(NSString *)bid;
+-(void)loadBatchPickWithListType:(int)list_type andModel:(int)model;
+-(void)loadBatchPickCategory:(NSString *)bid andModel:(int)model;
 -(void)batchPickDone:(NSString *)bid;
 -(void)loadBatchPickCategory:(NSString *)bid AndCatId:(NSString *)cat_id AndPage:(NSString *)page;
 -(void)loadBatchPickOrderList:(NSString *)bid;
