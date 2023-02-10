@@ -23,6 +23,7 @@
 @property (nonatomic,retain) NSString *tel;
 @property (nonatomic,retain) NSString *total_price;
 @property (nonatomic,retain) NSString *goods_count;
+@property (nonatomic,retain) NSString *normal_goods_count;
 @property (nonatomic,retain) NSString *region_name;
 @property (nonatomic,retain) NSString *end_time;
 @property (nonatomic,retain) PackageFormEntity *attribute;

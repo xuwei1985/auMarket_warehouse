@@ -331,7 +331,7 @@
     }
     lbl_order_sn_value.text=self.entity.order_sn;
     lbl_order_region_value.text=self.entity.region_name;
-    lbl_order_goods_num_value.text=self.entity.goods_count;
+    lbl_order_goods_num_value.text=self.entity.normal_goods_count;
     lbl_order_price_value.text=[NSString stringWithFormat:@"$%@",self.entity.total_price];
     
     if(self.list_model==1){
