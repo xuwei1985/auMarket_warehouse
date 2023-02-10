@@ -30,7 +30,7 @@ return __singleton__; \
     #define SERVER_ADDRESS        @"http://api2_test.bigau.com"
 
 #else//正式
-    #define SERVER_ADDRESS          @"http://api2.bigau.com"
+    #define SERVER_ADDRESS          @"http://api2_test.bigau.com"
 #endif
 
 //系统相关
