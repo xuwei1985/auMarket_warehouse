@@ -22,23 +22,26 @@
 }
 
 -(void)initData{
-    NSMutableDictionary *dic1,*dic2,*dic3,*dic4;
-    NSArray *item_childs_1,*item_childs_2,*item_childs_3,*item_childs_4;
+    NSMutableDictionary *dic1,*dic2,*dic3,*dic4,*dic5;
+    NSArray *item_childs_1,*item_childs_2,*item_childs_3,*item_childs_4,*item_childs_5;
     itemArr=[[NSMutableArray alloc] init];
     
-    dic1=[[NSMutableDictionary alloc] initWithObjectsAndKeys:@"扫描商品条形码",@"item_name",@"zy_0",@"item_icon",@"",@"item_value", nil];
-    dic2=[[NSMutableDictionary alloc] initWithObjectsAndKeys:@"手动搜索商品",@"item_name",@"zy_1",@"item_icon",@"",@"item_value", nil];
-    dic3=[[NSMutableDictionary alloc] initWithObjectsAndKeys:@"等待转移",@"item_name",@"zy_2",@"item_icon",@"",@"item_value", nil];
-    dic4=[[NSMutableDictionary alloc] initWithObjectsAndKeys:@"转移成功",@"item_name",@"zy_3",@"item_icon",@"",@"item_value", nil];
+    dic1=[[NSMutableDictionary alloc] initWithObjectsAndKeys:@"扫描商品条码 [相机]",@"item_name",@"zy_0",@"item_icon",@"",@"item_value", nil];
+    dic2=[[NSMutableDictionary alloc] initWithObjectsAndKeys:@"扫描商品条码 [扫码枪]",@"item_name",@"zy_0",@"item_icon",@"",@"item_value", nil];
+    dic3=[[NSMutableDictionary alloc] initWithObjectsAndKeys:@"手动搜索商品",@"item_name",@"zy_1",@"item_icon",@"",@"item_value", nil];
+    dic4=[[NSMutableDictionary alloc] initWithObjectsAndKeys:@"等待转移",@"item_name",@"zy_2",@"item_icon",@"",@"item_value", nil];
+    dic5=[[NSMutableDictionary alloc] initWithObjectsAndKeys:@"转移成功",@"item_name",@"zy_3",@"item_icon",@"",@"item_value", nil];
     
     item_childs_1=[NSArray arrayWithObjects:dic1, nil];
     item_childs_2=[NSArray arrayWithObjects:dic2, nil];
     item_childs_3=[NSArray arrayWithObjects:dic3, nil];
     item_childs_4=[NSArray arrayWithObjects:dic4, nil];
+    item_childs_5=[NSArray arrayWithObjects:dic5, nil];
     [itemArr addObject:item_childs_1];
     [itemArr addObject:item_childs_2];
     [itemArr addObject:item_childs_3];
     [itemArr addObject:item_childs_4];
+    [itemArr addObject:item_childs_5];
 }
 
 -(void)initUI{
@@ -79,7 +82,7 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 15;
+    return 10;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
@@ -123,14 +126,16 @@
     //商品条形码扫描
     if([indexPath compare:[NSIndexPath indexPathForRow:0 inSection:0]]==NSOrderedSame){
         [self gotoScanQRView:SCAN_GOODS];
-    }
-    else if([indexPath compare:[NSIndexPath indexPathForRow:0 inSection:1]]==NSOrderedSame){
-        [self gotoGoodsSearchView];
+    }else if([indexPath compare:[NSIndexPath indexPathForRow:0 inSection:1]]==NSOrderedSame){
+        [self gotoScanQRView2:SCAN_GOODS];
     }
     else if([indexPath compare:[NSIndexPath indexPathForRow:0 inSection:2]]==NSOrderedSame){
-        [self gotoTransferGoodsView:0];
+        [self gotoGoodsSearchView];
     }
     else if([indexPath compare:[NSIndexPath indexPathForRow:0 inSection:3]]==NSOrderedSame){
+        [self gotoTransferGoodsView:0];
+    }
+    else if([indexPath compare:[NSIndexPath indexPathForRow:0 inSection:4]]==NSOrderedSame){
         [self gotoTransferGoodsView:1];
     }
 }
@@ -176,6 +181,14 @@
     qvc.pass_delegate=self;
     [self.navigationController pushViewController:qvc animated:YES];
 }
+
+-(void)gotoScanQRView2:(SCAN_MODEL)scan_model{
+    GoodsScanViewController *qvc=[[GoodsScanViewController alloc] init];
+    qvc.scan_model=scan_model;
+    qvc.pass_delegate=self;
+    [self.navigationController pushViewController:qvc animated:YES];
+}
+
 
 -(void)gotoGoodsSearchView{
     GoodsSearchViewController *gvc=[[GoodsSearchViewController alloc] init];

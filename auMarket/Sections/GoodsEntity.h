@@ -49,3 +49,4 @@
 @property (nonatomic,retain) NSString *cost;
 @property (nonatomic,retain) NSString *shelves_code;
 @end
+

@@ -49,7 +49,7 @@
             [lbl_info_title mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.top.mas_equalTo(12);
                 make.left.mas_equalTo(info_icon.mas_right).offset(5);
-                make.size.mas_equalTo(CGSizeMake(150, 28));
+                make.size.mas_equalTo(CGSizeMake(200, 28));
             }];
             
             lbl_info_value=[[UILabel alloc] init];

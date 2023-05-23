@@ -54,6 +54,7 @@
 		A94A271220B0334E0025A438 /* stock_listnum@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A94A270B20B0334E0025A438 /* stock_listnum@2x.png */; };
 		A94A937520BA9816002EEE61 /* PickGoodsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A94A937320BA9815002EEE61 /* PickGoodsViewController.m */; };
 		A94A937820BA985A002EEE61 /* PickGoodsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A94A937720BA9859002EEE61 /* PickGoodsCell.m */; };
+		A94C179B2A1D1CBB008039E6 /* GoodsScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A94C17992A1D1CBB008039E6 /* GoodsScanViewController.m */; };
 		A953001B232BF1B300C18B0E /* InventoryCheckViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A953001A232BF1B300C18B0E /* InventoryCheckViewController.m */; };
 		A953001E232BF2D300C18B0E /* InventoryCheckCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A953001D232BF2D300C18B0E /* InventoryCheckCell.m */; };
 		A95E10911DF80ED000660E42 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A95E10901DF80ED000660E42 /* main.m */; };
@@ -334,6 +335,8 @@
 		A94A937420BA9815002EEE61 /* PickGoodsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickGoodsViewController.h; sourceTree = "<group>"; };
 		A94A937620BA9859002EEE61 /* PickGoodsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickGoodsCell.h; sourceTree = "<group>"; };
 		A94A937720BA9859002EEE61 /* PickGoodsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickGoodsCell.m; sourceTree = "<group>"; };
+		A94C17992A1D1CBB008039E6 /* GoodsScanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoodsScanViewController.m; sourceTree = "<group>"; };
+		A94C179A2A1D1CBB008039E6 /* GoodsScanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoodsScanViewController.h; sourceTree = "<group>"; };
 		A9530019232BF1B200C18B0E /* InventoryCheckViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InventoryCheckViewController.h; sourceTree = "<group>"; };
 		A953001A232BF1B300C18B0E /* InventoryCheckViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InventoryCheckViewController.m; sourceTree = "<group>"; };
 		A953001C232BF2D200C18B0E /* InventoryCheckCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InventoryCheckCell.h; sourceTree = "<group>"; };
@@ -1154,6 +1157,8 @@
 		A95E11681DF8518B00660E42 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				A94C179A2A1D1CBB008039E6 /* GoodsScanViewController.h */,
+				A94C17992A1D1CBB008039E6 /* GoodsScanViewController.m */,
 				A9D7E27920B2DAAB00E02AAA /* GoodsSearchViewController.h */,
 				A9D7E27A20B2DAAB00E02AAA /* GoodsSearchViewController.m */,
 				A9633B8A204D546F00F2FFEB /* GoodsBindViewController.h */,
@@ -1742,6 +1747,7 @@
 				A9D7E28720B31E3D00E02AAA /* GoodsInfoEntity.m in Sources */,
 				A9633B8E204D548700F2FFEB /* GoodsBindViewController.m in Sources */,
 				A95E113E1DF8491600660E42 /* NSArray+IDPExtension.m in Sources */,
+				A94C179B2A1D1CBB008039E6 /* GoodsScanViewController.m in Sources */,
 				A96AE539242701D500A00FAA /* BatchPickCell.m in Sources */,
 				A9A341A02428983B00814178 /* BatchPickCategoryViewController.m in Sources */,
 				A9F4DAD51F68390F00D71774 /* SDWebImageManager+MJ.m in Sources */,

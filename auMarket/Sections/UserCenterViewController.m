@@ -192,6 +192,7 @@
     cell.itemName =[[[_itemArr objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] objectForKey:@"item_name"];
     if(indexPath.row<3){
         cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
+        cell.itemPrice=@"";
     }
     else if(indexPath.row==3){
         cell.accessoryType=UITableViewCellAccessoryNone;
