@@ -9,11 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "StockModel.h"
 
-@interface GoodsScanViewController : SPBaseViewController<UISearchBarDelegate>
+@interface GoodsScanViewController : SPBaseViewController<UITextFieldDelegate>
 {
-    UISearchBar *_searchBar;
-    NSString *keyword;
-    UIView *titleView;
+    UITextField *goodsCodeField;
 }
 typedef void(^ScanResultBlock)(NSString *scanText);
 
