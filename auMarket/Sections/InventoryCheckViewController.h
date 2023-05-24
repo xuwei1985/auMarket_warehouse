@@ -11,6 +11,7 @@
 #import "GoodsEntity.h"
 #import "TransferModel.h"
 #import "TransferGoodsViewController.h"
+#import "GoodsScanViewController.h"
 
 
 @interface InventoryCheckViewController : SPBaseViewController<UITextFieldDelegate,PassValueDelegate>
@@ -19,6 +20,7 @@
     UILabel *lbl_transfer_num;
     BOOL hasHideTransferNum;
     UIImageView *scanGoodsImg;
+    UIImageView *saomiaoGoodsImg;
     UIImageView *goods_img;
     UILabel *goodsNameLbl;
     UILabel *goodsPriceLbl;

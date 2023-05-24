@@ -45,12 +45,28 @@
     [self.view addSubview:scanGoodsImg];
     
     [scanGoodsImg mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.mas_equalTo(self.view.mas_centerY).offset(-30);
+        make.centerY.mas_equalTo(self.view.mas_centerY).offset(-120);
         make.centerX.mas_equalTo(self.view.mas_centerX);
         make.size.mas_equalTo(CGSizeMake(120, 120));
     }];
     
     [scanGoodsImg addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gotoScanQRView:)]];
+    
+    saomiaoGoodsImg=[[UIImageView alloc] init];
+    saomiaoGoodsImg.image=[UIImage imageNamed:@"saoma"];
+    saomiaoGoodsImg.clipsToBounds=YES;
+    saomiaoGoodsImg.layer.cornerRadius = 14;
+    saomiaoGoodsImg.tag=1100;
+    saomiaoGoodsImg.userInteractionEnabled=YES;
+    [self.view addSubview:saomiaoGoodsImg];
+    
+    [saomiaoGoodsImg mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(scanGoodsImg.mas_bottom).offset(40);
+        make.centerX.mas_equalTo(self.view.mas_centerX);
+        make.size.mas_equalTo(CGSizeMake(120, 120));
+    }];
+    
+    [saomiaoGoodsImg addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gotoScanQRView:)]];
 }
 
 -(void)setUpTableView{
@@ -401,15 +417,28 @@
         view_tag=((UITapGestureRecognizer *)sender).view.tag;
     }
     
-    QRCodeViewController *qvc=[[QRCodeViewController alloc] init];
-    if(view_tag==1001){
-        qvc.scan_model=SCAN_SHELF;
+    if(view_tag==1100){
+        GoodsScanViewController *qvc=[[GoodsScanViewController alloc] init];
+        if(view_tag==1001){
+            qvc.scan_model=SCAN_SHELF;
+        }
+        else{
+            qvc.scan_model=SCAN_GOODS;
+        }
+        qvc.pass_delegate=self;
+        [self.navigationController pushViewController:qvc animated:YES];
+    }else{
+        QRCodeViewController *qvc=[[QRCodeViewController alloc] init];
+        if(view_tag==1001){
+            qvc.scan_model=SCAN_SHELF;
+        }
+        else{
+            qvc.scan_model=SCAN_GOODS;
+        }
+        qvc.pass_delegate=self;
+        [self.navigationController pushViewController:qvc animated:YES];
     }
-    else{
-        qvc.scan_model=SCAN_GOODS;
-    }
-    qvc.pass_delegate=self;
-    [self.navigationController pushViewController:qvc animated:YES];
+   
 }
 
 

@@ -15,7 +15,7 @@
 
 //背景色
 #define COLOR_BG_WHITE             [UIColor colorWithRed:255./255. green:255./255. blue:255./255. alpha:1]
-#define COLOR_BG_VIEW             [UIColor colorWithRed:242./255. green:242./255. blue:242./255. alpha:1]
+#define COLOR_BG_VIEW             [UIColor colorWithRed:245/255. green:245/255. blue:245/255. alpha:1]
 #define COLOR_BG_IMAGEVIEW        [UIColor colorWithRed:0.93 green:0.93 blue:0.93 alpha:1.00]
 #define COLOR_BG_NAVIGATION       [UIColor colorWithRed:0.98 green:0.20 blue:0.26 alpha:1.00]
 #define COLOR_BG_NAVIGATION_WHITE       [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.00]

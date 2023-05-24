@@ -98,24 +98,24 @@
     lineView.opaque=YES;
     [inputView4 addSubview:lineView];
     
-    UIImageView *accountIcon=[[UIImageView alloc] initWithFrame:CGRectMake(10, 14, 24, 22)];
+    UIImageView *accountIcon=[[UIImageView alloc] initWithFrame:CGRectMake(10, 14, 28, 26)];
     accountIcon.image=[UIImage imageNamed:@"account_icon_black"];
     [inputView1 addSubview:accountIcon];
     
-    UIImageView *pwdIcon=[[UIImageView alloc] initWithFrame:CGRectMake(10, 12, 25, 25)];
+    UIImageView *pwdIcon=[[UIImageView alloc] initWithFrame:CGRectMake(10, 12, 28, 28)];
     pwdIcon.image=[UIImage imageNamed:@"pwd_icon_black"];
     [inputView2 addSubview:pwdIcon];
     
-    UIImageView *verIcon=[[UIImageView alloc] initWithFrame:CGRectMake(10, 12, 25, 25)];
-    verIcon.image=[UIImage imageNamed:@"pwd_icon_black"];
+    UIImageView *verIcon=[[UIImageView alloc] initWithFrame:CGRectMake(12, 12, 22, 22)];
+    verIcon.image=[UIImage imageNamed:@"renlianmingdan"];
     [inputView3 addSubview:verIcon];
     
-    UIImageView *codeIcon=[[UIImageView alloc] initWithFrame:CGRectMake(10, 12, 25, 25)];
-    codeIcon.image=[UIImage imageNamed:@"pwd_icon_black"];
+    UIImageView *codeIcon=[[UIImageView alloc] initWithFrame:CGRectMake(12, 12, 22, 22)];
+    codeIcon.image=[UIImage imageNamed:@"yanzhengma"];
     [inputView4 addSubview:codeIcon];
     
     //创建输入框
-    _accountText = [[UITextField alloc] initWithFrame:CGRectMake(40, 6, WIDTH_SCREEN-60, 39)];
+    _accountText = [[UITextField alloc] initWithFrame:CGRectMake(44, 6, WIDTH_SCREEN-60, 39)];
     _accountText.delegate=self;
     _accountText.font=DEFAULT_FONT(15);;
     //_accountText.clearButtonMode = UITextFieldViewModeWhileEditing;
@@ -129,7 +129,7 @@
     _accountText.autocapitalizationType=UITextAutocapitalizationTypeNone;
     [inputView1 addSubview:_accountText];
     
-    _passwordText = [[UITextField alloc] initWithFrame:CGRectMake(40, 6, WIDTH_SCREEN-60, 39)];
+    _passwordText = [[UITextField alloc] initWithFrame:CGRectMake(44, 6, WIDTH_SCREEN-60, 39)];
     _passwordText.delegate=self;
     _passwordText.text=@"";
     _passwordText.font=DEFAULT_FONT(15);
@@ -144,7 +144,7 @@
     [inputView2 addSubview:_passwordText];
     
     _lbl_verify_mobile=[[UILabel alloc] init];
-    _lbl_verify_mobile.frame=CGRectMake(40, 6, WIDTH_SCREEN-60, 39);
+    _lbl_verify_mobile.frame=CGRectMake(44, 6, WIDTH_SCREEN-60, 39);
     _lbl_verify_mobile.text=@"选择验证手机号";
     _lbl_verify_mobile.font=DEFAULT_FONT(15);
     _lbl_verify_mobile.textColor=RGBCOLOR(185, 185, 185);
@@ -153,7 +153,7 @@
     [inputView3 addSubview:_lbl_verify_mobile];
     [inputView3 addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pickVerifyMobile:)]];
     
-    _verifyText = [[UITextField alloc] initWithFrame:CGRectMake(40, 6, 0, 0)];
+    _verifyText = [[UITextField alloc] initWithFrame:CGRectMake(44, 6, 0, 0)];
     _verifyText.delegate=self;
     _verifyText.text=@"";
     _verifyText.font=DEFAULT_FONT(15);
