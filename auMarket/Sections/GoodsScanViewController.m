@@ -55,7 +55,7 @@
     if(self.scan_model==SCAN_GOODS){
         self.navigationItem.title=@"扫描商品条码";
     }else{
-        self.navigationItem.title=@"扫描商货架条码";
+        self.navigationItem.title=@"扫描货架条码";
     }
 }
     
@@ -68,7 +68,7 @@
     if(self.scan_model==SCAN_GOODS){
         goodsCodeField.placeholder =@"扫描商品条码";
     }else{
-        goodsCodeField.placeholder =@"扫描商货架条码";
+        goodsCodeField.placeholder =@"扫描货架条码";
     }
     goodsCodeField.keyboardType=UIKeyboardTypeDefault;
     goodsCodeField.tintColor = COLOR_FONT_BLACK;
