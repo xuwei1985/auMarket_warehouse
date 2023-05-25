@@ -33,6 +33,9 @@
 
 -(void)setNavigation{
     self.title=@"盘点库存";
+    
+//    UIBarButtonItem *right_Item = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"model_camera"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(changeScanModel)];
+//    self.navigationItem.rightBarButtonItem=right_Item;
 }
 
 -(void)createScanGoodsView{
@@ -418,6 +421,23 @@
     }
     
     if(view_tag==1100){
+        self.scan_model=1;
+        GoodsScanViewController *qvc=[[GoodsScanViewController alloc] init];
+        if(view_tag==1001){
+            qvc.scan_model=SCAN_SHELF;
+        }
+        else{
+            qvc.scan_model=SCAN_GOODS;
+        }
+        qvc.pass_delegate=self;
+        [self.navigationController pushViewController:qvc animated:YES];
+    }else{
+        if(self.scan_model==0){
+            self.scan_model=2;
+        }
+    }
+    
+    if(self.scan_model==1){
         GoodsScanViewController *qvc=[[GoodsScanViewController alloc] init];
         if(view_tag==1001){
             qvc.scan_model=SCAN_SHELF;
@@ -438,7 +458,6 @@
         qvc.pass_delegate=self;
         [self.navigationController pushViewController:qvc animated:YES];
     }
-   
 }
 
 

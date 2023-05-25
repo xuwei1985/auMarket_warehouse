@@ -39,4 +39,5 @@
 @property(nonatomic,retain) GoodsListModel *goods_model;
 @property(nonatomic,retain) NSIndexPath *inputPath;
 @property(nonatomic,retain) NSString *goods_code;
+@property(nonatomic,assign) int scan_model;
 @end

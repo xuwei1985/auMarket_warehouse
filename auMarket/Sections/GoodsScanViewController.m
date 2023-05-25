@@ -35,23 +35,41 @@
     [self initUI];
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self initUI];
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+}
+
 
 - (void)initUI
 {
     [self createSearchBar];
     [self setNavigation];
-
 }
 
 -(void)setNavigation{
-    self.navigationItem.title=@"扫描商品条码";
+    if(self.scan_model==SCAN_GOODS){
+        self.navigationItem.title=@"扫描商品条码";
+    }else{
+        self.navigationItem.title=@"扫描商货架条码";
+    }
 }
+    
 
 - (void)createSearchBar
 {
     goodsCodeField = [[UITextField alloc] initWithFrame:CGRectMake(40, 100, WIDTH_SCREEN-80, 48)];
     goodsCodeField.delegate=self;
-    goodsCodeField.placeholder =@"扫描商品条形码";
+    
+    if(self.scan_model==SCAN_GOODS){
+        goodsCodeField.placeholder =@"扫描商品条码";
+    }else{
+        goodsCodeField.placeholder =@"扫描商货架条码";
+    }
     goodsCodeField.keyboardType=UIKeyboardTypeDefault;
     goodsCodeField.tintColor = COLOR_FONT_BLACK;
     goodsCodeField.autocorrectionType=UITextAutocorrectionTypeNo;
@@ -89,11 +107,6 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:YES];
-    
-}
 
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
@@ -105,10 +118,7 @@
     });
 }
 
--(void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
-   
-}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
