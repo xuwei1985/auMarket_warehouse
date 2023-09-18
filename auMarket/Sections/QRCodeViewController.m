@@ -297,7 +297,8 @@
                                                    AVMetadataObjectTypeCode128Code,
                                                    AVMetadataObjectTypeCode39Code,
                                                    AVMetadataObjectTypeCode93Code,
-                                                   AVMetadataObjectTypeCode39Mod43Code
+                                                   AVMetadataObjectTypeCode39Mod43Code,
+                                                   AVMetadataObjectTypeQRCode
                                                    ]];
 //        AVMetadataObjectTypePDF417Code,
 //        AVMetadataObjectTypeAztecCode,
@@ -327,22 +328,31 @@
     self.preview.frame = CGRectMake(0, 0, WIDTH_SCREEN, HEIGHT_SCREEN);
     // 因为 AVCaptureVideoPreviewLayer是继承CALayer,所以添加到当前view的layer层
     [self.view.layer insertSublayer:self.preview atIndex:0];
+    
+    
+    if ([self.device isFocusModeSupported:AVCaptureFocusModeContinuousAutoFocus]) {
+        NSError *error = nil;
+        if ([self.device lockForConfiguration:&error]) {
+            self.device.focusMode = AVCaptureFocusModeContinuousAutoFocus;
+            [self.device unlockForConfiguration];
+        } else {
+            NSLog(@"Failed to configure focus mode: %@", error);
+        }
+    }
+    
     //放大焦距
-    
     NSError *error = nil;
-    
+
     [self.device lockForConfiguration:&error];
-    
-    
-    
-    if (self.device.activeFormat.videoMaxZoomFactor > 1.5) {
-        
-        self.device.videoZoomFactor = 1.3;
-        
+
+    if (self.device.activeFormat.videoMaxZoomFactor > 2) {
+
+        self.device.videoZoomFactor = 1.8;
+
     }else{
-        
+
         self.device.videoZoomFactor = self.device.activeFormat.videoMaxZoomFactor;
-        
+
     }
     
     

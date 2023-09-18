@@ -23,6 +23,7 @@
     BatchPickViewController *batchPickViewController;
     BatchPickViewController *batchPickViewController2;
     PickViewController* pickViewController;
+    PickViewController* foodPickViewController;
     InformationViewController* informationViewController;
     UserCenterViewController* userCenterViewController;
     ToolsViewController *toolsViewController;
@@ -64,17 +65,21 @@
     batchPickViewController.hidesBottomBarWhenPushed = NO;
     batchPickViewController.listType=0;
     batchPickViewController.dataModel=2;
-    batchPickViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"冷冻拣货" image:[UIImage imageNamed:@"batchpick"] selectedImage:[UIImage imageNamed:@"batchpick_on"]];
+    batchPickViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"冷冻混货" image:[UIImage imageNamed:@"batchpick"] selectedImage:[UIImage imageNamed:@"batchpick_on"]];
     
     batchPickViewController2=[[BatchPickViewController alloc] init];
     batchPickViewController2.hidesBottomBarWhenPushed = NO;
     batchPickViewController2.listType=0;
     batchPickViewController2.dataModel=3;
-    batchPickViewController2.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"熟食拣货" image:[UIImage imageNamed:@"batchpick"] selectedImage:[UIImage imageNamed:@"batchpick_on"]];
+    batchPickViewController2.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"熟食混拣" image:[UIImage imageNamed:@"batchpick"] selectedImage:[UIImage imageNamed:@"batchpick_on"]];
     
     pickViewController = [[PickViewController alloc] init];
     pickViewController.hidesBottomBarWhenPushed = NO;
-    pickViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"单人拣货" image:[UIImage imageNamed:@"pick"] selectedImage:[UIImage imageNamed:@"pick_on"]];
+    pickViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"普通单拣" image:[UIImage imageNamed:@"pick"] selectedImage:[UIImage imageNamed:@"pick_on"]];
+    
+    foodPickViewController = [[PickViewController alloc] init];
+    foodPickViewController.hidesBottomBarWhenPushed = NO;
+    foodPickViewController.tabBarItem = [[SPTabBarItem alloc] initWithTitle:@"熟食单拣" image:[UIImage imageNamed:@"pick"] selectedImage:[UIImage imageNamed:@"pick_on"]];
     
     blockPickStartViewController = [[BlockPickStartViewController alloc] init];
     blockPickStartViewController.hidesBottomBarWhenPushed = NO;
@@ -88,6 +93,7 @@
     SPNavigationController *nav_batchPick = [[SPNavigationController alloc] initWithRootViewController:batchPickViewController];
     SPNavigationController *nav_batchPick2 = [[SPNavigationController alloc] initWithRootViewController:batchPickViewController2];
     SPNavigationController *nav_pick = [[SPNavigationController alloc] initWithRootViewController:pickViewController];
+    SPNavigationController *nav_food_pick = [[SPNavigationController alloc] initWithRootViewController:foodPickViewController];
     SPNavigationController *nav_tools = [[SPNavigationController alloc] initWithRootViewController:blockPickStartViewController];
     SPNavigationController *nav_member = [[SPNavigationController alloc] initWithRootViewController:userCenterViewController];
 
@@ -104,6 +110,7 @@
         [tabbar addObject:nav_pick];
     }
     [tabbar addObject:nav_batchPick];
+    [tabbar addObject:nav_food_pick];
     [tabbar addObject:nav_batchPick2];
     [tabbar addObject:nav_member];
     [self.tabBarController setViewControllers:tabbar];
